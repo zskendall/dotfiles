@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Remap right Alt key to Mod3 for i3.
+xmodmap .xmodmap
+
+# If at work, set up the displays.
+let atgoogle = filereadable(glob('~/.vimrc_google'))
+if (atgoogle)
+  xrandr --output DP-4 --left-of DP-5
+endif
