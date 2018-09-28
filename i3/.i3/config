@@ -164,7 +164,7 @@ mode "resize" {
 # }
 
 # Make a Polybar panel instead of the default i3bar
-exec_always --no-startup-id ~/dotfiles/polybar/launch.sh
+exec_always --no-startup-id ~/dotfiles/polybar/.config/polybar/launch.sh
 
 # Rebind the volume keys
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status

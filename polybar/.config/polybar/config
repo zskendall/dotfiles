@@ -103,7 +103,7 @@ label-urgent-padding = 2
 [module/weather]
 type = custom/script
 
-exec = ~/dotfiles/polybar/weather.sh
+exec = ~/dotfiles/polybar/.config/polybar/weather.sh
 interval = 300 ; seconds
 
 [module/volume]
