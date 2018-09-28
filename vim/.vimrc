@@ -8,6 +8,13 @@ let atgoogle = filereadable(glob('~/.vimrc_google'))
 " ==============================================================================
 filetype plugin indent on
 
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree'
+Plug 'mhinz/vim-signify'
+
+call plug#end()
+
 " ==============================================================================
 " Basic Options
 " ==============================================================================
@@ -26,6 +33,7 @@ augroup END
 " text width
 set tw=80
 
+" line numbers down left
 set number
 
 " set tabs
@@ -172,5 +180,5 @@ au InsertLeave * hi User4 ctermfg=22 cterm=bold
 " }}}
 
 if (atgoogle)
-  source ~/.vimrc_google
+" source ~/.vimrc_google
 endif
