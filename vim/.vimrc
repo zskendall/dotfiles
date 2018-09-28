@@ -34,6 +34,7 @@ augroup END
 set tw=80
 
 " line numbers down left
+highlight LineNr ctermfg=grey
 set number
 
 " set tabs
