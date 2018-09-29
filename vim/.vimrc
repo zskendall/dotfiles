@@ -58,12 +58,12 @@ let mapleader=","
 " map keys to comment and uncomment
 augroup comment
   autocmd!
+  autocmd FileType * map <C-C> :s:^\s*:\1\/\/ <CR>
+  autocmd FileType * map <C-T> :s:^\s*\/\/:\1 <CR>
   autocmd FileType vim map <C-C> :s:^\s*:\1" <CR>
   autocmd FileType vim map <C-T> :s:":\1 <CR>
   autocmd FileType python map <C-C> :s:^\s*:\1# <CR>
   autocmd FileType python map <C-T> :s:^\s*#:\1 <CR>
-  autocmd FileType java map <C-C> :s:^\s*:\1\/\/ <CR>
-  autocmd FileType java map <C-T> :s:^\s*\/\/:\1 <CR>
 augroup END
 
 " Map keys for movement: Alt-HJKL {{{
