@@ -3,8 +3,8 @@
 ## Installation Notes
 For Debian or Ubuntu, will need to follow instructions to build from [source](https://github.com/jaagr/polybar).
 
-![ ](https://github.com/zskendall/dotfiles/polybar/.config/polybar/screenshot_dual.png)
-*Polybar on dual monitors*
+![ ](screenshot_dual.png)
+*My Polybar on dual monitors*
 
 Deps [[1]](https://medium.com/@tatianaensslin/install-polybar-in-3-steps-on-debian-stretch-c64ab6157fb1):
 
