@@ -167,7 +167,7 @@ augroup end
 set laststatus=2
 
 " Status Colors: {{{
-hi User1 ctermfg=1
+hi User1 ctermfg=1 cterm=bold
 hi User2 ctermfg=15
 hi User3 ctermfg=250
 hi User4 ctermfg=22 cterm=bold
