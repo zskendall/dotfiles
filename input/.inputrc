@@ -1,0 +1,6 @@
+# Convenience key mappings:
+"\ek": previous-history
+"\ej": next-history
+"\eh": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
