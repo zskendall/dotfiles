@@ -15,6 +15,15 @@ Plug 'mhinz/vim-signify'
 
 call plug#end()
 
+" Highlight colors in Signify {{{
+highlight SignColumn ctermbg=none
+
+" signs
+highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
+" }}}
+
 " ==============================================================================
 " Basic Options
 " ==============================================================================
@@ -181,5 +190,5 @@ au InsertLeave * hi User4 ctermfg=22 cterm=bold
 " }}}
 
 if (atgoogle)
-" source ~/.vimrc_google
+  source ~/.vimrc_google
 endif
