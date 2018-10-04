@@ -20,7 +20,7 @@ tertiary = #e60053
 quarternary = #0a6cf5
 alert = #bd2c40
 
-[bar/example]
+[bar/tray]
 monitor = ${env:MONITOR:}
 width = 100%
 height = 27
@@ -55,6 +55,9 @@ modules-right = volume xkeyboard date time powermenu
 
 tray-position =
 tray-padding = 2
+
+; Required for auto hide script
+override-redirect = true
 
 ;wm-restack = i3
 
