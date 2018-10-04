@@ -10,6 +10,7 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 WIDTH=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+' | cut -d"x" -f1)
 for m in $(polybar --list-monitors | cut -d":" -f1); do
   MONITOR=$m polybar --reload tray &
-  sleep 2;
+  echo $m
+  sleep 5;
   sh ~/dotfiles/polybar/.config/polybar/hideIt.sh --name "^polybar-tray_"$m"$" --direction top --region 0x0+$WIDTH+10 &
 done
