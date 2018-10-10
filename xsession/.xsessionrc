@@ -5,5 +5,5 @@ xmodmap .xmodmap
 
 # If at work, set up the displays.
 if [ -r ~/.xsessionrc_google ];
-then .~/.xsessionrc_google;
+then . ~/.xsessionrc_google;
 fi
