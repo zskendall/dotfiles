@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SESSION="home"
+if [ -r ~/.tmux_google ];
+  then SESSION="work";
+fi
+
+# Either attach to an existing session or create a new one that's detached
+tmux a -t $SESSION || tmux new -s $SESSION -d \; \
+  split-window -h \; \
+  select-pane -t 1 \; \
+  split-window \; \
+  send-keys -t 2 "cd ~/dotfiles" C-m \; \
+
+# If at work, configure the main and top-right windows.
+if [ -r ~/.tmux_google ];
+then . ~/.tmux_google;
+else
+  tmux a -t $SESSION
+fi
+
