@@ -7,7 +7,3 @@ alias emacs='emacs -nw'
 
 # Run custom tmux startup script.
 alias tms='~/tmux/session'
-
-if [ -z "$TMUX" ]; then
-~/tmux/session
-fi
