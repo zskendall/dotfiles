@@ -11,6 +11,6 @@ fi
 # Set background image.
 feh --bg-scale ~/dotfiles/images/nikhita-singhal-496545-unsplash.jpg
 
-# Start compton as a background process to have compositing. See
+# Start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
 compton -b
