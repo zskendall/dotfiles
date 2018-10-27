@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ASCII_WEATHER="$(curl -s 'wttr.in/?TQ0')"
+ASCII_WEATHER="$(curl -s 'wttr.in/?TQu0')"
 CONDITION="STRUGGLES"
 
 if grep -iq "Sunny\|clear" <<< "$ASCII_WEATHER"
