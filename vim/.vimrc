@@ -10,7 +10,7 @@ filetype plugin indent on
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 
 call plug#end()
@@ -64,6 +64,9 @@ inoremap qq <Esc>
 " switch mapleader to comma
 let mapleader=","
 
+" add explore
+nnoremap <leader>e :Explore<CR>
+
 " map keys to comment and uncomment
 augroup comment
   autocmd!
@@ -73,8 +76,7 @@ augroup comment
   autocmd FileType vim map <C-T> :s:":\1 <CR>
   autocmd FileType python map <C-C> :s:^\s*:\1# <CR>
   autocmd FileType python map <C-T> :s:^\s*#:\1 <CR>
-augroup END
-
+augroup END 
 " Map keys for movement: Alt-HJKL {{{
 execute "set <A-J>=\ej"
 execute "set <A-K>=\ek"
