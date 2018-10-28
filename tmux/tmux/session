@@ -18,7 +18,8 @@ function create_session() {
     then . ~/.tmux_google;
   else
     tmux a -t $SESSION \; \
-      send-keys -t 1 "clock-mode" C-m
+      send-keys -t 1 "tmux clock-mode" C-m \; \
+      select-pane -t 0
   fi
 }
 
