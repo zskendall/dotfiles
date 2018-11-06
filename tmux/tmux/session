@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SESSION="home"
+SESSION=""
 if [ -r ~/.tmux_google ];
-  then SESSION="work";
+  then SESSION="";
 fi
 
 function create_session() {
@@ -14,11 +14,15 @@ function create_session() {
     send-keys -t 2 "vim ." C-m \; \
 
   # If at work, configure the main and top-right windows.
-  if [ -r ~/.tmux_google ];
+  if [ "$SESSION" = "" ];
     then . ~/.tmux_google;
   else
     tmux a -t $SESSION \; \
+      select-pane -t 1 \; \
       send-keys -t 1 "tmux clock-mode" C-m \; \
+      detach
+    sleep 1;
+    tmux a -t $SESSION \; \
       select-pane -t 0
   fi
 }
