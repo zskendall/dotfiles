@@ -28,11 +28,6 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 " Basic Options
 " ==============================================================================
 
-if (!atgoogle)
-  " Automatically select a colorscheme good for dark background
-  set background=dark
-endif
-
 " Syntax highlighting
 syntax on
 
