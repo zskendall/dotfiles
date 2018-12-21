@@ -17,3 +17,5 @@ to_win() {
     cd "$WIN_HOME"
 }
 alias wh=to_win
+
+alias moo='/usr/games/cowsay'
