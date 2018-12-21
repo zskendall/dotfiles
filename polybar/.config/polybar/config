@@ -59,7 +59,7 @@ tray-position =
 tray-padding = 2
 
 ; Required for auto hide script
-override-redirect = true
+; override-redirect = true
 
 ;wm-restack = i3
 

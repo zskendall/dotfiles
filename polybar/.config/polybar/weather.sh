@@ -9,9 +9,15 @@ then
 elif grep -iq "cloudy\|overcast" <<< "$ASCII_WEATHER"
 then
   CONDITION="%{T2}%{T-}"
-elif grep -iq "haze\|hazy\|mist" <<< "$ASCII_WEATHER"
+elif grep -iq "haze\|hazy\|mist\|fog" <<< "$ASCII_WEATHER"
 then
   CONDITION="%{T2}%{T-}"
+elif grep -iq "smoke" <<< "$ASCII_WEATHER"
+then
+  CONDITION="%{T2}%{T-}"
+elif grep -iq "rain" <<< "$ASCII_WEATHER"
+then
+  CONDITION="%{T2}%{T-}"
 fi
 
 TEMP=$(echo $ASCII_WEATHER | grep -m 1 -Eo -e '-?[[:digit:]].*°F')
