@@ -55,6 +55,13 @@ augroup autotab
   autocmd BufNewFile,BufRead set expandtab
 augroup END
 
+if !atgoogle
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set expandtab
+endif
+
 autocmd BufNewFile,BufRead set fo+=t
 autocmd BufNewFile,BufRead set tw=80
 
