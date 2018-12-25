@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
+Plug 'RRethy/vim-illuminate'
 
 call plug#end()
 
@@ -23,6 +24,10 @@ highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 " }}}
+
+" Highlight spec for vim-illuminate
+highlight Illum ctermbg=237
+hi link illuminatedWord Illum
 
 " ==============================================================================
 " Basic Options
