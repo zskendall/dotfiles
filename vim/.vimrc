@@ -10,9 +10,14 @@ filetype plugin indent on
 
 call plug#begin('~/.vim/plugged')
 
-" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'mhinz/vim-signify'
 Plug 'RRethy/vim-illuminate'
+Plug 'raimondi/delimitmate'
+
+if !atgoogle
+  Plug 'valloric/YouCompleteMe'
+endif
 
 call plug#end()
 
@@ -28,6 +33,17 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 " Highlight spec for vim-illuminate
 highlight Illum ctermbg=237
 hi link illuminatedWord Illum
+
+" Configurations for NerdCommenter {{{
+" Spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Allow commenting and inverting empty lines (useful for commenting region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" }}}
 
 " ==============================================================================
 " Basic Options
@@ -79,16 +95,6 @@ let mapleader=","
 " add explore
 nnoremap <leader>e :Explore<CR>
 
-" map keys to comment and uncomment
-augroup comment
-  autocmd!
-  autocmd FileType * map <C-C> :s:^\s*:\1\/\/ <CR>
-  autocmd FileType * map <C-T> :s:^\s*\/\/:\1 <CR>
-  autocmd FileType vim map <C-C> :s:^\s*:\1" <CR>
-  autocmd FileType vim map <C-T> :s:":\1 <CR>
-  autocmd FileType python map <C-C> :s:^\s*:\1# <CR>
-  autocmd FileType python map <C-T> :s:^\s*#:\1 <CR>
-augroup END 
 " Map keys for movement: Alt-HJKL {{{
 execute "set <A-J>=\ej"
 execute "set <A-K>=\ek"
@@ -120,6 +126,11 @@ nnoremap <A-N> <PageDown>
 " ==============================================================================
 " Status Line Functions and Creation
 " ==============================================================================
+
+" Split bar: {{{
+set fillchars+=vert:│
+hi VertSplit ctermbg=90 ctermfg=16
+" }}}
 
 " Build status: {{{
 function! Status(winnum)
