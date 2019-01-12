@@ -14,6 +14,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mhinz/vim-signify'
 Plug 'RRethy/vim-illuminate'
 Plug 'raimondi/delimitmate'
+Plug 'markonm/traces.vim'
 
 if !atgoogle
   Plug 'valloric/YouCompleteMe'
@@ -45,12 +46,18 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 " }}}
 
+" Highlight for the search term used by traces.vim.
+hi Search ctermbg=159
+
 " ==============================================================================
 " Basic Options
 " ==============================================================================
 
 " Syntax highlighting
 syntax on
+
+" Change visual highlight to dark because WHITE???
+hi Visual ctermbg=235 ctermfg=none
 
 " Highlight overlength lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
@@ -95,19 +102,25 @@ let mapleader=","
 " add explore
 nnoremap <leader>e :Explore<CR>
 
-" Map keys for movement: Alt-HJKL {{{
+" highlight next search match
+set incsearch
+
+" yank to EOL
+nnoremap Y y$
+
+" Map keys for movement: {{{
 execute "set <A-J>=\ej"
 execute "set <A-K>=\ek"
 execute "set <A-L>=\el"
 execute "set <A-H>=\eh"
 
-" buffers
+" buffers Alt-HJKL
 nnoremap <A-J> <C-W><C-J>
 nnoremap <A-K> <C-W><C-K>
 nnoremap <A-L> <C-W><C-L>
 nnoremap <A-H> <C-W><C-H>
 
-" insert
+" insert Alt-HJKL
 inoremap <A-J> <Down>
 inoremap <A-K> <Up>
 inoremap <A-L> <Right>
@@ -121,7 +134,17 @@ execute "set <A-U>=\eu"
 execute "set <A-N>=\en"
 nnoremap <A-U> <PageUp>
 nnoremap <A-N> <PageDown>
+
+" previous and next cursor placement
+execute "set <A-O>=\eo"
+execute "set <A-I>=\ei"
+nnoremap <A-O> <C-O>
+nnoremap <A-I> <C-I>
 " }}}
+
+" Add some convenience searching
+execute "set <A-;>=\e;"
+nnoremap <A-;> *
 
 " ==============================================================================
 " Status Line Functions and Creation
