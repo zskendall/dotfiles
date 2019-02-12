@@ -7,25 +7,28 @@ enum user_layers {
   _QWERTY,
   _NUM,
   _NAV,
-  _GUI,
+  _MOUSE,
 };
+
+// Custom keycodes for modded mod-tap combos
+enum user_keycodes {
+  META_BG,
+}
 
 /** Dynamic mod-tap keycode macros. */
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_RET RCTL_T(KC_ENT)
-#define LALT_LP LALT_T(S(KC_9))
-#define RALT_RP RALT_T(S(KC_0))
-#define LSFT_LB LSFT_T(S(KC_LBRACKET))
-#define RSFT_RB RSFT_T(S(KC_RBRACKET))
+#define LALT_LB LALT_T(KC_LBRC)
+#define RALT_RB RALT_T(KC_RBRC)
 
 /** Dynamic layer-tap keycode macros. */
 #define NUM_SPC LT(_NUM, KC_SPC)
 #define NAV_SPC LT(_NAV, KC_SPC)
-#define LGUI_BG LT(_GUI, C(KC_Z))
-#define RGUI_LK LT(_GUI, LWIN(KC_L))
 
 // Key aliases
 #define ___x___ KC_NO
+#define MS_TOG TG(_MOUSE)
+#define KC_UNDS LSFT(KC_MINS)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -39,19 +42,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * | Esc  |  A   |  S   |  D   |  F   |  G   |                          |   H  |   J  |   K  |   L  |   ;  |  Ret |
    * | LCtrl|      |      |      |      |      |                          |      |      |      |      |      | LCtrl|
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐            ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
-   * |  {   |  Z   |  X   |  C   |  V   |  B   | Del  |            |   =  |   N  |   M  |   ,  |   .  |   /  |   }  |
+   * |  (   |  Z   |  X   |  C   |  V   |  B   | Del  |            |   =  |   N  |   M  |   ,  |   .  |   /  |   )  |
    * | LShft|      |      |      |      |      |      |            |      |      |      |      |      |      | RShft|
    * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘            └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-   *                         | C-z  |  (   | Spc  |                   |  Spc |   )  | Lock |
-   *                         |*GUI* | LAlt |*Num* |                   | *Nav*| RAlt | *GUI*|
+   *                         | C-z  |  [   | Spc  |                   |  Spc |   ]  |MS_TOG|
+   *                         | Meta | LAlt |*Num* |                   | *Nav*| RAlt |      |
    *                         └──────┴──────┴──────┘                   └──────┴──────┴──────┘
    */
   [_QWERTY] = LAYOUT(
      KC_GRV , KC_1 , KC_2 , KC_3 , KC_4 , KC_5 ,                  KC_6 , KC_7 , KC_8   , KC_9  , KC_0   , KC_BSPC,
      KC_TAB , KC_Q , KC_W , KC_E , KC_R , KC_T ,                  KC_Y , KC_U , KC_I   , KC_O  , KC_P   , KC_QUOT,
      CTL_ESC, KC_A , KC_S , KC_D , KC_F , KC_G ,                  KC_H , KC_J , KC_K   , KC_L  , KC_SCLN, CTL_RET,
-     LSFT_LB, KC_Z , KC_X , KC_C , KC_V , KC_B , KC_DEL,   KC_EQ, KC_N , KC_M , KC_COMM, KC_DOT, KC_SLSH, RSFT_RB,
-                          LGUI_BG, LALT_LP, NUM_SPC,         NAV_SPC, RALT_RP, RGUI_LK
+     KC_LSPO, KC_Z , KC_X , KC_C , KC_V , KC_B , KC_DEL,   KC_EQ, KC_N , KC_M , KC_COMM, KC_DOT, KC_SLSH, KC_RSPC,
+                          META_BG, LALT_LB, NUM_SPC,         NAV_SPC, RALT_RB, MS_TOG
   ),
 
   /**
@@ -59,21 +62,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ┌──────┬──────┬──────┬──────┬──────┬──────┐                          ┌──────┬──────┬──────┬──────┬──────┬──────┐
    * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                          |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
    * ├──────┼──────┼──────┼──────┼──────┼──────┤                          ├──────┼──────┼──────┼──────┼──────┼──────┤
-   * |//////|      |      |//////|      |      |                          |   *  |   7  |   8  |   9  |   -  |  Bsp |
+   * |//////|      |      |//////|      |   _  |                          |   *  |   7  |   8  |   9  |   -  |  Bsp |
    * ├──────┼──────┼──────┼──────┼──────┼──────┤                          ├──────┼──────┼──────┼──────┼──────┼──────┤
    * |//////|//////|      |//////|//////|   \  |                          |   /  |   4  |   5  |   6  |   +  |//////|
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐            ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
    * |//////|      |      |//////|      |//////|//////|            |      |   =  |   1  |   2  |   3  |  Ret |//////|
    * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘            └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-   *                         |      |//////|*Pad* |                   |   0  |//////|   .  |
+   *                         |//////|//////|*Pad* |                   |   0  |//////|   .  |
    *                         └──────┴──────┴──────┘                   └──────┴──────┴──────┘
    */
   [_NUM] = LAYOUT(
      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                     KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12,
-     _______, ___x___, ___x___, _______, ___x___, ___x___,                     KC_PAST, KC_P7  , KC_P8  , KC_P9  , KC_PMNS, KC_BSPC,
+     _______, ___x___, ___x___, _______, ___x___, KC_UNDS,                     KC_PAST, KC_P7  , KC_P8  , KC_P9  , KC_PMNS, KC_BSPC,
      _______, _______, ___x___, _______, _______, KC_BSLS,                     KC_PSLS, KC_P4  , KC_P5  , KC_P6  , KC_PPLS, _______,
      _______, ___x___, ___x___, _______, ___x___, _______, _______,   ___x___, KC_PEQL, KC_P1  , KC_P2  , KC_P3  , KC_PENT, _______,
-                                    ___x___, _______, _______,              KC_P0,  _______, KC_PDOT
+                                    _______, _______, _______,              KC_P0,  _______, KC_PDOT
   ),
 
   /**
@@ -87,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐            ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
    * |//////|      |      |      |      |      |//////|            |      |      |      |      |      |      |//////|
    * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘            └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-   *                         |      |//////|//////|                   | *Nav*|//////|      |
+   *                         |//////|//////|//////|                   | *Nav*|//////|      |
    *                         └──────┴──────┴──────┘                   └──────┴──────┴──────┘
    */
   [_NAV] = LAYOUT(
@@ -95,29 +98,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______, ___x___, ___x___, ___x___, ___x___, ___x___,                     ___x___, ___x___, ___x___, ___x___, ___x___, _______,
      _______, ___x___, KC_HOME, KC_PGUP, KC_PGDN, KC_END,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, ___x___, _______,
      _______, ___x___, ___x___, ___x___, ___x___, ___x___, _______,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, _______,
-                                    ___x___, _______, _______,            _______, _______, ___x___
+                                    _______, _______, _______,            _______, _______, ___x___
   ),
 
   /**
-   * GUI/Media Layer
+   * Mouse/Media Layer
    * ┌──────┬──────┬──────┬──────┬──────┬──────┐                          ┌──────┬──────┬──────┬──────┬──────┬──────┐
-   * |      |      |      |      |      |      |                          |      |      |      |      |      |      |
+   * |      |      |      |      |      |      |                          |      |      |      |      |      | PrtSc|
    * ├──────┼──────┼──────┼──────┼──────┼──────┤                          ├──────┼──────┼──────┼──────┼──────┼──────┤
-   * |//////|      |  M↑  |      | Bri+ |      |                          |      |      |      |      |      | PrtSc|
+   * |//////|      |  M↑  |      | Bri+ |      |                          |      |      |      |      |      |      |
    * ├──────┼──────┼──────┼──────┼──────┼──────┤                          ├──────┼──────┼──────┼──────┼──────┼──────┤
    * |//////|  M←  |  M↓  |  M→  | Bri- |      |                          |  W←  |  W↓  |  W↑  |  W→  | Vol+ |//////|
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐            ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
    * |//////| Prev | Play | Next | Stop |      |      |            | MsB3 |      |      |      | Mute | Vol- |//////|
    * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘            └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-   *                         |*GUI* |//////| MsB1 |                   | MsB2 |//////| *GUI*|
+   *                         |//////|//////| MsB1 |                   | MsB2 |//////|MS_TOG|
    *                         └──────┴──────┴──────┘                   └──────┴──────┴──────┘
    */
-  [_GUI] = LAYOUT(
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
-     _______, _______, KC_MS_U, _______, KC_BRIU, _______,                            _______, _______, _______, _______, _______, KC_PSCR,
-     _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _______,                            KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _______,
-     _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, _______,         KC_BTN_3, _______, _______, _______, KC_MUTE, KC_VOLD, _______,
-                                    _______, _______, KC_BTN1,                   KC_BTN_2, _______, _______
+  [_MOUSE] = LAYOUT(
+     ___x___, ___x___, ___x___, ___x___, ___x___, ___x___,                     ___x___, ___x___, ___x___, ___x___, ___x___, KC_PSCR,
+     _______, _______, KC_MS_U, _______, KC_BRIU, _______,                     _______, _______, _______, _______, _______, _______,
+     _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _______,                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _______,
+     _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, _______,   KC_BTN3, _______, _______, _______, KC_MUTE, KC_VOLD, _______,
+                                    _______, _______, KC_BTN1,           KC_BTN_2, _______, MS_TOG
   ),
 };
 
+// Process record to handle custom user keycodes
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case META_BG:
+      if (record->event.pressed) {
+        register_mods(MOD_LGUI);
+        record->tap.interruped = 0;
+      } else {
+        unregister_mods(MOD_LGUI);
+
+        if (record->tap.count && !record->tap.interrupted) {
+          add_weak_mods(MOD_LCTL);
+          register_code(KC_Z);
+          unregister_code(KC_Z);
+          del_weak_mods(MOD_LCTL);
+        }
+
+        record->tap.count = 0;
+      }
+      return false;
+  }
+  return true;
+}
