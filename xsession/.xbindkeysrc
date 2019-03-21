@@ -1,0 +1,13 @@
+# Assign button 10 to close a tab
+"/usr/bin/xte 'keydown Control_L' 'key w' 'keyup Control_L'"
+b:10
+
+# Assign button 2 to open a tab and navigate to it
+"/usr/bin/xte 'keydown Shift_L' 'mouseclick 2' 'usleep 100000' 'keyup Shift_L'"
+b:2 + Release
+
+# Try something crazy
+"/usr/bin/xte 'key Page_Up'"
+Control + b:4
+"/usr/bin/xte 'key Page_Down'"
+Control + b:5
