@@ -1,7 +1,7 @@
 " Enable modern Vim features not compatible with Vi spec.
 set nocompatible
 
-let atgoogle = filereadable(glob('~/.vimrc_google'))
+let atwork = filereadable(glob('~/.vimrc_work'))
 
 " ==============================================================================
 " Configure plugins (e.g. - Vundle) here.
@@ -16,7 +16,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'raimondi/delimitmate'
 Plug 'markonm/traces.vim'
 
-if !atgoogle
+if !atwork
   Plug 'valloric/YouCompleteMe'
 endif
 
@@ -75,20 +75,10 @@ highlight LineNr ctermfg=grey
 set number
 
 " set tabs
-augroup autotab
-  autocmd!
-  autocmd BufNewFile,BufRead set tabstop=2
-  autocmd BufNewFile,BufRead set softtabstop=2
-  autocmd BufNewFile,BufRead set shiftwidth=2
-  autocmd BufNewFile,BufRead set expandtab
-augroup END
-
-if !atgoogle
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-  set expandtab
-endif
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
 
 autocmd BufNewFile,BufRead set fo+=t
 autocmd BufNewFile,BufRead set tw=80
@@ -107,6 +97,9 @@ set incsearch
 
 " yank to EOL
 nnoremap Y y$
+
+" always open split buffer below
+set splitbelow
 
 " Map keys for movement: {{{
 execute "set <A-J>=\ej"
@@ -237,6 +230,6 @@ au InsertChange * call InsertStatusLineColor(v:insertmode)
 au InsertLeave * hi User4 ctermfg=22 cterm=bold
 " }}}
 
-if (atgoogle)
-  source ~/.vimrc_google
+if (atwork)
+  source ~/.vimrc_work
 endif
