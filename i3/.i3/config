@@ -34,7 +34,8 @@ bindsym $mod+Return exec xfce4-terminal
 #i3-sensible-terminal
 
 # lock screen with i3lock
-bindsym mod4+l exec ~/dotfiles/i3/.i3/i3lock.sh -i ~/dotfiles/i3/.i3/background.png -t -c 000000 -o 191d0f -w 572020 -l ffffff -e
+bindsym mod4+l exec ~/dotfiles/i3/.i3/i3lock.sh -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -t -e
+#-o 191d0f -w 572020 -l 000000 -e
 
 # kill focused window
 bindsym $mod+Shift+q kill

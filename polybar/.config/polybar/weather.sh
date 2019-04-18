@@ -15,7 +15,7 @@ then
 elif grep -iq "smoke" <<< "$ASCII_WEATHER"
 then
   CONDITION="%{T2}%{T-}"
-elif grep -iq "rain" <<< "$ASCII_WEATHER"
+elif grep -iq "rain\|shower" <<< "$ASCII_WEATHER"
 then
   CONDITION="%{T2}%{T-}"
 fi
@@ -32,6 +32,15 @@ then
   upper=${BASH_REMATCH[2]}
 
   # Calculate average truncated to integer
+  TEMP="$(( (lower + upper) / 2 ))"
+elif [[ $TEMP == *..* ]]
+# Support new weather range format of X..Y
+then
+  re='(-?[[:digit:]]+)..(-?[[:digit:]]+)'
+  [[ $TEMP =~ $re ]]
+  lower=${BASH_REMATCH[1]}
+  upper=${BASH_REMATCH[2]}
+
   TEMP="$(( (lower + upper) / 2 ))"
 fi
 
@@ -63,4 +72,4 @@ else
   COLOR="#ff6600" # orange
 fi
 
-echo $CONDITION "|" %{F$COLOR}$TEMP%{F-} "°F"
+echo $CONDITION "%{T6}|" %{F$COLOR}$TEMP%{F-} "°F%{T-}"

@@ -7,99 +7,130 @@
 ;
 ;=====================================================
 
-[colors]
-;background = ${xrdb:color0:#222}
-background = #000
+;=====================================================
+; COLORS
+;=====================================================
+[default]
 background-alt = #222
-;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
-primary = #fff
-secondary = #ffb52a
-tertiary = #e60053
-quarternary = #0a6cf5
 alert = #bd2c40
-visible = #999
-unfocused = #4d4d4d
 
-[bar/tray]
+
+[nikhita]
+focus-foreground = #fff
+unfocus-foreground = #4d4d4d
+visible-foreground = #999
+caps-indicator = #a402a5
+
+[borealis]
+background = #80723d71
+focus-foreground = #b30000
+unfocus-foreground = #7b926f
+visible-foreground = #0f0c10
+caps-indicator = #61995b
+
+
+[colors]
+inherit = default
+
+; Background/theme-specific colors
+background = ${borealis.background}
+focus = ${borealis.focus-foreground}
+unfocused = ${borealis.unfocus-foreground}
+visible = ${borealis.visible-foreground}
+caps = ${borealis.caps-indicator}
+
+
+
+;=====================================================
+; FONTS
+;=====================================================
+[section/fonts]
+font-0 = "Sawasdee:bold:size=14;0"
+font-1 = "MaterialIcons:size=14;4"
+font-2 = "Font Awesome webfont:pixelsize=10;0"
+font-3 = "MaterialIcons:size=16;4"
+font-4 = "EastSeaDokdo:bold:size=16;1"
+font-5 = "EastSeaDokdo-Regular:bold:size=18:2"
+
+
+
+;=====================================================
+; BARS
+;=====================================================
+[bar/common]
+inherit = section/fonts
 monitor = ${env:MONITOR:}
-width = 100%
-height = 27
-;offset-x = 1%
-;offset-y = 1%
-radius = 6.0
+radius = 15.0
 fixed-center = true
-
-background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 3
 line-color = #f00
 
-border-size = 0
-border-color = #00000000
-
-padding-left = 0
 padding-right = 2
 
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = "Sawasdee:bold:size=14;0"
-font-1 = "MaterialIcons:size=14;4"
-font-2 = "Font Awesome webfont:pixelsize=10;0"
-font-3 = "MaterialIcons:size=16;4"
-
-modules-left = i3
-modules-center = weather
-modules-right = volume xkeyboard date time powermenu
-
-tray-position =
-tray-padding = 2
-
-; Required for auto hide script
-; override-redirect = true
-
-;wm-restack = i3
-
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+
+[bar/tray]
+inherit = bar/common
+
+width = 100%
+height = 27
+offset-x = 2%
+offset-y = 1%
+
+background = ${colors.background}
+
+modules-left = i3
+modules-center = weather
+modules-right = volume xkeyboard date powermenu
+
+; Float bar; required for auto hide script
+;override-redirect = true
+
+;wm-restack = i3
+
+dim-value = 0.5
+
+
+
+;=====================================================
+; MODULES
+;=====================================================
 [module/i3]
 ws-icon-0 = 1;
 ws-icon-1 = 2;
 ws-icon-2 = 3;
 ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-default = 
+ws-icon-default = 
 
 type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
+format = <label-state>
 wrapping-scroll = false
 pin-workspaces = true
-
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 ; focused workspace will have underline and foreground shading
 label-focused = %icon%
+label-focused-foreground = ${colors.focus}
 label-focused-background = ${colors.background-alt}
-label-focused-underline = ${colors.primary}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-underline = ${colors.unfocused}
+label-unfocused-foreground = ${colors.unfocused}
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
-label-visible-underline = ${colors.visible}
+label-visible-foreground = ${colors.visible}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
@@ -107,23 +138,23 @@ label-urgent = %icon%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
+
 [module/weather]
 type = custom/script
 
 exec = ~/dotfiles/polybar/.config/polybar/weather.sh
 interval = 300 ; seconds
 
+
 [module/volume]
 type = internal/volume
 
-format-volume-underline = ${colors.tertiary}
 format-volume = <label-volume> <bar-volume>
 label-volume = %{T2}%{T-}
 label-volume-foreground = ${root.foreground}
 
 format-muted-foreground = ${colors.foreground-alt}
 label-muted = %{T4}%{T-}
-label-muted-underline = ${colors.tertiary}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -142,45 +173,32 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 
 format-prefix = "%{T2}%{T-} "
 format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
 
 label-layout = %layout%
-label-layout-underline = ${colors.secondary}
 
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+label-indicator = 
+label-indicator-padding = 1
+label-indicator-margin = 0
+label-indicator-underline = ${colors.caps}
+
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = "%A, %d %B %Y"
-date-alt = " %Y-%m-%d"
+date = "%{T4}%{T5} %{F#999}%A, %d %B %Y%{F-}  %{T4}%{T5} %{F#999}%H:%M%{F-}%{T-}"
 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.quarternary}
 
 label = %date%
 
-[module/time]
-type = internal/date
-interval = 5
-
-time = %H:%M
-time-alt = %H:%M:%S
-
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #7e01af
-
-label = %time%
 
 [module/powermenu]
 type = custom/menu
@@ -189,9 +207,7 @@ format-spacing = 1
 expand-right = false
 
 label-open = %{T4}
-label-open-foreground = ${colors.primary}
 label-close = 
-label-close-foreground = ${colors.primary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
@@ -220,11 +236,19 @@ menu-3-0-exec = menu-open-0
 menu-3-1 = %{T-}
 menu-3-1-exec = exit-session
 
+
+
+;=====================================================
+; OTHER
+;=====================================================
 [settings]
 screenchange-reload = true
+
 
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+
 
 ; vim:ft=dosini
