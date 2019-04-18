@@ -4,12 +4,15 @@
 xmodmap .xmodmap
 
 # If at work, set up the displays.
-if [ -r ~/.xsessionrc_google ];
-then . ~/.xsessionrc_google;
+if [ -r ~/.xsessionrc_work ];
+then
+  . ~/.xsessionrc_work;
+  # Set buttons
+  xinput --set-button-map 10 1 3 10 4 5 6 7 9 2 8
 fi
 
 # Set background image.
-feh --bg-scale ~/dotfiles/images/nikhita-singhal-496545-unsplash.jpg
+feh --bg-scale ~/dotfiles/images/background.jpg
 
 # Start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.

@@ -7,7 +7,15 @@ b:10
 b:2 + Release
 
 # Try something crazy
-"/usr/bin/xte 'key Page_Up'"
-Control + b:4
-"/usr/bin/xte 'key Page_Down'"
-Control + b:5
+"/usr/bin/xdotool key --clearmodifiers control+Page_Up"
+Alt + b:1
+"/usr/bin/xdotool key --clearmodifiers control+Page_Down"
+Alt + b:10
+
+# Mods for copy, paste, and enter (useful in Chrome)
+"/usr/bin/xdotool key --clearmodifiers control+c"
+Alt + b:8
+"/usr/bin/xdotool key --clearmodifiers control+v"
+Alt + b:9
+"/usr/bin/xdotool key --clearmodifiers Return"
+Alt + b:2
