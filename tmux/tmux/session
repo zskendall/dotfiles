@@ -9,35 +9,5 @@ if [ -r ~/.tmux_work ];
 fi
 LEFT=$1
 
-# function create_session() {
-#   tmux new -s $SESSION -d \; \
-#     split-window -h
-#
-#   if [ ! $LEFT ]; then
-#     tmux a -t $SESSION \; \
-#       select-pane -t 1 \; \
-#       split-window \; \
-#       detach
-#   fi
-#
-#   # If at work, configure the main and top-right windows.
-#   if [ "$SESSION" = "" ]; then
-#     . ~/.tmux_work $LEFT;
-#   else
-#     tmux a -t $SESSION \; \
-#       select-pane -t 2 \; \
-#       send-keys -t 2 "cd ~/dotfiles" C-m \; \
-#       send-keys -t 2 "vim ." C-m \; \
-#       select-pane -t 1 \; \
-#       send-keys -t 1 "tmux clock-mode" C-m \; \
-#       detach
-#
-#     sleep 1;
-#
-#     tmux a -t $SESSION \; \
-#       select-pane -t 0
-#   fi
-# }
-
 # Either attach to an existing session or create a new one
 tmux a -dt $SESSION || create_session $SESSION $LEFT
