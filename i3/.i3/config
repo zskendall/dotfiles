@@ -34,7 +34,8 @@ bindsym $mod+Return exec xfce4-terminal
 #i3-sensible-terminal
 
 # lock screen with i3lock
-bindsym mod4+l exec ~/dotfiles/i3/.i3/i3lock.sh -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -t -e
+bindsym mod4+l exec ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png
+# -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -t -e
 #-o 191d0f -w 572020 -l 000000 -e
 
 # kill focused window
@@ -173,7 +174,17 @@ bindsym $mod+r mode "resize"
 # Make a Polybar panel instead of the default i3bar
 exec_always --no-startup-id ~/dotfiles/polybar/.config/polybar/launch.sh
 
+# Reload Polybar
+bindsym $mod+mod1+p exec --no-startup-id ~/dotfiles/polybar/.config/polybar/launch.sh
+
 # Rebind the volume keys
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && killall -SIGUSR1 i3status
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && killall -SIGUSR1 i3status
+
+# Rebind the brightness keys
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 20"
+
+# Rebind the mic mute key
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle

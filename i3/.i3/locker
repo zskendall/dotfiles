@@ -1,0 +1,53 @@
+#!/bin/bash
+
+HOST=$(hostname)
+
+# If it's the laptop, default to neutral black lockscreen
+if [[ $HOST == *"laptop"* ]]; then
+  ~/.i3/i3lock.sh -c 000000 -w b30000 -l 595959 -t -e
+  exit
+fi
+
+# Otherwise, parse the arguments to construct the i3lock command
+while getopts ":i:c:w:l:o:" opt; do
+  case $opt in
+    i) image="$OPTARG"
+    ;;
+    c) color="$OPTARG"
+    ;;
+    w) wrong="$OPTARG"
+    ;;
+    l) idle="$OPTARG"
+    ;;
+    o) done="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+    :) echo "Option -$OPTARG requires an argument." >&2
+    ;;
+  esac
+done
+
+lock='~/.i3/i3lock.sh -t -e'
+
+if [[ ! -z "$image" ]]; then
+  lock="$lock -i $image"
+fi
+
+if [[ ! -z "$color" ]]; then
+  lock="$lock -c $color"
+fi
+
+if [[ ! -z "$wrong" ]]; then
+  lock="$lock -w $wrong"
+fi
+
+if [[ ! -z "$idle" ]]; then
+  lock="$lock -l $idle"
+fi
+
+if [[ ! -z "$done" ]]; then
+  lock="$lock -o $done"
+fi
+
+eval $lock
