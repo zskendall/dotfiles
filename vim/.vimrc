@@ -139,6 +139,9 @@ nnoremap <A-I> <C-I>
 execute "set <A-;>=\e;"
 nnoremap <A-;> *
 
+" Fix weird characters sometimes being inserted with i-Esc-i in quick succession
+set ttimeoutlen=0
+
 " ==============================================================================
 " Status Line Functions and Creation
 " ==============================================================================
