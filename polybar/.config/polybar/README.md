@@ -2,6 +2,7 @@
 
 ![ ](screenshot_dual.png)
 *My Polybar on dual monitors*
+Photo by FORREST CAVALE on Unsplash
 
 ## Installation Notes
 For Debian or Ubuntu, will need to follow instructions to build from [source](https://github.com/jaagr/polybar).
