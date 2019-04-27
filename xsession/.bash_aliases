@@ -19,3 +19,6 @@ to_win() {
 alias wh=to_win
 
 alias moo='/usr/games/cowsay'
+
+# Occasional Nautilus problem freezing workspace in Ubuntu
+alias naf='nautilus --no-desktop'
