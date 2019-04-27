@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# ==============================================================================
+# Settings for Wacom tablet. Optimized for Krita.
+# ==============================================================================
+DEVICE="Wacom Intuos Pro L"
+
+PAD="$DEVICE Pad pad"
+
+: <<'END'
++-------------------------------------+
+|
+| +------+
+| |  2   | --> Show on screen help
+| +------+
+|
+| +------+
+| |  3   |
+| +------+
+|
+| +------+
+| |  8   | --> Shift (defaults brush size)
+| +------+
+|
+| +------+
+| |  9   | --> Ctrl (defaults color picker)
+| +------+
+|
+| *
+|  /-----\  --> Mode 1: zoom
+| /  ---  \ --> Mode 2: zoom
+| | |   | |
+| \  ---  / --> Mode 3: zoom
+|  \-----/  --> Mode 4: zoom
+|
+| +------+
+| |  10  | --> Deselect (C-Shift-a)
+| +------+
+|
+| +------+
+| |  11  | --> Save (C-s)
+| +------+
+|
+| +------+
+| |  12  | --> Redo (C-Shift-z)
+| +------+
+|
+| +------+
+| |  13  | --> Undo (C-z)
+| +------+
+|
++--------------------------------------+
+END
+
+# Express Keys {{{
+
+xsetwacom set "$PAD" button 8 key "shift"
+xsetwacom set "$PAD" button 9 key "ctrl"
+
+xsetwacom set "$PAD" Button 10 key "ctrl shift a"
+xsetwacom set "$PAD" Button 11 key "ctrl s"
+xsetwacom set "$PAD" Button 12 key "ctrl shift z"
+xsetwacom set "$PAD" Button 13 key "ctrl z"
+
+# }}}
