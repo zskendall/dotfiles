@@ -29,8 +29,9 @@ stow i3
 **TODO:** information about i3lock.
 
 ## Polybar
-System bar is Polybar; see [polybar README](polybar/.config/polybar/README.md)
-for more information.
+System bar is Polybar; see
+[polybar README](polybar/.config/polybar/README.md#installation-notes)
+for installation information.
 ```
 stow polybar fonts
 ```
