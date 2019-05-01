@@ -7,6 +7,10 @@ xmodmap .xmodmap
 if [ -r ~/.xsessionrc_work ];
 then
   . ~/.xsessionrc_work;
+  # If on laptop, set up an autolock
+  if [[ $(hostname) == *"laptop"* ]]; then 
+    xautolock -time 15 -locker ~/.i3/locker &
+  fi
 fi
 
 # Set background image.
@@ -17,4 +21,6 @@ feh --bg-scale ~/dotfiles/images/background.jpg
 compton -b
 
 # Configure wacom buttons
-. ~/.wacom
+if [ -r ~/.wacom ]; then
+  . ~/.wacom
+fi
