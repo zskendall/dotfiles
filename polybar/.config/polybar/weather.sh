@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ASCII_WEATHER="$(curl -s 'wttr.in/?TQu0')"
+ASCII_WEATHER="$(curl -s 'wttr.in?TQu0')"
 CONDITION="STRUGGLES"
 
 if grep -iq "Sunny\|clear" <<< "$ASCII_WEATHER"
@@ -17,7 +17,12 @@ then
   CONDITION="%{T2}%{T-}"
 elif grep -iq "rain\|shower" <<< "$ASCII_WEATHER"
 then
-  CONDITION="%{T2}%{T-}"
+  CONDITION="%{T7}%{T-}"
+fi
+
+if grep -iq "struggles" <<< "$CONDITION"
+then
+  echo "%{T6}$CONDITION%{T-}"
 fi
 
 TEMP=$(echo $ASCII_WEATHER | grep -m 1 -Eo -e '-?[[:digit:]].*°F')
@@ -44,10 +49,12 @@ then
   TEMP="$(( (lower + upper) / 2 ))"
 fi
 
+DEG="°F"
 COLOR='#ffffff'
 if [ -z "$TEMP" ]
 then
   TEMP=$TEMP
+  DEG=""
 elif [ $TEMP -le 32 ]
 then
   TEMP="%{T2}%{T-}"
@@ -68,8 +75,9 @@ elif [ $TEMP -ge 100 ]
 then
   TEMP="%{T2}%{T-}"
   COLOR="#ff0000" # pure red
+  DEG=""
 else
   COLOR="#ff6600" # orange
 fi
 
-echo $CONDITION "%{T6}|" %{F$COLOR}$TEMP%{F-} "°F%{T-}"
+echo "$CONDITION %{T6}| %{F$COLOR}$TEMP%{F-}$DEG%{T-}"
