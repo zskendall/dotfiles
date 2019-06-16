@@ -20,7 +20,7 @@ feh --bg-scale ~/dotfiles/images/background.jpg
 # https://wiki.archlinux.org/index.php/compton for more information.
 compton -b
 
-# Configure wacom buttons
-if [ -r ~/.wacom ]; then
+# If at home, configure wacom buttons
+if [ ! -r ~/.xsessionrc_work ] && [ -r ~/.wacom ]; then
   . ~/.wacom
 fi
