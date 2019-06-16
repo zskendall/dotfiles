@@ -1,0 +1,71 @@
+/*******************************************************************************
+ * ROFI theme to match borealis background and polybar
+ *******************************************************************************/
+
+* {
+    foreground:                  #7b926f;
+    selected-foreground:         #b30000;
+    active-foreground:           #000;
+
+    background:                  #723d7180;
+    background-color:            #0000;
+    selected-background:         #222;
+
+    border-color:                #c1c1c1;
+    spacing:                     2;
+    separatorcolor:              @active-foreground;
+}
+#window {
+    background-color: @background;
+    border:           1;
+    location:         north;
+    padding:          5;
+    y-offset:         27px;
+}
+#mainbox {
+    border:  0;
+    padding: 0;
+}
+#listview {
+    fixed-height: 0;
+    border:       2px solid 0px 0px;
+    border-color: @separatorcolor;
+    spacing:      2px;
+    padding:      2px 0px 0px ;
+}
+#element {
+    border:  0;
+    padding: 2px 10px;
+}
+#element.normal.normal {
+    text-color:       @foreground;
+}
+#element.selected.normal {
+    background-color: @selected-background;
+    text-color:       @selected-foreground;
+}
+#element.alternate.normal {
+    text-color:       @foreground;
+}
+#inputbar {
+    spacing:    0;
+    padding:    1px ;
+}
+#entry {
+    spacing:    0;
+    text-color: @active-foreground;
+}
+#prompt {
+    spacing:    0;
+    text-color: @active-foreground;
+}
+#inputbar {
+    background-color: @foreground;
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+#textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0px 0.3em 0em 0em ;
+    text-color: @active-foreground;
+}

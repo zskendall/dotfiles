@@ -1,0 +1,5 @@
+rofi.lines:             5
+rofi.width:             20
+rofi.kb-row-down:       Alt-n,Alt-j
+rofi.kb-row-up:         Alt-p,Alt-k
+rofi.kb-delete-entry:   Alt-x
