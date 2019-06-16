@@ -51,3 +51,6 @@ if [[ ! -z "$done" ]]; then
 fi
 
 eval $lock
+
+# Turn the screen off after a delay.
+sleep 25; pgrep i3lock && xset dpms force off

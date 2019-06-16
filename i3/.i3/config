@@ -34,7 +34,7 @@ bindsym $mod+Return exec xfce4-terminal
 #i3-sensible-terminal
 
 # lock screen with i3lock
-bindsym mod4+l exec ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png
+bindsym mod4+l exec ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000
 # -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -t -e
 #-o 191d0f -w 572020 -l 000000 -e
 
@@ -188,3 +188,10 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 20"
 
 # Rebind the mic mute key
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+
+# Rebind the print-screen key
+bindsym mod1+Print exec gnome-screenshot -a
+bindsym Print exec gnome-screenshot
+
+#bindsym $mod+mod1+k exec --no-startup-id xinput disable 10
+bindsym $mod+mod1+mod4+m exec --no-startup-id "xinput list-props 10 | grep -qE 'Device Enabled.*1$' && xinput disable 10 || xinput enable 10
