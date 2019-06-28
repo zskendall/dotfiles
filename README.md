@@ -21,10 +21,16 @@ xbindkeys &
 
 ## i3 window manager
 ```
-sudo apt-get install i3-wm suckless-tools xfce4-terminal
+sudo apt-get install i3-wm suckless-tools xfce4-terminal rofi
 stow i3
 ```
 [User guide](https://i3wm.org/docs/userguide.html)
+
+Application launcher is rofi. Can specify width, height, and key maps in
+.Xresources, and custom rasi themes `-theme <theme>` in i3 config bindsym.
+```
+stow rofi
+```
 
 **TODO:** information about i3lock.
 
