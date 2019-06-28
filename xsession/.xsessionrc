@@ -13,7 +13,7 @@ then
   fi
 fi
 
-# Set background image.
+# Set background image. If change background, then change Polybar, i3, and Tmux.
 feh --bg-scale ~/dotfiles/images/background.jpg
 
 # Start compton as a background process to enable compositing. See
