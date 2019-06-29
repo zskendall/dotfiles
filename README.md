@@ -30,9 +30,17 @@ Application launcher is rofi. Can specify width, height, and key maps in
 .Xresources, and custom rasi themes `-theme <theme>` in i3 config bindsym.
 ```
 stow rofi
+xrdb ~/.Xresources
 ```
 
-**TODO:** information about i3lock.
+Lock screen is [a branch of i3lock](https://github.com/Lixxia/i3lock) that
+provides a clock and other customization. To use 24h time, the boolean use24hour
+in `i3lock.c` must be set to true before making and installing.
+
+I use a bash wrapper around i3lock. This allows specifying the same set of args
+in the i3 bindsym but only using ones that are applicable for a given host. For
+example, the i3 bindsym might include an image path; the locker script will only
+pass that along to i3lock if the file exists.
 
 ## Polybar
 System bar is Polybar; see
