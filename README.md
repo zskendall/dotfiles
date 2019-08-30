@@ -8,8 +8,12 @@ sudo apt-get install git stow
 Configuration for display and input devices.
 ```
 sudo apt-get install feh compton xbindkeys xautomation xdotool xsetwacom
-stow xsession
+stow xsession compton
 ```
+
+I use [tryone's fork of compton](https://github.com/tryone144/compton) to add
+kawase blur. On Debian/Ubuntu, cloned the repo with git clone and followed the
+build instructions in the repo README.
 
 To experiment with button mappings:
 ```
