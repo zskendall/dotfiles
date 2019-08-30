@@ -23,6 +23,11 @@ xbindkeys -n -v
 xbindkeys &
 ```
 
+System monitoring with [gotop](https://github.com/cjbassi/gotop). Cloned the
+repo into the home directory and ran cjbassi's `download.sh` script. Run the
+monitor with `~/gotop -p -a`. To avoid compton auto-dimming the monitoring when
+inactive, named terminal tab 'sysmon' and excluded it in compton config.
+
 ## i3 window manager
 ```
 sudo apt-get install i3-wm suckless-tools xfce4-terminal rofi
