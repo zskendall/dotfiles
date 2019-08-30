@@ -118,15 +118,21 @@ bindsym $mod+y layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+# Tiling / Floating {{{
 
-bindsym $mod+mod1+b move scratchpad
+# toggle, handling borders
+bindsym $mod+b exec ~/.i3/toggle_float
+
+# scratchpad
+# bindsym $mod+mod1+b move scratchpad
+bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
 bindsym $mod+mod1+c [class="Google-chrome"] scratchpad show
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+
+# }}}
 
 # focus the parent container
 bindsym $mod+p focus parent
@@ -231,6 +237,8 @@ bindsym $mod+mod1+p exec --no-startup-id ~/dotfiles/polybar/.config/polybar/laun
 # ==============================================================================
 # AESTHETICS
 # ==============================================================================
+
+# --- Colors
 # multi-purpose greys; correspond to the defaults for unfocused
 set $light_neutral           #888888
 set $mid_neutral             #333333
@@ -243,3 +251,9 @@ set $borealis              #7b926f
 # class                  border        bg             text            indicator    child_border
 client.focused           $borealis     $borealis      $dark_neutral   $borealis    $borealis
 client.focused_inactive  $mid_neutral  $dark_neutral  $borealis       $indicator   $dark_neutral
+
+
+# --- Gaps
+for_window [class="^.*"] border pixel 0
+gaps inner 30
+gaps outer 20

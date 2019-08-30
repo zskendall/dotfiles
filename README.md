@@ -26,6 +26,10 @@ stow i3
 ```
 [User guide](https://i3wm.org/docs/userguide.html)
 
+If running `i3-gaps` on Debian/Ubuntu, followed instructions to build and
+install from [source](https://www.github.com/Airblader/i3) found
+[here](benjames.io/2017/09/03/installing-i3-gaps-on-ubuntu-16-04/).
+
 Application launcher is rofi. Can specify width, height, and key maps in
 .Xresources, and custom rasi themes `-theme <theme>` in i3 config bindsym.
 ```
