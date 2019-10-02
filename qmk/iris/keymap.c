@@ -21,6 +21,7 @@ enum user_keycodes {
 #define CTL_RET RCTL_T(KC_ENT)
 #define LALT_SPC LALT_T(KC_SPC)
 #define RALT_SPC RALT_T(KC_SPC)
+#define CTL_INS LCTL_T(KC_INS)
 
 /** Dynamic layer-tap keycode macros. */
 #define NUM_LB LT(_NUM, KC_LBRC)
@@ -28,6 +29,7 @@ enum user_keycodes {
 
 // Key aliases
 #define __x__ KC_NO
+#define _____ KC_TRNS
 #define MS_TOG TG(_MOUSE)
 #define KC_UNDS LSFT(KC_MINS)
 #define ART_TOG TG(_ART)
@@ -52,10 +54,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_QWERTY] = LAYOUT(
-        ART_TOG, KC_1, KC_2, KC_3, KC_4, KC_5,                        KC_6, KC_7, KC_8,    KC_9,   KC_0,    KC_BSPC,
-        KC_TAB,  KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_QUOT,
-        CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K,    KC_L,   KC_SCLN, CTL_RET,
-        META_CZ, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_DEL,        KC_EQL, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, MS_TOG,
+        ART_TOG, KC_1, KC_2, KC_3, KC_4, KC_5,                        KC_6, KC_7, KC_8   , KC_9  , KC_0   , KC_BSPC,
+        KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_QUOT,
+        CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_RET,
+        META_CZ, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_DEL,        KC_EQL, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, MS_TOG ,
                         KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, RALT_SPC, KC_RSPC
     ),
 
@@ -74,11 +76,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_NUM] = LAYOUT(
-        KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,  KC_F6,                      KC_F7,   KC_F8, KC_F9, KC_F10, KC_F11,  KC_F12,
-        _____, __x__, __x__, _____, KC_GRV, KC_UNDS,                    KC_PAST, KC_P7, KC_P8, KC_P9,  KC_PMNS, KC_BSPC,
-        _____, _____, __x__, _____, _____,  KC_BSLS,                    KC_PSLS, KC_P4, KC_P5, KC_P6,  KC_PPLS, _____,
-        _____, __x__, __x__, _____, __x__,  _____,   _____,      __x__, KC_PEQL, KC_P1, KC_P2, KC_P3,  KC_PENT, _____,
-                                  _____, _____, _____,              KC_P0, _____, KC_PDOT
+        KC_F1, KC_F2, KC_F3, KC_F4, KC_F5 , KC_F6  ,                    KC_F7  , KC_F8, KC_F9, KC_F10, KC_F11 , KC_F12 ,
+        _____, __x__, __x__, _____, KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_PMNS, KC_BSPC,
+        _____, _____, __x__, _____, _____ , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____  ,
+        _____, __x__, __x__, _____, __x__ , _____  , _____,      __x__, KC_PEQL, KC_1 , KC_2 , KC_3  , KC_PENT, _____  ,
+                                  _____, _____, _____,              KC_0, _____, KC_DOT
     ),
 
     /**
@@ -92,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐   ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|      |      |      |      |      |//////|   |      |      |      |      |      |      |//////|
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘   └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-     *                         |//////|//////|//////|          | *Nav*|//////|      |
+     *                         |//////|//////|//////|          | *Nav*|//////|(RShft|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_NAV] = LAYOUT(
@@ -100,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _____, KC_1,    KC_2,    KC_3,    KC_4,   KC_5,                       KC_6,    KC_7,    KC_8,  KC_9,    KC_0,  _____,
         _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, __x__,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, __x__, _____,
         _____, __x__,   __x__,   __x__,   __x__,  __x__, _____,        __x__, __x__,   __x__,   __x__, __x__,   __x__, _____,
-                                        _____, _____, _____,              _____, _____, __x__
+                                        _____, _____, _____,              _____, _____, KC_RSPC
     ),
 
     /**
@@ -110,44 +112,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|      |  M↑  |      | Bri+ |      |                 |      |      |      |      |      |      |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  M←  |  M↓  |  M→  | Bri- |      |                 |  W←  |  W↓  |  W↑  | W→   | Vol+ |//////|
+     * |//////|  M←  |  M↓  |  M→  | Bri- |//////|                 |  W←  |  W↓  |  W↑  | W→   | Vol+ |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐   ┌──────┼──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////| Prev | Play | Next | Stop |      |      |   | MsB3 |      |      |      | Mute | Vol- |MS_TOG|
+     * |//////| Prev | Play | Next | Stop |//////|//////|   | MsB3 |//////|//////|//////| Mute | Vol- |//////|
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘   └──┬───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-     *                         |//////|//////| MsB1 |          | MsB2 |//////| RShft|
+     *                         |//////|//////| MsB1 |          | MsB2 |//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_MOUSE] = LAYOUT(
-        __x__, __x__,   __x__,   __x__,   __x__,   __x__,                        __x__,   __x__,   __x__,   __x__,   __x__,   KC_PSCR,
-        _____, _____,   KC_MS_U, _____,   KC_BRIU, _____,                        _____,   _____,   _____,   _____,   _____,   _____,
-        _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____,
-        _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____, _____,        KC_BTN3, _____, _____, _____, KC_MUTE, KC_VOLD, _____,
-                                        _____, _____, KC_BTN1,              KC_BTN2, _____, KC_RSPC
+        __x__, __x__  , __x__  , __x__  , __x__  , __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , KC_PSCR,
+        _____, __x__  , KC_MS_U, __x__  , KC_BRIU, __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , __x__  ,
+        _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
+        _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____, _____,        KC_BTN3, _____  , _____  , _____  , KC_MUTE, KC_VOLD, _____  ,
+                                        _____, _____, KC_BTN1,              KC_BTN2, _____, _____
     ),
 
     /**
      * Art
-     * Condensed layout with common Krita functions collapsed onto left half of keyboard. No function on right half.
+     * Condensed layout with common Krita functions collapsed onto left half of
+     * keyboard. Only mod functions on right half.
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐       
-     * |//////|      |      |      |      |      |       
+     * | ART  |      |  N   |  L   |  I   |  O   |       
      * ├──────┼──────┼──────┼──────┼──────┼──────┤       
-     * |//////|      |      |      |      |  T   |       
+     * |//////|      |  W   |  E   |      |  T   |       
      * ├──────┼──────┼──────┼──────┼──────┼──────┤       
-     * |//////|  A   |  S   |      |      |  G   |       
+     * |//////|  A   |  S   |  D   |      |  G   |       
      * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┐
-     * |//////|  Z   |      |      |  V   |  B   |  J   |
+     * |LShft |  Z   |  X   |  C   |  V   |  B   |  J   |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┬───┘
+     *                         |//////|//////| Ins  |    
      *                         |//////|//////|LCtrl |    
      *                         └──────┴──────┴──────┘    
      */
     [_ART] = LAYOUT(
-        _____, __x__, __x__, __x__, __x__, __x__,                    __x__, __x__, __x__, __x__, __x__, __x__,
-        _____, __x__, __x__, __x__, __x__, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
-        _____, KC_A,  KC_S,  __x__, __x__, KC_G,                     __x__, __x__, __x__, __x__, __x__, __x__,
-        _____, KC_Z,  __x__, __x__, KC_V,  KC_B,  KC_J,       __x__, __x__, __x__, __x__, __x__, __x__, __x__,
-                               _____, _____, _____,                _____, _____, _____,
+        ART_TOG, __x__, KC_N , KC_L , KC_I , KC_O,                     __x__, __x__, __x__, __x__, __x__, __x__,
+        _____  , __x__, KC_W , KC_E , __x__, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
+        _____  , KC_A , KC_S , KC_D , __x__, KC_G,                     __x__, __x__, __x__, __x__, __x__, _____,
+        KC_LSFT, KC_Z , KC_X,  KC_C,  KC_V , KC_B,  KC_J,       __x__, __x__, __x__, __x__, __x__, __x__, _____,
+                                 _____, _____, CTL_INS,             _____, _____, _____,
         
-        ),
+    ),
 };
 
 // Process record to handle custom user keycodes
