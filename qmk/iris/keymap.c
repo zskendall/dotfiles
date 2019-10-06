@@ -33,6 +33,7 @@ enum user_keycodes {
 #define MS_TOG TG(_MOUSE)
 #define KC_UNDS LSFT(KC_MINS)
 #define ART_TOG TG(_ART)
+#define VTERM LCTL(S(KC_F1))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -108,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**
      * Mouse/Media Layer
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |      |      |      |      |      |      |                 |      |      |      |      |      | PrtSc|
+     * |V Term|      |      |      |      |      |                 |      |      |      |      |      | PrtSc|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|      |  M↑  |      | Bri+ |      |                 |      |      |      |      |      |      |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
@@ -120,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_MOUSE] = LAYOUT(
-        __x__, __x__  , __x__  , __x__  , __x__  , __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , KC_PSCR,
+        VTERM, __x__  , __x__  , __x__  , __x__  , __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , KC_PSCR,
         _____, __x__  , KC_MS_U, __x__  , KC_BRIU, __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , __x__  ,
         _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
         _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____, _____,        KC_BTN3, _____  , _____  , _____  , KC_MUTE, KC_VOLD, _____  ,
@@ -128,9 +129,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /**
-     * Art
+     * Art Layer
      * Condensed layout with common Krita functions collapsed onto left half of
-     * keyboard. Only mod functions on right half.
+     * keyboard. Only fall through mod functions on right half.
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐       
      * | ART  |      |  N   |  L   |  I   |  O   |       
      * ├──────┼──────┼──────┼──────┼──────┼──────┤       
@@ -149,8 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _____  , __x__, KC_W , KC_E , __x__, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
         _____  , KC_A , KC_S , KC_D , __x__, KC_G,                     __x__, __x__, __x__, __x__, __x__, _____,
         KC_LSFT, KC_Z , KC_X,  KC_C,  KC_V , KC_B,  KC_J,       __x__, __x__, __x__, __x__, __x__, __x__, _____,
-                                 _____, _____, CTL_INS,             _____, _____, _____,
-        
+                                 _____, _____, CTL_INS,             _____, _____, _____
     ),
 };
 
