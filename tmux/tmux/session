@@ -7,7 +7,7 @@ if [ -r ~/.tmux_work ];
   then SESSION="";
   # then SESSION="work";
 fi
-LEFT=$1
+MAIN_ON_RIGHT=$1
 
 # Either attach to an existing session or create a new one
-tmux a -dt $SESSION || create_session $SESSION $LEFT
+tmux a -dt $SESSION || create_session $SESSION $MAIN_ON_RIGHT

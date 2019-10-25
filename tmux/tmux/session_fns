@@ -1,35 +1,51 @@
 #!/bin/bash
 
-SESSION=$1
-LEFT=$2
+# Basic split pattern:
+# +----------------------------------+
+# |                |                 |
+# |                |                 |
+# |                |                 |
+# |                |-----------------|
+# |                |                 |
+# |                |                 |
+# |                |                 |
+# +----------------------------------+
+function default_split() {
+  echo $SPLIT
+  tmux a -t $SESSION \; \
+    split-window -h \; \
+    select-pane -t $SPLIT \; \
+    split-window \; \
+    detach
+}
 
+# Creates a configured tmux session
+# @arg 1: the session name
+# @arg 2: whether the main pane should be on the right
 function create_session() {
+  SESSION=$1
+
   tmux new -s $SESSION -d \; \
     rename-window "main" \; \
-    split-window -h
 
-  if [ ! $LEFT ]; then
-    tmux a -t $SESSION \; \
-      select-pane -t 1 \; \
-      split-window \; \
-      detach
-  fi
+  SPLIT=`[ $2 ] && echo 0 || echo 1`
+  default_split
 
-  # If at work, configure the main and top-right windows.
+  # If at work, configure the panes.
   if [ "$SESSION" = "" ]; then
-    . ~/.tmux_work m $LEFT;
+    . ~/.tmux_work $SPLIT m;
   else
     tmux a -t $SESSION \; \
-      select-pane -t 2 \; \
-      send-keys -t 2 "cd ~/dotfiles" C-m \; \
-      send-keys -t 2 "vim ." C-m \; \
-      select-pane -t 1 \; \
-      send-keys -t 1 "tmux clock-mode" C-m \; \
+      select-pane -t $(( $SPLIT + 1)) \; \
+      send-keys -t $(( $SPLIT + 1)) "cd ~/dotfiles" C-m \; \
+      send-keys -t $(( $SPLIT + 1)) "vim ." C-m \; \
+      select-pane -t $SPLIT \; \
+      send-keys -t $SPLIT "tmux clock-mode" C-m \; \
       detach
 
     sleep 1;
 
     tmux a -t $SESSION \; \
-      select-pane -t 0
+      select-pane -t $(( 2 - $SPLIT * 2 ))
   fi
 }
