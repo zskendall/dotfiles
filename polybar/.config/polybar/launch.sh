@@ -14,7 +14,7 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
   if [[ $HOST == *"laptop"* ]]; then
     MONITOR=$m polybar --reload expanded &
   else
-    MONITOR=$m polybar --reload tray &
+    MONITOR=$m polybar --reload default &
   fi
   # sleep 5;
   # sh ~/dotfiles/polybar/.config/polybar/hideIt.sh --name "^polybar-tray_"$m"$" --direction top --region 0x0+$WIDTH+10 &

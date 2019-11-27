@@ -24,7 +24,7 @@ visible-foreground = #999
 caps-indicator = #a402a5
 
 [borealis]
-background = #80723d71
+background = #59723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
 visible-foreground = #0f0c10
@@ -61,11 +61,17 @@ font-7 = "Sawasdee:bold:size=10;2"
 ;=====================================================
 ; BARS
 ;=====================================================
-[bar/common]
+[bar/base]
 inherit = section/fonts
 monitor = ${env:MONITOR:}
-radius = 15.0
+
 fixed-center = true
+
+
+[bar/common]
+inherit = bar/base
+radius = 15.0
+background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 3
@@ -83,17 +89,16 @@ modules-left = i3
 modules-center = weather
 
 
-[bar/tray]
+; Default polybar for desktop
+[bar/default]
 inherit = bar/common
 
 width = 100%
 height = 27
-offset-x = 2%
-offset-y = 1%
+; offset-x = 2%
+; offset-y = 1%
 
-background = ${colors.background}
-
-modules-right = volume xkeyboard date powermenu
+modules-right = volume xkeyboard date powermenulauncher
 
 ; Float bar; required for auto hide script
 ;override-redirect = true
@@ -103,19 +108,32 @@ modules-right = volume xkeyboard date powermenu
 dim-value = 0.5
 
 
+; Polybar for laptop with extra modules
 [bar/expanded]
 inherit = bar/common
 
 width = 100%
 height = 27
-offset-x = 2%
-offset-y = 1%
+; offset-x = 2%
+; offset-y = 1%
 
-background = ${colors.background}
-
-modules-right = volume xkeyboard wireless battery date powermenu
+modules-right = volume xkeyboard wireless battery date powermenulauncher
 
 
+; Power menu
+[bar/powermenu]
+inherit = bar/base
+width = 200
+height = 27
+
+offset-x = 100%:-200
+offset-y = 30
+
+separator = %{F#33}|
+
+modules-right = logout reboot poweroff closepowermenu
+
+override-redirect = true
 
 ;=====================================================
 ; MODULES
@@ -216,41 +234,35 @@ format-prefix-foreground = ${colors.foreground-alt}
 label = %date%
 
 
-[module/powermenu]
-type = custom/menu
+[module/powermenulauncher]
+; Floating power options menu bar, from: https://github.com/djsavvy/dotfiles
+type = custom/text
+content = %{T4}%{T-}
+click-left = polybar powermenu
 
-format-spacing = 1
-expand-right = false
 
-label-open = %{T4}
-label-close = 
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
+[module/logout]
+type = custom/text
+content = %{T4}%{T-}
+click-left = "pkill -n polybar ; i3-msg exit"
 
-menu-0-0 =  
-menu-0-0-exec = menu-open-1
-menu-0-1 = 
-menu-0-1-exec = menu-open-2
-menu-0-2 = 
-menu-0-2-exec = menu-open-3
 
-; power confirmation
-menu-1-0 = 
-menu-1-0-exec = menu-open-0
-menu-1-1 = 
-menu-1-1-exec = shutdown now
+[module/reboot]
+type = custom/text
+content = %{T4}%{T-}
+click-left = "pkill -n polybar ; systemctl reboot"
 
-; reboot confirmation
-menu-2-0 = 
-menu-2-0-exec = menu-open-0
-menu-2-1 = 
-menu-2-1-exec = reboot
 
-; logout confirmation
-menu-3-0 = 
-menu-3-0-exec = menu-open-0
-menu-3-1 = %{T-}
-menu-3-1-exec = i3-msg exit
+[module/poweroff]
+type = custom/text
+content = %{T4}%{T-}
+click-left = "pkill -n polybar ; systemctl poweroff"
+
+
+[module/closepowermenu]
+type = custom/text
+content = %{T4}%{T-}
+click-left = "pkill -n polybar"
 
 
 [module/battery]
