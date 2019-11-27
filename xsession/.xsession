@@ -4,23 +4,24 @@
 xmodmap .xmodmap
 
 # If at work, set up the displays.
-if [ -r ~/.xsessionrc_work ];
-then
+if [ -r ~/.xsessionrc_work ]; then
   . ~/.xsessionrc_work;
-  # If on laptop, set up an autolock
-  if [[ $(hostname) == *"laptop"* ]]; then 
-    xautolock -time 15 -locker ~/.i3/locker &
-  fi
 fi
 
 # Set background image. If change background, then change Polybar, i3, and Tmux.
-feh --bg-scale ~/dotfiles/images/background.jpg
+if [ -r ~/dotfiles/images/background.jpg ]; then
+  feh --bg-scale ~/dotfiles/images/background.jpg
+fi
 
-# Start compton as a background process to enable compositing. See
+# If installed, start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
-compton -b
+if [[ $(dpkg -s compton | grep "installed") ]]; then
+  compton -b
+fi
 
 # If at home, configure wacom buttons
 if [ ! -r ~/.xsessionrc_work ] && [ -r ~/.wacom ]; then
   . ~/.wacom
 fi
+
+
