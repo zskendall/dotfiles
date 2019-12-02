@@ -11,7 +11,9 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 # Launch and auto-hide polybar on all monitors
 WIDTH=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+' | cut -d"x" -f1)
 for m in $(polybar --list-monitors | cut -d":" -f1); do
-  if [[ $HOST == *"laptop"* ]]; then
+  # Check for a battery power supply as indicator for displaying the expanded
+  # polybar with battery and wifi status.
+  if [[ $(ls /sys/class/power_supply/ | egrep -i bat | wc -l) -gt 0 ]]; then
     MONITOR=$m polybar --reload expanded &
   else
     MONITOR=$m polybar --reload default &

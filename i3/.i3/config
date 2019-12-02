@@ -124,10 +124,11 @@ bindsym $mod+e layout toggle split
 bindsym $mod+b exec ~/.i3/toggle_float
 
 # scratchpad
-# bindsym $mod+mod1+b move scratchpad
-bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
+bindsym $mod+shift+b move scratchpad
+# bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
 bindsym $mod+mod1+c [class="Google-chrome"] scratchpad show
+bindsym $mod+shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -213,6 +214,9 @@ bindsym Print exec gnome-screenshot
 #bindsym $mod+mod1+k exec --no-startup-id xinput disable 10
 bindsym $mod+mod1+mod4+m exec --no-startup-id "xinput list-props 10 | grep -qE 'Device Enabled.*1$' && xinput disable 10 || xinput enable 10
 
+for_window [class="Nm-connection-editor"] floating enable, move position mouse
+focus_follows_mouse off
+
 
 
 # ==============================================================================
@@ -251,9 +255,3 @@ set $borealis              #7b926f
 # class                  border        bg             text            indicator    child_border
 client.focused           $borealis     $borealis      $dark_neutral   $borealis    $borealis
 client.focused_inactive  $mid_neutral  $dark_neutral  $borealis       $indicator   $dark_neutral
-
-
-# --- Gaps
-for_window [class="^.*"] border pixel 0
-gaps inner 30
-gaps outer 20
