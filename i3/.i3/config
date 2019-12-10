@@ -47,8 +47,10 @@ font pango:monospace 8
 
 # --- Startups ---
 bindsym $mod+Return exec xfce4-terminal
+bindsym Mod4+Return exec xfce4-terminal
 # start rofi (program laucher mode)
-bindsym $mod+f exec rofi -show run -theme borealis
+bindsym $mod+f exec rofi -show run -p run -display-run "launch" -theme launcher
+bindsym $mod+q exec --no-startup-id ~/.i3/scripts/rofi_option_menu
 
 # IF DESIRED: start dmenu (a program launcher)
 # bindsym $mod+f exec dmenu_run -nb '#563f55' -nf '#7b926f' -sb '#222' -sf '#b30000'
@@ -125,7 +127,7 @@ bindsym $mod+b exec ~/.i3/toggle_float
 
 # scratchpad
 bindsym $mod+shift+b move scratchpad
-# bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
+bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
 bindsym $mod+mod1+c [class="Google-chrome"] scratchpad show
 bindsym $mod+shift+space floating toggle

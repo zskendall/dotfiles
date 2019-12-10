@@ -1,0 +1,78 @@
+/* ROFI theme for application launcher */
+@import "borealis.rasi"
+
+configuration {
+  theme:              "config";
+  font:               "DejaVu Sans 14";
+}
+
+* {
+    background:                 @purple-50;
+    foreground:                 @green;
+    primary:                    @red;
+
+    selected-background:        @grey-dark;
+    selected-foreground:        @primary;
+    active-foreground:          #000;
+    border-color:               @grey-light;
+}
+
+window {
+    border:                     1;
+    height:                     40%;
+    location:                   north;
+    padding:                    5;
+    width:                      20%;
+    y-offset:                   27;
+}
+
+mainbox {
+    children:                   [ inputbar, listview ];
+    padding:                    0;
+}
+
+inputbar {
+    children:                   [ prompt, entry ];
+    border:                     0 0px 2px solid;
+    border-color:               @active-foreground;
+    margin:                     0 0 2;
+}
+
+entry {
+    border:                     2;
+    border-color:               @foreground;
+    expand:                     true;
+    text-color:                 @active-foreground;
+}
+
+prompt {
+    horizontal-align:           1;
+    padding:                    8 0 8 8;
+    spacing:                    0;
+    text-color:                 @active-foreground;
+    vertical-align:             0.5;
+}
+
+listview {
+    padding:                    2 0px 0px;
+}
+
+element {
+    padding:                    5 10px;
+}
+
+element normal {
+    text-color:                 @foreground;
+}
+
+element alternate {
+    text-color:                 @foreground;
+}
+
+element selected {
+    border:                     0 solid 0px 0px;
+    background-color:           @selected-background;
+    text-color:                 @selected-foreground;
+}
+
+/* vim:ft=css

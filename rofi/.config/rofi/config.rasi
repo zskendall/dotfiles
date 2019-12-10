@@ -1,0 +1,81 @@
+/* Default configuration
+ * Based on theme by ntcarlson:
+ * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/config.rasi
+ */
+configuration {
+    show-icons:                     false;
+    font:                           "DejaVu Sans 20";
+}
+
+* {
+    background-color:               transparent;
+    spacing:                        2;
+
+    background:                     #2E3440CC;
+    background-alt:                 #5E81AC80;
+    text-color:                     #D8DEE9;
+    primary:                        #A3BE8C;
+    urgent:                         #BF616A;
+}
+
+window {
+    background-color:               @background;
+    height:                         100%;
+    transparency:                   "real";
+    width:                          100%;
+}
+
+textbox {
+    horizontal-align:   0.5;
+    border-color:       @primary;
+    margin:             12px 30%;
+    padding:            12px;
+}
+
+entry {
+    background-color:               transparent;
+    border:                         8px;
+    border-color:                   transparent;
+    border-radius:                  5px;
+    margin:                         12px 36px;
+    padding:                        8px;
+}
+
+element {
+    orientation:                    horizontal;
+    padding:                        8 0;
+}
+
+element normal.urgent, element alternate.urgent {
+    background-color:               @urgent;
+}
+
+element normal.active, element alternate.active {
+    background-color:               @background-alt;
+    border:                         4px 4px solid 4px 4px;
+    border-radius:                  8;
+    border-color:                   transparent;
+}
+
+element selected {
+    border:                         4px 4px solid 4px 4px;
+    border-radius:                  8;
+    border-color:                   @primary;
+}
+
+element selected.urgent {
+    background-color:               @urgent;
+}
+
+element selected.active {
+    background-color:               @background-alt;
+}
+
+element-icon {
+    border:                         1px;
+    border-color:                   @primary;
+    border-radius:                  5;
+    padding:                        6px;
+}
+
+/* vim:ft=css

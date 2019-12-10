@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Based on rofi setup from ntcarlson:
+# https://github.com/ntcarlson/dotfiles/blob/tau/i3/scripts
+
+LOCK=""
+LOGOUT=""
+RESTART=""
+SHUTDOWN=""
+
+rofi_confirm() {
+  echo $1
+  case "$(echo -e "Cancel\nConfirm" | rofi -dmenu -theme confirm -mesg "$1")" in
+    "Cancel") exit 1;;
+    "Confirm") exit 0;;
+  esac
+  exit 1
+}
+
+list_icons() {
+  echo $LOCK
+  echo $LOGOUT
+  echo $RESTART
+  echo $SHUTDOWN
+}
+
+handle_option() {
+  case "$1" in
+    "$LOCK")
+        ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000 -c 000000;;
+    "$LOGOUT")
+        if $(rofi_confirm $LOGOUT); then
+          i3-msg exit
+        fi
+        ;;
+    "$RESTART")
+        if $(rofi_confirm $RESTART); then
+          reboot
+        fi
+        ;;
+    "$SHUTDOWN")
+        if $(rofi_confirm $SHUTDOWN); then
+          shutdown now
+        fi
+        ;;
+  esac
+}
+
+SELECTION="$(list_icons | rofi -dmenu -theme options_menu -mesg 'System')"
+handle_option $SELECTION &

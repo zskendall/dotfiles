@@ -1,0 +1,55 @@
+/* ROFI theme for confirmation dialog
+ * Based on theme by ntcarlson:
+ * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/confirmation_dialog.rasi
+ */
+@import "borealis.rasi"
+
+configuration {
+    theme:        "config";
+}
+
+* {
+    background:         @grey-dark-50;
+    primary:            @purple;
+    text-color:         @green;
+}
+
+mainbox {
+    children:           [ message, listview ];
+    padding:            40% 0;
+}
+
+textbox {
+    border:             0px 0px 2px;
+    font:               "Material Icons 70";
+}
+
+listview {
+  layout:             horizontal;
+  spacing:            2%;
+  fixed-height:       1;
+  dynamic:            true;
+  horizontal-align:   0.5;
+  margin: 0 38%;
+  expand: true;
+}
+
+element {
+    width:            11%;
+    border:           1% 1% solid 1% 1%;
+    border-color:     transparent;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+element-text {
+    horizontal-align:   0.5;
+    vertical-align:   0.5;
+    padding: 0px;
+}
+
+element selected {
+    border-color:     @primary;
+}
+
+/* vim:ft=css
