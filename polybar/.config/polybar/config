@@ -24,7 +24,9 @@ visible-foreground = #999
 caps-indicator = #a402a5
 
 [borealis]
-background = #33723d71
+; background = #33723d71
+module-background = #33723d71
+background = #00723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
 visible-foreground = #723d71
@@ -40,6 +42,7 @@ focus = ${borealis.focus-foreground}
 unfocused = ${borealis.unfocus-foreground}
 visible = ${borealis.visible-foreground}
 caps = ${borealis.caps-indicator}
+module = ${borealis.module-background}
 
 
 
@@ -55,6 +58,7 @@ font-4 = "EastSeaDokdo:bold:size=16;1"
 font-5 = "EastSeaDokdo-Regular:bold:size=18;2"
 font-6 = "Lekton Nerd Font:bold:size=15;2"
 font-7 = "Sawasdee:bold:size=10;2"
+font-8 = "Lekton Nerd Font:bold:size=22;4"
 
 
 
@@ -74,10 +78,10 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-padding-right = 2
+; padding-right = 2
 
-module-margin-left = 1
-module-margin-right = 2
+; module-margin-left = 1
+; module-margin-right = 2
 
 
 [bar/common]
@@ -85,7 +89,7 @@ inherit = bar/base
 
 width = 100%
 height = 27
-radius = 15.0
+; radius = 15.0
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -105,7 +109,7 @@ dim-value = 0.5
 [bar/default]
 inherit = bar/common
 
-modules-right = volume date
+modules-right = sep-left spacer volume spacer date spacer
 
 
 ; Polybar for laptop with extra modules
@@ -143,6 +147,29 @@ modules-center = bgweather
 ;=====================================================
 ; MODULES
 ;=====================================================
+[module/spacer]
+type = custom/text
+content = " "
+content-background = ${colors.module}
+content-padding = 1
+
+
+[module/sep-left]
+type = custom/text
+content = "%{T9}%{T-}"
+; content-background = ${colors.module}
+content-foreground = ffffff
+content-padding = 1
+
+
+[module/sep-right]
+type = custom/text
+content = "%{T9}%{T-}"
+; content-background = ${colors.module}
+content-foreground = ffffff
+content-padding = 1
+
+
 [module/i3]
 ws-icon-0 = 1;
 ws-icon-1 = 2;
@@ -219,6 +246,8 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+format-volume-background = ${colors.module}
+
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -241,16 +270,19 @@ interval = 5
 
 date = "%{T4}%{T5} %{F#999}%A, %d %B %Y%{F-}  %{T4}%{T5} %{F#999}%H:%M%{F-}%{T-}"
 
-format-prefix-foreground = ${colors.foreground-alt}
-
 label = %date%
+format-background = ${colors.module}
 
 
 [module/powermenulauncher]
 ; Floating power options menu bar, from: https://github.com/djsavvy/dotfiles
-type = custom/text
-content = %{T4}%{T-}
-click-left = polybar powermenu
+type = custom/ipc
+hook-0 = ~/.i3/scripts/polybar_wrapper options_icon $MONITOR "closed"
+hook-1 = ~/.i3/scripts/polybar_wrapper options_icon $MONITOR "open"
+initial = 1
+; content = "%{A1:~/tmp/test &:}%{T4}%{T-}%{A}"
+; content = %{T4}%{T-}
+click-left = ~/.i3/scripts/polybar_wrapper options $MONITOR
 
 
 [module/lock]
