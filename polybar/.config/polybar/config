@@ -24,10 +24,10 @@ visible-foreground = #999
 caps-indicator = #a402a5
 
 [borealis]
-background = #59723d71
+background = #33723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
-visible-foreground = #0f0c10
+visible-foreground = #723d71
 caps-indicator = #61995b
 
 
@@ -53,7 +53,7 @@ font-2 = "Font Awesome webfont:pixelsize=10;0"
 font-3 = "MaterialIcons:size=16;4"
 font-4 = "EastSeaDokdo:bold:size=16;1"
 font-5 = "EastSeaDokdo-Regular:bold:size=18;2"
-font-6 = "Lekton Nerd Font:bold:size:20;2"
+font-6 = "Lekton Nerd Font:bold:size=15;2"
 font-7 = "Sawasdee:bold:size=10;2"
 
 
@@ -65,6 +65,7 @@ font-7 = "Sawasdee:bold:size=10;2"
 inherit = section/fonts
 
 monitor = ${env:MONITOR:}
+enable-ipc = true
 fixed-center = true
 
 background = ${colors.background}
@@ -104,14 +105,14 @@ dim-value = 0.5
 [bar/default]
 inherit = bar/common
 
-modules-right = volume xkeyboard date powermenulauncher
+modules-right = volume date
 
 
 ; Polybar for laptop with extra modules
 [bar/expanded]
 inherit = bar/common
 
-modules-right = volume xkeyboard wireless battery date powermenulauncher
+modules-right = volume xkeyboard wireless battery date
 
 
 ; Power menu
@@ -126,7 +127,16 @@ height = 27
 offset-x = 88%
 offset-y = 27
 
-modules-center = lock logout reboot poweroff closepowermenu
+modules-center = lock logout reboot poweroff
+; closepowermenu
+
+
+; Background processing
+[bar/weather]
+inherit = bar/base
+override-redirect = true
+bottom = true
+modules-center = bgweather
 
 
 
@@ -171,7 +181,14 @@ label-urgent-padding = 2
 [module/weather]
 type = custom/script
 
-exec = ~/dotfiles/polybar/.config/polybar/weather.sh
+exec = ~/dotfiles/polybar/.config/polybar/weather.sh "palo alto"
+interval = 300 ; seconds
+
+
+[module/bgweather]
+type = custom/script
+
+exec = ~/dotfiles/i3/.i3/scripts/weather "palo alto"
 interval = 300 ; seconds
 
 
@@ -239,7 +256,7 @@ click-left = polybar powermenu
 [module/lock]
 type = custom/text
 content = %{T4}%{T-}
-click-left = "~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000 -c 000000"
+click-left = "pkill -n polybar ; ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000 -c 000000"
 
 
 [module/logout]
