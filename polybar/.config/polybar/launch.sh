@@ -20,13 +20,15 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
   # sh ~/dotfiles/polybar/.config/polybar/hideIt.sh --name "^polybar-tray_"$m"$" --direction top --region 0x0+$WIDTH+10 &
 done
 
-# Start and hide an ipc weather watcher; based on
-# https://github.com/ntcarlson/dotfiles/blob/gamma/i3/scripts/polybar_wrapper,
-# linked from
-# reddit.com/r/unixporn/comments/92guq6/i3polybar_animated_polybar_drop_down_menus/
-MONITOR="DP-5" polybar weather &
-BAR_ID=$!
-echo "weather watcher id: $BAR_ID"
-ln -sf /tmp/polybar_mqueue.$BAR_ID /tmp/polybar_mqueue_weather
-sleep 2
-echo "cmd:hide" >> /tmp/polybar_mqueue_weather
+if [[ $(ls /sys/class/power_supply/ | egrep -i bat | wc -l) -eq 0 ]]; then
+  # Start and hide an ipc weather watcher; based on
+  # https://github.com/ntcarlson/dotfiles/blob/gamma/i3/scripts/polybar_wrapper,
+  # linked from
+  # reddit.com/r/unixporn/comments/92guq6/i3polybar_animated_polybar_drop_down_menus/
+  MONITOR="DP-5" polybar weather &
+  BAR_ID=$!
+  echo "weather watcher id: $BAR_ID"
+  ln -sf /tmp/polybar_mqueue.$BAR_ID /tmp/polybar_mqueue_weather
+  sleep 2
+  echo "cmd:hide" >> /tmp/polybar_mqueue_weather
+fi

@@ -25,11 +25,11 @@ caps-indicator = #a402a5
 
 [borealis]
 ; background = #33723d71
-module-background = #33723d71
+module-background = #4d723d71
 background = #00723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
-visible-foreground = #723d71
+visible-foreground = #fff
 caps-indicator = #61995b
 
 
@@ -58,7 +58,7 @@ font-4 = "EastSeaDokdo:bold:size=16;1"
 font-5 = "EastSeaDokdo-Regular:bold:size=18;2"
 font-6 = "Lekton Nerd Font:bold:size=15;2"
 font-7 = "Sawasdee:bold:size=10;2"
-font-8 = "Lekton Nerd Font:bold:size=22;4"
+font-8 = "Lekton Nerd Font:bold:size=30;3"
 
 
 
@@ -86,6 +86,7 @@ line-color = #f00
 
 [bar/common]
 inherit = bar/base
+enable-ipc = true
 
 width = 100%
 height = 27
@@ -94,7 +95,7 @@ height = 27
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-modules-left = i3
+modules-left = i3 sep-right
 modules-center = weather
 
 ; Float bar; required for auto hide script
@@ -116,19 +117,23 @@ modules-right = sep-left spacer volume spacer date spacer
 [bar/expanded]
 inherit = bar/common
 
-modules-right = volume xkeyboard wireless battery date
-
+modules-right = sep-left volume wireless spacer battery spacer date spacer
 
 ; Power menu
 [bar/powermenu]
 inherit = bar/base
+enable-ipc = true
 override-redirect = true
 
 radius = 15
 
-width = 12%
-height = 27
-offset-x = 88%
+; width = 12%
+; height = 27
+; offset-x = 88%
+; offset-y = 27
+width = 25%
+height = 1030
+offset-x = 75%
 offset-y = 27
 
 modules-center = lock logout reboot poweroff
@@ -156,18 +161,14 @@ content-padding = 1
 
 [module/sep-left]
 type = custom/text
-content = "%{T9}%{T-}"
-; content-background = ${colors.module}
-content-foreground = ffffff
-content-padding = 1
+content = "%{T7}%{T-}"
+content-foreground = ${colors.module}
 
 
 [module/sep-right]
 type = custom/text
-content = "%{T9}%{T-}"
-; content-background = ${colors.module}
-content-foreground = ffffff
-content-padding = 1
+content = "%{T7}%{T-}"
+content-foreground = ${colors.module}
 
 
 [module/i3]
@@ -192,11 +193,13 @@ label-focused-padding = 2
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
 label-unfocused-foreground = ${colors.unfocused}
+label-unfocused-background = ${colors.module}
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
 label-visible-foreground = ${colors.visible}
+label-visible-background = ${colors.module}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
@@ -218,6 +221,8 @@ type = custom/script
 exec = ~/dotfiles/i3/.i3/scripts/weather "palo alto"
 interval = 300 ; seconds
 
+click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
+
 
 [module/volume]
 type = internal/volume
@@ -225,8 +230,12 @@ type = internal/volume
 format-volume = <label-volume> <bar-volume>
 label-volume = %{T2}%{T-}
 label-volume-foreground = ${root.foreground}
+format-volume-background = ${colors.module}
+format-volume-padding = 1
 
 format-muted-foreground = ${colors.foreground-alt}
+format-muted-background = ${colors.module}
+format-muted-padding = 1
 label-muted = %{T4}%{T-}
 
 bar-volume-width = 10
@@ -246,8 +255,6 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-format-volume-background = ${colors.module}
-
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -255,13 +262,18 @@ blacklist-0 = num lock
 
 format-prefix = "%{T2}%{T-} "
 format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.module}
 
 label-layout = %layout%
+label-layout-background = ${colors.module}
 
-label-indicator = 
-label-indicator-padding = 1
+label-indicator =
+label-indicator-background = ${colors.module}
+label-indicator-padding = 0
 label-indicator-margin = 0
 label-indicator-underline = ${colors.caps}
+
+format-spacing = 0
 
 
 [module/date]
@@ -280,8 +292,6 @@ type = custom/ipc
 hook-0 = ~/.i3/scripts/polybar_wrapper options_icon $MONITOR "closed"
 hook-1 = ~/.i3/scripts/polybar_wrapper options_icon $MONITOR "open"
 initial = 1
-; content = "%{A1:~/tmp/test &:}%{T4}%{T-}%{A}"
-; content = %{T4}%{T-}
 click-left = ~/.i3/scripts/polybar_wrapper options $MONITOR
 
 
@@ -293,25 +303,25 @@ click-left = "pkill -n polybar ; ~/.i3/locker -i ~/Downloads/jeremy-thomas-12845
 
 [module/logout]
 type = custom/text
-content = %{T4}%{T-}
+content = "%{T9}%{T-}Logout"
 click-left = "pkill -n polybar ; i3-msg exit"
 
 
 [module/reboot]
 type = custom/text
-content = %{T4}%{T-}
+content = "%{T9}%{T-}Reboot"
 click-left = "pkill -n polybar ; systemctl reboot"
 
 
 [module/poweroff]
 type = custom/text
-content = %{T4}%{T-}
+content = "%{T9}%{T-}Poweroff"
 click-left = "pkill -n polybar ; systemctl poweroff"
 
 
 [module/closepowermenu]
 type = custom/text
-content = %{T4}%{T-}
+content = "%{T9}%{T-}"
 click-left = "pkill -n polybar"
 
 
@@ -328,10 +338,13 @@ adapter = AC
 ; Aesthetics
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
+format-charging-background = ${colors.module}
+format-discharging-background = ${colors.module}
 
 label-full = 
 label-charging = %{T8}%percentage%%%{T-}
 label-discharging = %{T8}%percentage%% %time%%{T-}
+format-full-background = ${colors.module}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -351,8 +364,10 @@ animation-charging-framerate = 750
 type = internal/network
 interface = wlp2s0
 
-label-connected = "%{A1:nm-connection-editor &:}  %{T8}%essid% %signal%%%{T-}%{A}"
-label-disconnected = "%{A1:nm-connection-editor &:}  %{A}"
+label-connected = "%{A1:~/.i3/scripts/wifi:}  %{T8}%essid% %signal%%%{T-}%{A}"
+label-disconnected = "%{A1:~/.i3/scripts/wifi:}  %{A}"
+label-connected-background = ${colors.module}
+label-disconnected-background = ${colors.module}
 
 
 
