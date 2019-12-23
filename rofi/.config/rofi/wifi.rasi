@@ -1,0 +1,33 @@
+@import "launcher.rasi"
+
+configuration {
+  theme:              "config";
+  font:               "DejaVu Sans 14";
+}
+
+* {
+    background:                 #222222cc;
+
+    selected:                   @purple;
+    active-foreground:          @primary;
+    border-color:               @foreground;
+}
+
+window {
+    border:                     2;
+    height:                     300;
+    location:                   northeast;
+    width:                      400;
+    x-offset:                   -140;
+}
+
+entry {
+    text-color:                 @selected;
+}
+
+element selected {
+    background-color:           @selected;
+    text-color:                 #000;
+}
+
+/* vim:ft=css

@@ -12,7 +12,6 @@ configuration {
     primary:                    @red;
 
     selected-background:        @grey-dark;
-    selected-foreground:        @primary;
     active-foreground:          #000;
     border-color:               @grey-light;
 }
@@ -72,7 +71,7 @@ element alternate {
 element selected {
     border:                     0 solid 0px 0px;
     background-color:           @selected-background;
-    text-color:                 @selected-foreground;
+    text-color:                 @primary;
 }
 
 /* vim:ft=css
