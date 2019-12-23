@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Remap right Alt key to Mod3 for i3.
-xmodmap .xmodmap
+xmodmap ~/.xmodmap
 
 # If at work, set up the displays.
 if [ -r ~/.xsessionrc_work ]; then
