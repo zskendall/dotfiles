@@ -1,0 +1,72 @@
+#!/bin/bash
+
+city=$1
+if [[ "$1" != "${1%[[:space:]]*}" ]]; then
+  city=$(echo "${city// /+}")
+fi
+
+img="$city"_F.png
+wget wttr.in/$img
+
+# Get monitor dimensions.
+disp=$(xrandr | grep " connected")
+re='([[:digit:]]+)x([[:digit:]]+)\+([[:digit:]]+).*'
+[[ $disp =~ $re ]]
+w=${BASH_REMATCH[1]}
+h=${BASH_REMATCH[2]}
+(( w < h )) && w=${BASH_REMATCH[2]}; h=${BASH_REMATCH[1]}
+echo "screen width: $w, screen height: $h" > ~/tmp/tmp
+
+# Scale weather image to monitor dimensions.
+convert -resize "$w"x"$h" $img -blur 3x3 -alpha on -channel a -evaluate set 40% horizontal.png
+convert -resize "$h"x"$w" $img -blur 3x3 -alpha on -channel a -evaluate set 40% vertical.png
+
+# Get actual dimensions of scaled image. Since `convert` maintains aspect
+# ratio, the actual dimensions will be used to calculate centering offsets.
+[[ $(identify horizontal.png) =~ $re ]]
+hw=${BASH_REMATCH[1]}
+hh=${BASH_REMATCH[2]}
+echo "horizontal width: $hw, horizontal height: $hh" >> ~/tmp/tmp
+[[ $(identify vertical.png) =~ $re ]]
+vw=${BASH_REMATCH[1]}
+vh=${BASH_REMATCH[2]}
+echo "vertical width: $vw, vertical height: $vh" >> ~/tmp/tmp
+
+# Calculate offsets needed to center.
+hx=$(( (w - hw) / 2 ))
+hy=$(( (h - hh) / 2 ))
+vx=$(( (h - vw) / 2 ))
+vy=$(( (w - vh) / 2 ))
+echo "horizontal offsets: +$hx+$hy, vertical offsets: +$vx+$vy" >> ~/tmp/tmp
+
+montage horizontal.png -geometry +$hx+$hy -background black horizontal.png
+montage vertical.png -geometry +$vx+$vy -background black vertical.png
+
+convert horizontal.png ~/dotfiles/images/lock-darkgrey.png -gravity center -composite horizontal.png
+convert vertical.png ~/dotfiles/images/lock-darkgrey.png -gravity center -composite vertical.png
+
+m=$(xrandr | grep " connected" | wc -l)
+images=""
+persisted_offset=0
+for i in $disp; do
+  [[ $i =~ $re ]]
+  tw=${BASH_REMATCH[1]}
+  offsetx=${BASH_REMATCH[3]}
+  if [[ -z $offsetx ]]; then
+    continue;
+  fi
+  (( tw == h )) && image="vertical.png" || image="horizontal.png"
+  (( offsetx < persisted_offset )) && images="$image $images" || images="$images $image"
+  persisted_offset=$offsetx
+done
+
+montage $images -tile "$m"x1 -geometry +0+0 weather.png
+
+rm $img horizontal.png vertical.png
+
+# if (( $(ps -aux | grep "i3lock.sh" | wc -l) > 1 )); then
+#   args=$(ps -aux | grep "i3lock.sh" | awk -F".sh" '{print $2}' | awk -F"-t" '{print $2}')
+#   echo $args
+#   # killall i3lock.sh
+#   # eval "~/.i3/i3lock.sh -t$args"
+# fi
