@@ -9,8 +9,7 @@ RESTART=""
 SHUTDOWN=""
 
 rofi_confirm() {
-  echo $1
-  case "$(echo -e "Cancel\nConfirm" | rofi -dmenu -theme confirm -mesg "$1")" in
+  case "$(echo -e 'Cancel\nConfirm' | rofi -dmenu -theme confirm -mesg "$1")" in
     "Cancel") exit 1;;
     "Confirm") exit 0;;
   esac
@@ -27,19 +26,19 @@ list_icons() {
 handle_option() {
   case "$1" in
     "$LOCK")
-        ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000 -c 000000;;
+        ~/.i3/scripts/locker -i ~/weather.png -l 999999;;
     "$LOGOUT")
-        if $(rofi_confirm $LOGOUT); then
+        if $(rofi_confirm "$LOGOUT"); then
           i3-msg exit
         fi
         ;;
     "$RESTART")
-        if $(rofi_confirm $RESTART); then
+        if $(rofi_confirm "$RESTART"); then
           reboot
         fi
         ;;
     "$SHUTDOWN")
-        if $(rofi_confirm $SHUTDOWN); then
+        if $(rofi_confirm "$SHUTDOWN"); then
           shutdown now
         fi
         ;;
