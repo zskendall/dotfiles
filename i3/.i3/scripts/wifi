@@ -1,0 +1,39 @@
+#!/bin/bash
+
+get_networks() {
+  local saved=$(nmcli c | awk -F" +" '{print $1}' | sort)
+  local available=$(nmcli dev wifi | awk -F" +" '{print $2}' | sort -u)
+  case $OPTIONS in
+    "saved")
+      # If the options are specified as 'saved', list saved networks.
+      echo $saved
+      break
+      ;;
+    "all")
+      # If the options are specified as 'all', list all available networks.
+      echo $available
+      break
+      ;;
+    *)
+      # Otherwise (unknown options or no options), only display the currently
+      # available saved networks.
+      echo $(comm -12 <(for s in "${saved[@]}"; do echo "$s"; done) \
+        <(for a in "${available[@]}"; do echo "$a"; done))
+      break
+      ;;
+  esac
+}
+
+list_networks() {
+  for i in $(get_networks); do
+    if [[ "$i" == "SSID" ]]; then continue; fi
+    echo $i
+  done
+}
+
+OPTIONS=$1
+SELECTION="$(list_networks | rofi -dmenu -i -p 'Network' -theme wifi)"
+if [ ! -z $SELECTION ]; then
+  # echo $SELECTION
+  eval "nmcli c up $SELECTION"
+fi
