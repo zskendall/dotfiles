@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Parse the arguments to construct the i3lock command
+while getopts ":i:c:w:l:o:z:" opt; do
+  case $opt in
+    i) image="$OPTARG"
+    ;;
+    c) color="$OPTARG"
+    ;;
+    w) wrong="$OPTARG"
+    ;;
+    l) idle="$OPTARG"
+    ;;
+    o) done="$OPTARG"
+    ;;
+    z) city="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+    :) echo "Option -$OPTARG requires an argument." >&2
+    ;;
+  esac
+done
+
+lock='~/.i3/scripts/i3lock -e -O 0.1'
+
+if [[ ! -z $city ]]; then
+  # Only use the current weather if a city is provided.
+  city=$(echo "${city// /+}")
+  . ~/.i3/scripts/weather $city
+  lock="$lock -i weather.png -l 999999"
+elif [[ ! -z "$image" ]] && [ -f "$image" ]; then
+  # Otherwise set the image if the arg was defined and the file exists.
+  lock="$lock -i $image"
+fi
+
+# Set the idle color if an arg was provided and it hasn't already been set.
+if [[ ! -z "$idle" ]] && [[ ! "$lock" == *"-l"* ]]; then
+  lock="$lock -l $idle"
+fi
+
+if [[ ! -z "$color" ]]; then
+  lock="$lock -c $color"
+
+  # If the background color is black and an idle color hasn't been set, change
+  # the idle color to something lighter.
+  if [[ "$color" == "000000" ]] && [[ ! "$lock" == *"-l"* ]]; then
+    lock="$lock -l 595959"
+  fi
+fi
+
+if [[ ! -z "$wrong" ]]; then
+  lock="$lock -w $wrong"
+fi
+
+if [[ ! -z "$done" ]]; then
+  lock="$lock -o $done"
+fi
+
+eval $lock
+
+# Turn the screen off after a delay.
+sleep 3600; pgrep i3lock && xset dpms force off

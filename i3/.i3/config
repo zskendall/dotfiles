@@ -70,9 +70,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock screen with i3lock
-bindsym mod4+l exec ~/.i3/locker -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -w b30000 -c 000000
-# -i ~/Downloads/jeremy-thomas-128457-unsplash-cropped.png -t -e
-#-o 191d0f -w 572020 -l 000000 -e
+bindsym mod4+l exec ~/.i3/scripts/locker -i ~/weather.png -l 999999
+exec --no-startup-id xautolock -time 1 -noclose -locker '~/.i3/scripts/locker -i ~/weather.png -l 999999' &
 
 
 # --- Display ---
