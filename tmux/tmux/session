@@ -7,7 +7,21 @@ if [ -r ~/.tmux_work ];
   then SESSION="";
   # then SESSION="work";
 fi
-MAIN_ON_RIGHT=$1
+
+# Parse input args (supports specifying multi without specifying split as well)
+while getopts ":r:m:c:" opt; do
+  case $opt in
+    r) MAIN_ON_RIGHT="$OPTARG"
+      ;;
+    m) MULTI="$OPTARG"
+      ;;
+    c) CLIENT="$OPTARG"
+      ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+  esac
+done
+SPLIT=`[ $MAIN_ON_RIGHT ] && echo 0 || echo 1`
+if [ ! $CLIENT ]; then CLIENT=0; fi
 
 # Either attach to an existing session or create a new one
-tmux a -dt $SESSION || create_session $SESSION $MAIN_ON_RIGHT
+tmux a -dt $SESSION || create_session $SESSION $SPLIT $CLIENT $MULTI

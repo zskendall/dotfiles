@@ -21,26 +21,27 @@ function default_split() {
 
 # Creates a configured tmux session
 # @arg 1: the session name
-# @arg 2: whether the main pane should be on the right
+# @arg 2: the top side pane
+# @arg 3: the client name
+# @arg 4: whether to set up multiple panes
 function create_session() {
   SESSION=$1
 
   tmux new -s $SESSION -d \; \
     rename-window "main" \; \
 
-  SPLIT=`[ $2 ] && echo 0 || echo 1`
+  SPLIT=$2
   default_split
 
   # If at work, configure the panes.
   if [ "$SESSION" = "" ]; then
-    . ~/.tmux_work $SPLIT m;
+    . ~/.tmux_work $SPLIT $4 $3;
   else
     tmux a -t $SESSION \; \
-      select-pane -t $(( $SPLIT + 1)) \; \
-      send-keys -t $(( $SPLIT + 1)) "cd ~/dotfiles" C-m \; \
-      send-keys -t $(( $SPLIT + 1)) "vim ." C-m \; \
       select-pane -t $SPLIT \; \
       send-keys -t $SPLIT "tmux clock-mode" C-m \; \
+      send-keys -t $(( $SPLIT + 1)) "cd ~/dotfiles" C-m \; \
+      send-keys -t $(( $SPLIT + 1)) "vim ." C-m \; \
       detach
 
     sleep 1;
