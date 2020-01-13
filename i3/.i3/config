@@ -123,11 +123,11 @@ bindsym $mod+e layout toggle split
 # Tiling / Floating {{{
 
 # toggle, handling borders
-bindsym $mod+b exec ~/.i3/toggle_float
+bindsym $mod+b exec ~/.i3/scripts/toggle_float
 
 # scratchpad
 bindsym $mod+shift+b move scratchpad
-bindsym $mod+mod1+b exec ~/.i3/to_scratchpad
+bindsym $mod+mod1+b exec ~/.i3/scripts/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
 bindsym $mod+mod1+c [class="Google-chrome"] scratchpad show
 bindsym $mod+shift+space floating toggle
