@@ -110,7 +110,7 @@ dim-value = 0.5
 [bar/default]
 inherit = bar/common
 
-modules-right = sep-left spacer volume spacer date spacer
+modules-right = sep-left volume spacer date spacer
 
 
 ; Polybar for laptop with extra modules
