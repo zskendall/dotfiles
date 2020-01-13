@@ -2,8 +2,8 @@
 
 /* Use I2C or Serial, not both */
 
-// #define USE_SERIAL
-#define USE_I2C
+#define USE_SERIAL_PD2
+// #define USE_MATRIX_I2C
 
 /* Select hand configuration */
 
