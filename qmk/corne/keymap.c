@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | Esc  |  A   |  S   |  D   |  F   |  G   |                 |   H  |   J  |   K  |   L  |   ;  |   '  |
      * | LCtrl|      |      |      |      |      |                 |      |      |      |      |      | LCtrl|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * | CMAK |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
+     * | TERM |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |  (   | Spc  |  [   |          |   ]  |  Ret |   )  |
      *                         |LShft | LAlt |*Num* |          | *Nav*| RAlt | RShft|
@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_BSPC,
         CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_QUOT,
-        CMAK   , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
+        TERM   , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
                         KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, META_RET, KC_RSPC
     ),
 
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|  A   |  S   |  R   |  T   |  D   |                 |   H  |   N  |   E  |   I  |   O  |   '  |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  Z   |  X   |  C   |  V   |  B   |                 |   K  |   M  |   ,  |   .  |   /  |   -  |
+     * | CMAK |  Z   |  X   |  C   |  V   |  B   |                 |   K  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |//////|//////|//////|          |//////|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT(
 	_____, _____, _____, KC_F , KC_P , KC_G ,		      KC_J, KC_L , KC_U , KC_Y , KC_SCLN, _____,
 	_____, _____, _____, KC_R , KC_T , KC_D ,		      KC_H, KC_N , KC_E , KC_I , KC_O   , _____,
-	_____, _____, _____, _____, _____, _____,		      KC_K, _____, _____, _____, _____  , _____,
+	CMAK , _____, _____, _____, _____, _____,		      KC_K, _____, _____, _____, _____  , _____,
                                   _____, _____, _____,            _____, _____, _____
     ),
 
