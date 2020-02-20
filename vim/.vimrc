@@ -1,8 +1,6 @@
 " Enable modern Vim features not compatible with Vi spec.
 set nocompatible
 
-let atwork = filereadable(glob('~/.vimrc_work'))
-
 " ==============================================================================
 " Configure plugins (e.g. - Vundle) here.
 " ==============================================================================
@@ -16,8 +14,9 @@ Plug 'RRethy/vim-illuminate'
 Plug 'raimondi/delimitmate'
 Plug 'markonm/traces.vim'
 
-if !atwork
-  Plug 'valloric/YouCompleteMe'
+" Source any machine-specific plugins
+if filereadable(glob('~/.vim.plugins.$HOSTNAME'))
+  source ~/.vim.plugins.$HOSTNAME
 endif
 
 call plug#end()
@@ -233,6 +232,9 @@ au InsertChange * call InsertStatusLineColor(v:insertmode)
 au InsertLeave * hi User4 ctermfg=22 cterm=bold
 " }}}
 
-if (atwork)
-  source ~/.vimrc_work
+" ==============================================================================
+" Machine-specific Configuration
+" ==============================================================================
+if filereadable(glob('~/.vimrc.$HOSTNAME'))
+  source ~/.vimrc.$HOSTNAME
 endif
