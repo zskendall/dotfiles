@@ -1,12 +1,11 @@
 #!/bin/bash
 
 source ~/dotfiles/tmux/tmux/session_fns
-
-SESSION=""
-if [ -r ~/.tmux_work ];
-  then SESSION="";
-  # then SESSION="work";
+if [ -r ~/.tmux.$HOSTNAME ]; then
+  source ~/.tmux.$HOSTNAME
 fi
+
+set_session || SESSION=""
 
 # Parse input args (supports specifying multi without specifying split as well)
 while getopts ":r:m:c:" opt; do
@@ -24,4 +23,4 @@ SPLIT=`[ $MAIN_ON_RIGHT ] && echo 0 || echo 1`
 if [ ! $CLIENT ]; then CLIENT=0; fi
 
 # Either attach to an existing session or create a new one
-tmux a -dt $SESSION || create_session $SESSION $SPLIT $CLIENT $MULTI
+tmux a -dt $SESSION || create_session
