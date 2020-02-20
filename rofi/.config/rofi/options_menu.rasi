@@ -2,11 +2,11 @@
  * Based on theme by ntcarlson:
  * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/options_menu.rasi
  */
-@import "borealis.rasi"
-
 configuration {
     theme:                          "config";
 }
+
+@import "borealis.rasi"
 
 * {
     background:                     @grey-dark-50;

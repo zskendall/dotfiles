@@ -1,9 +1,9 @@
-@import "launcher.rasi"
-
 configuration {
   theme:              "config";
   font:               "DejaVu Sans 14";
 }
+
+@import "launcher.rasi"
 
 * {
     background:                 #222222cc;

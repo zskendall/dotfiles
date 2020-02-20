@@ -1,10 +1,10 @@
 /* ROFI theme for application launcher */
-@import "borealis.rasi"
-
 configuration {
   theme:              "config";
   font:               "DejaVu Sans 14";
 }
+
+@import "borealis.rasi"
 
 * {
     background:                 @purple-50;
