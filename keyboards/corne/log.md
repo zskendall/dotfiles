@@ -1,7 +1,7 @@
 # Corne (crkbd) Build Log
 
 <div><i>Built November-December 2019</i></div>
-<div align="right"><i>Updated 22 February 2020</i></div>
+<div align="right"><i>Updated 28 February 2020</i></div>
 
 <div align="center">
   <img alt="Finished Corne"
@@ -369,8 +369,9 @@ Prusa Mk3 from 6h to just under 3.5.
 | Part                        | Filament (g)     | Print Time |
 | --------------------------- | ----------------:| ----------:|
 | 1 × wedge, right            | 61.03            | 3h20m      |
-| 1 × failed wedge, left      | 40 (est)         | 2h10m      |
-| **Total (running)**         | **101.03** (est) | **5h30m**  |
+| 1 × failed wedge, left      | 34.23            | 2h10m      |
+| 1 × wedge, left             | 61.13            | 3h22m      |
+| **Total (running)**         | **156.39**       | **9h52m**  |
 
 However, as expected, the faster print time came at the expense of lower
 quality. Because it was at an angle, not all layers went all the way around the
@@ -378,10 +379,6 @@ piece, and the layers/ledges were clearly visible and rough to touch. I ran over
 the wedges with some sandpaper to remove some of the texture, but since they're
 just for the keyboard to sit on, I'm not too concerned with the reduced
 quality.
-
-Note that as of 21 February 2020, I have only printed the right half. The first
-attempt at the left half, as indicated in the table above, failed when the part
-separated from the printer bed.
 
 #### Acrylics
 Even though I didn't purchase LEDs, having a hotswappable board means I can take
