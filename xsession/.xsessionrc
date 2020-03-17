@@ -4,8 +4,8 @@
 xmodmap ~/.xmodmap
 
 # Set background image. If change background, then change Polybar, i3, and Tmux.
-if [ -r ~/dotfiles/images/background.jpg ]; then
-  feh --bg-scale ~/dotfiles/images/background.jpg
+if [ -r ~/dotfiles/images/background_main.jpg ]; then
+  feh --bg-scale ~/dotfiles/images/background_main.jpg
 fi
 
 # If installed, start compton as a background process to enable compositing. See
