@@ -1,7 +1,13 @@
 # linux setup
-Config files versioned with git and managed by GNU stow.
+Config files versioned with git and managed by GNU stow. I use Debian on some
+machines, Manjaro (Arch-based) on others; install commands for both are listed
+just for completeness.
 ```
 sudo apt-get install git stow
+```
+or
+```
+sudo pacman -S git stow
 ```
 
 ## X Session
@@ -9,6 +15,10 @@ Configuration for display and input devices.
 ```
 sudo apt-get install feh compton xbindkeys xautomation xdotool xsetwacom
 stow xsession compton
+```
+or
+```
+sudo pacman -S feh compton xbindkeys xautomation xdotool
 ```
 
 I use [tryone's fork of compton](https://github.com/tryone144/compton) to add
@@ -32,6 +42,10 @@ inactive, named terminal tab 'sysmon' and excluded it in compton config.
 ```
 sudo apt-get install i3-wm suckless-tools xfce4-terminal rofi
 stow i3
+```
+or
+```
+sudo pacman -S i3-gaps xfce4-terminal rofi
 ```
 [User guide](https://i3wm.org/docs/userguide.html)
 
@@ -63,10 +77,19 @@ for installation information.
 stow polybar fonts
 ```
 
+If on an Arch-based distro:
+```
+sudo pacman -S polybar
+```
+
 ## Tmux
 ```
 sudo apt-get install tmux
 stow tmux
+```
+or
+```
+sudo pacman -S tmux
 ```
 
 ## Other
@@ -138,3 +161,16 @@ If `pacmd` reports the sink as not found, may need to restart pulseaudio daemon:
 pulseaudio --start
 ```
 and reconnect the headphones.
+
+## Speakers (Manjaro)
+In Majaro, sometimes the sound from Chrome was cutting out. These things worked
+to fix it once, so try them first!
+
+1. Check the jacks. On older sound cards, green looks a lot like grey.
+2. Read this forum post: https://forum.manjaro.org/t/no-sound-in-chrome-or-ff/3824/14,
+   specifically the post by manjrob in June '16 to use `aplay -l` and `aplay -D
+   plughw:X,Y /usr/share/sounds/alsa/Front_Right.wav` to determine which card is
+   being used.
+3. Use `pacmd` to list sinks and find the one that matches the card name found
+   from #2
+4. `pacmd set-default-sink` as the sink name found from #3

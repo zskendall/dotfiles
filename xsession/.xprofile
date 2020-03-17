@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Remap any keys and modifiers.
+xmodmap ~/.xmodmap
+
+# Set background image. If change background, then change Polybar, i3, and Tmux.
+if [ -r ~/dotfiles/images/background_main.jpg ] &&
+  [ -r ~/dotfiles/images/background_secondary.jpg ]; then
+  feh --bg-scale ~/dotfiles/images/background_main.jpg ~/dotfiles/images/background_secondary.jpg
+elif [ -r ~/dotfiles/images/background_main.jpg ]; then
+  feh --bg-scale ~/dotfiles/images/background_main.jpg
+elif [ -r ~/dotfiles/images/background_secondary.jpg ]; then
+  feh --bg-scale ~/dotfiles/images/background_secondary.jpg
+fi
+
+# If installed, start compton as a background process to enable compositing. See
+# https://wiki.archlinux.org/index.php/compton for more information.
+if [[ $(pacman -Q compton) ]]; then   # for Manjaro
+  compton -b
+elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
+  compton -b
+fi
+
+# Run any machine-specific setup
+if [ -r ~/.xprofile.$HOSTNAME ]; then
+  . ~/.xprofile.$HOSTNAME
+fi

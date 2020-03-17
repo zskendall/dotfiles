@@ -1,18 +1,6 @@
 #!/bin/bash
 
-# Remap any keys and modifiers.
-xmodmap ~/.xmodmap
-
-# Set background image. If change background, then change Polybar, i3, and Tmux.
-if [ -r ~/dotfiles/images/background_main.jpg ]; then
-  feh --bg-scale ~/dotfiles/images/background_main.jpg
-fi
-
-# If installed, start compton as a background process to enable compositing. See
-# https://wiki.archlinux.org/index.php/compton for more information.
-if [[ $(dpkg -s compton | grep "installed") ]]; then
-  compton -b
-fi
+[ -f ~/.xprofile ] && . ~/.xprofile
 
 # Run any machine-specific setup
 if [ -r ~/.xsessionrc.$HOSTNAME ];
