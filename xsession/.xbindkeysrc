@@ -19,3 +19,6 @@ Alt + b:8
 Alt + b:9
 "/usr/bin/xdotool key --clearmodifiers Return"
 Alt + b:2
+
+"~/.wacom_wheel"
+b:14

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PAD=$(xsetwacom list devices | grep pad | awk -F'  ' '{print $1}')
+MODE=`expr $(($(cat /tmp/wacom) + 1)) % 4`
+
+case $MODE in
+  3)
+    xsetwacom set "$PAD" AbsWheelUp key "["
+    xsetwacom set "$PAD" AbsWheelDown key "]"
+    ;;
+  *)
+    xsetwacom set "$PAD" AbsWheelUp 4
+    xsetwacom set "$PAD" AbsWheelDown 5
+    ;;
+esac
+
+echo $MODE > /tmp/wacom

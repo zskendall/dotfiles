@@ -18,7 +18,7 @@ stow xsession compton
 ```
 or
 ```
-sudo pacman -S feh compton xbindkeys xautomation xdotool
+sudo pacman -S feh compton xbindkeys xautomation xdotool xf86-input-wacom
 ```
 
 I use [tryone's fork of compton](https://github.com/tryone144/compton) to add

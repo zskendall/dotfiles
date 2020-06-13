@@ -21,6 +21,16 @@ elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
   compton -b
 fi
 
+if [ -r ~/.wacom ]; then
+  if [[ $(pacman -Q xf86-input-wacom) ]]; then # for Manjaro
+    . ~/.wacom
+  elif [[ $(dpkg -s xsetwacom) ]]; then # for Debian/Ubuntu
+    . ~/.wacom
+  fi
+fi
+
+[ -r ~/.xbindkeysrc ] && xbindkeys &
+
 # Run any machine-specific setup
 if [ -r ~/.xprofile.$HOSTNAME ]; then
   . ~/.xprofile.$HOSTNAME

@@ -3,9 +3,15 @@
 # ==============================================================================
 # Settings for Wacom tablet. Optimized for Krita.
 # ==============================================================================
-DEVICE="Wacom Intuos Pro L"
+echo '1' > /tmp/wacom
 
-PAD="$DEVICE Pad pad"
+DISP=$([ -z $1 ] && echo $(xrandr | grep primary | awk -F' ' '{print $1}') || echo $1)
+
+PAD=$(xsetwacom list devices | grep pad | awk -F'  ' '{print $1}') 
+
+PEN=$(xsetwacom list devices | grep stylus | awk -F'  ' '{print $1}') 
+
+xsetwacom set "$PEN" MapToOutput "$DISP"
 
 : <<'END'
 +-------------------------------------+
@@ -23,30 +29,30 @@ PAD="$DEVICE Pad pad"
 | +------+
 |
 | +------+
-| |  9   | --> Ctrl (defaults color picker)
+| |  9   | --> b (Krita brush tool)
 | +------+
 |
 | *
 |  /-----\  --> Mode 1: zoom
 | /  ---  \ --> Mode 2: zoom
 | | |   | |
-| \  ---  / --> Mode 3: zoom
+| \  ---  / --> Mode 3: brush size
 |  \-----/  --> Mode 4: zoom
 |
 | +------+
-| |  10  | --> Deselect (C-Shift-a)
+| |  10  | --> Save (C-s)
 | +------+
 |
 | +------+
-| |  11  | --> Save (C-s)
+| |  11  | --> Undo (C-z)
 | +------+
 |
 | +------+
-| |  12  | --> Redo (C-Shift-z)
+| |  12  | --> Deselect (C-Shift-a)
 | +------+
 |
 | +------+
-| |  13  | --> Undo (C-z)
+| |  13  | --> Redo (C-Shift-z)
 | +------+
 |
 +--------------------------------------+
@@ -55,11 +61,20 @@ END
 # Express Keys {{{
 
 xsetwacom set "$PAD" button 8 key "shift"
-xsetwacom set "$PAD" button 9 key "ctrl"
+xsetwacom set "$PAD" button 9 key "b"
 
-xsetwacom set "$PAD" Button 10 key "ctrl shift a"
-xsetwacom set "$PAD" Button 11 key "ctrl s"
-xsetwacom set "$PAD" Button 12 key "ctrl shift z"
-xsetwacom set "$PAD" Button 13 key "ctrl z"
+xsetwacom set "$PAD" button 1 14
+
+xsetwacom set "$PAD" Button 10 key "ctrl s"
+xsetwacom set "$PAD" Button 11 key "ctrl"
+xsetwacom set "$PAD" Button 12 key "ctrl shift a"
+xsetwacom set "$PAD" Button 13 key "ctrl shift z"
+
+# }}}
+
+# Pen {{{
+
+xsetwacom set "$PEN" button 2 3
+xsetwacom set "$PEN" button 3 key "ctrl z"
 
 # }}}
