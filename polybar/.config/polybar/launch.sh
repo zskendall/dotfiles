@@ -1,17 +1,35 @@
 #!/bin/bash
 
+set_vars() {
+  export NETWORK
+  export NETWORK_CONNECTED_LABEL
+  export NETWORK_DISCONNECTED_LABEL
+
+  local connected="$(nmcli device status | grep connected)"
+  NETWORK="$(echo $connected | awk -F" " '{print $1}')"
+  NET_TYPE="$(echo $connected | awk -F" " '{print $2}')"
+
+  if [[ "$NET_TYPE" == *"wifi"* ]]; then
+    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:}  %{T8}%essid%
+    %signal%%%{T-}%{A}"
+    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:}  %{A}"
+  fi
+}
+
 # Terminate already running bar instances
 killall -q polybar
 
 # Wait until the processes have been shut down
 while pgrep -x polybar >/dev/null; do sleep 1; done
 
+set_vars
+
 # Launch normal polybar on all monitors, optionally hiding them
 WIDTH=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+' | cut -d"x" -f1)
 for m in $(polybar --list-monitors | cut -d":" -f1); do
   # Check for a battery power supply as indicator for displaying the expanded
   # polybar with battery and wifi status.
-  if [[ $(ls /sys/class/power_supply/ | egrep -i bat | wc -l) -gt 0 ]]; then
+  if [[ "$NET_TYPE" == *"wifi"* ]]; then
     MONITOR=$m polybar --reload expanded &
   else
     MONITOR=$m polybar --reload default &

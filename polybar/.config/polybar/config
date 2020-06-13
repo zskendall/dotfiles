@@ -110,14 +110,14 @@ dim-value = 0.5
 [bar/default]
 inherit = bar/common
 
-modules-right = sep-left volume spacer date spacer
+modules-right = sep-left volume spacer network spacer date spacer
 
 
 ; Polybar for laptop with extra modules
 [bar/expanded]
 inherit = bar/common
 
-modules-right = sep-left volume wireless spacer battery spacer date spacer
+modules-right = sep-left volume network spacer battery spacer date spacer
 
 ; Power menu
 [bar/powermenu]
@@ -174,7 +174,7 @@ content-foreground = ${colors.module}
 [module/i3]
 ws-icon-0 = 1;
 ws-icon-1 = 2;
-ws-icon-2 = 3;
+ws-icon-2 = 3;
 ws-icon-3 = 4;
 ws-icon-default = 
 
@@ -226,6 +226,8 @@ click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
 
 [module/volume]
 type = internal/volume
+
+master-soundcard = hw:1
 
 format-volume = <label-volume> <bar-volume>
 label-volume = %{T2}%{T-}
@@ -360,12 +362,12 @@ animation-charging-4 = 
 animation-charging-framerate = 750
 
 
-[module/wireless]
+[module/network]
 type = internal/network
-interface = wlp2s0
+interface = ${env:NETWORK:enp2s0}
 
-label-connected = "%{A1:~/.i3/scripts/wifi:}  %{T8}%essid% %signal%%%{T-}%{A}"
-label-disconnected = "%{A1:~/.i3/scripts/wifi:}  %{A}"
+label-connected = ${env:NETWORK_CONNECTED_LABEL: %{T8}eth%{T-}}
+label-disconnected = ${env:NETWORK_DISCONNECTED_LABEL:%{F#333}%{T8}null%{T-}%{F-}}
 label-connected-background = ${colors.module}
 label-disconnected-background = ${colors.module}
 
