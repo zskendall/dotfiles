@@ -17,6 +17,7 @@ enum user_layers {
 #define _____ KC_TRNS
 #define MS_TOG TG(_MOUSE)
 #define KC_UNDS LSFT(KC_MINS)
+#define ART_TOG TG(_ART)
 #define VTERM LCTL(S(KC_F1))
 #define CMAK TG(_COLEMAK)
 #define TERM LGUI(KC_ENT)
@@ -26,6 +27,7 @@ enum user_layers {
 #define CTL_QUOT RCTL_T(KC_QUOT)
 #define LALT_SPC LALT_T(KC_SPC)
 #define META_RET RGUI_T(KC_ENT)
+#define CTL_INS LCTL_T(KC_INS)
 
 /** Dynamic layer-tap keycode macros. */
 #define NUM_LB LT(_NUM, KC_LBRC)
@@ -42,16 +44,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | Esc  |  A   |  S   |  D   |  F   |  G   |                 |   H  |   J  |   K  |   L  |   ;  |   '  |
      * | LCtrl|      |      |      |      |      |                 |      |      |      |      |      | LCtrl|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * | TERM |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
+     * | ART  |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |  (   | Spc  |  [   |          |   ]  |  Ret |   )  |
-     *                         |LShft | LAlt |*Num* |          | *Nav*| RAlt | RShft|
+     *                         |LShft | LAlt |*Num* |          | *Nav*| Meta | RShft|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_QWERTY] = LAYOUT(
         KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_BSPC,
         CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_QUOT,
-        TERM   , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
+        ART_TOG, KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
                         KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, META_RET, KC_RSPC
     ),
 
@@ -129,5 +131,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
         _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____,                        _____  , _____  , _____  , KC_MUTE, KC_VOLD, MS_TOG ,
                                         _____, _____, KC_BTN1,              KC_BTN2, _____, _____
+    ),
+
+    /**
+     * Art Layer
+     * Condensed layout with common Krita functions collapsed onto left half of
+     * keyboard. Only fall through mod functions on right half.
+     * ┌──────┬──────┬──────┬──────┬──────┬──────┐
+     * | ART  |  N   |  W   |  E   |  O   |  T   |
+     * ├──────┼──────┼──────┼──────┼──────┼──────┤
+     * |//////|  A   |  S   |  D   |  J   |  G   |
+     * ├──────┼──────┼──────┼──────┼──────┼──────┤
+     * |LShft |  Z   |  X   |  C   |  V   |  B   |
+     * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐
+     *                         |//////|//////| Ins  |
+     *                         |//////|//////|LCtrl |
+     *                         └──────┴──────┴──────┘
+     */
+    [_ART] = LAYOUT(
+        ART_TOG, KC_N, KC_W, KC_E, KC_O, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
+        _____  , KC_A, KC_S, KC_D, KC_J, KC_G,                     __x__, __x__, __x__, __x__, __x__, _____,
+        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                     __x__, __x__, __x__, __x__, __x__, __x__,
+                                 _____, _____, CTL_INS,         _____, _____, _____
     ),
 };

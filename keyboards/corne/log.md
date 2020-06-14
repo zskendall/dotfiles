@@ -154,9 +154,14 @@ I have thus far only ever flashed on Linux, which may require installing
 `avrdude` if not already done:
 
 ```
-sudo apt-get install avrdude
+sudo (apt-get install || pacman -S) avrdude
 sudo make crkbd/rev1:zskendall:avrdude-loop
 ```
+
+#### Issues
+* avr-gcc not found: run `./util/qmk_install.sh` from qmk_firmware/
+* tmk_core/protocol/lufa.mk:14: lib/lufa/LUFA/makefile not found: run `make
+  git-submodules` from qmk_firmware/
 
 ### Base
 Since the base of my cases had warped and developed a wobble while printing, I
@@ -457,3 +462,14 @@ manuform](https://github.com/abstracthat/dactyl-manuform), and going wireless.
 Regardless of whether I build one (or more) keyboard(s), I think that building
 and using my Corne has firmly cemented my preference for split 40% and it will
 remain a one of my go-to keebs.
+
+<div align="center">
+  <img alt="Finished Corne #2"
+    src="https://lh3.googleusercontent.com/pw/ACtC-3e8soiFY-IsCcNG00ZnjXhf8qB5IelLuwYOezRPhWZlPU7XcmCe0Qq8dyaeKEuUn_H9_4x5wptGEOuWyvMKCH7IhQrxKN51ifH_bEHEJ2-fsb9YMz6lM3PuS15mfs9A4DNxqgn-F4wEu2TF8KdQoIIy=w1419-h829-no" width="98%">
+  <br>
+  <span>
+    In fact, I built a second, super bare-bones Corne while at my parents' in
+    June 2020.
+  <span>
+</div>
+<br>
