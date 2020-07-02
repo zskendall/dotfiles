@@ -6,11 +6,7 @@ configuration {
 @import "launcher.rasi"
 
 * {
-    background:                 #222222cc;
-
-    selected:                   @purple;
-    active-foreground:          @primary;
-    border-color:               @foreground;
+    background:                 @grey-dark-80;
 }
 
 window {

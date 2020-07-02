@@ -257,11 +257,10 @@ set $indicator               #292d2e
 
 # themed
 set $borealis              #7b926f
+set $nikhita               #4d4d4d
+set $chjara                #eb8d04
+set $maqi                  #ff5fad
 
 # class                  border        bg             text            indicator    child_border
-client.focused           $borealis     $borealis      $dark_neutral   $borealis    $borealis
-client.focused_inactive  $mid_neutral  $dark_neutral  $borealis       $indicator   $dark_neutral
-# --- Gaps
-for_window [class="^.*"] border pixel 0
-gaps inner 30
-gaps outer 20
+client.focused           $maqi     $maqi      $dark_neutral   $maqi    $maqi
+client.focused_inactive  $mid_neutral  $dark_neutral  $maqi       $indicator   $dark_neutral

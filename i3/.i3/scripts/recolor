@@ -1,0 +1,167 @@
+#!/bin/bash
+
+argv="$#"
+THEME=$1
+shift
+IMAGES=("$@")
+
+# normal font color
+normal=$(tput sgr0)
+
+warn() {
+  yellow=$(tput setaf 3)
+  printf "%s\n" "${yellow}$@${normal}"
+}
+
+error() {
+  red=$(tput setaf 1)
+  printf "%s\n" "${red}$@${normal}"
+}
+
+# @arg1 the config without the theme
+# @arg2 the available themes for the config
+no_theme_error() {
+  # printf "\n%s\n%s\n%s\n" "${red}No $1 configuration for theme $THEME." \
+  error "" "No $1 configuration for theme $THEME." \
+    "  Available themes are [${2//$'\n'/ }]" \
+    "Leaving $1 configuration as-is."
+}
+
+# @arg1 the default image to use
+refresh_display() {
+  if [ ! -z $1 ]; then
+    feh --bg-scale $1
+  elif (( $argv < 2 )); then
+    warn "No default image for theme $THEME. Leaving background as-is."
+  else
+    display="feh --bg-scale "
+    for i in "${IMAGES[@]}"; do
+      display+="'$i' "
+    done
+    eval $display
+  fi
+}
+
+theme_polybar() {
+  local current=`egrep -o "^background = .{([a-z]*)" ~/.config/polybar/config \
+    | grep -v "colors" | cut -d'{' -f 2`
+  local updated=`[ $(grep "\[$THEME\]" ~/.config/polybar/config) ] \
+    && echo "$THEME" || echo "default"`
+  if [[ "$updated" == *"default"* ]]; then
+    local available=`awk "/COLORS/,/\[colors\]/" ~/.config/polybar/config | \
+      egrep "\[[a-z]+\]" | sed 's/[][]//g' | sed 's/colors//'`
+    warn "" "Unknown polybar theme $THEME." \
+      "  Available themes are: [${available//$'\n'/ }]" \
+      "Using default polybar colors."
+    # echo -e "Unknown polybar theme $THEME;\n  Available themes are:" \
+    #   "[${available//$'\n'/ }]\nUsing default polybar colors."
+  fi
+  sed -i "s/${current}\./${updated}\./g" ~/.config/polybar/config
+}
+
+theme_i3() {
+  if [[ ! $(grep "^set \$$THEME" ~/.i3/config) ]]; then
+    local available=`awk "/# themed/,/# class/" ~/.i3/config | \
+      egrep "set .[a-z]+.*" | awk -F' ' '{print $2}' | sed 's/\\$//'`
+    no_theme_error "i3" "$available"
+    return
+  fi
+  local current=`egrep -o "^client\.focused .*\$" ~/.i3/config \
+    | awk -F' ' '{print $2}' | sed 's/\$//'`
+  sed -ie "/^client/s/\$${current}/\$${THEME}/g" ~/.i3/config
+}
+
+theme_tmux() {
+  if [[ ! $(grep "^${THEME}_" ~/.tmux.conf) ]]; then
+    local available=`awk "/# Themed colors/,/\}\}\}/" ~/.tmux.conf | \
+      grep ".*_status_active" | awk -F'_' '{print $1}'`
+    no_theme_error "tmux" "$available"
+    return
+  fi
+  local line=`grep -m 1 "=\$.*_" ~/.tmux.conf`
+  local re='.*\$([a-z]+)_.*'
+  [[ $line =~ $re ]]
+  local current=${BASH_REMATCH[1]}
+  sed -i "s/\$${current}_/\$${THEME}_/g" ~/dotfiles/tmux/.tmux.conf
+}
+
+theme_rofi() {
+  if [ ! -r "/home/$USER/.config/rofi/$THEME.rasi" ]; then
+    local available=`grep -r "@import \"general.rasi\"" ~/.config/rofi | \
+      awk -F':' '{print $1}' | awk -F'.' '{print $2}' | awk -F'/' '{print $3}'`
+    no_theme_error "rofi" "$available"
+    return
+  fi
+  local line=`egrep -o "^@import .*\.rasi" ~/.config/rofi/launcher.rasi`
+  local re='.*"([a-z]+).rasi'
+  [[ $line =~ $re ]]
+  local current=${BASH_REMATCH[1]}
+  for f in $(grep -r $current ~/.config/rofi | cut -d':' -f 1); do
+    sed -ie "/^@import/s/${current}/${THEME}/g" $f
+  done
+}
+
+theme_dunst() {
+  # read the [urgency_normal] section and parse the background and foreground
+  # colors based on either the theme or the default
+  norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" \
+    ~/.config/dunst/dunstrc | grep "$THEME:" || \
+    awk "/\[urgency_normal\]/,/\[urgency_critical/" \
+    ~/.config/dunst/dunstrc | grep "default:"`
+  local norm_bg=$(echo $norm | awk -F'#' '{print $3}' | sed -e 's/[[:space:]]*$//')
+  local norm_fg=$(echo $norm | awk -F'#' '{print $4}' | sed -e 's/[[:space:]]*$//')
+  local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | \
+    awk -F':' '{print $1}'`
+  local nend=`grep -n "\[urgency_critical\]" ~/.config/dunst/dunstrc | \
+    awk -F':' '{print $1}'`
+  echo
+  sed -ri "${nbeg},${nend}s/(^.*background = \"#)[a-f0-9]{6}/\1$norm_bg/" ~/.config/dunst/dunstrc
+  sed -ri "${nbeg},${nend}s/(^.*foreground = \"#)[a-f0-9]{6}/\1$norm_fg/" ~/.config/dunst/dunstrc
+
+  # read and parse the frame color based on either theme or default
+  local frame=`echo $(awk "/color of the frame/,/color for the separator/" \
+    ~/.config/dunst/dunstrc | grep "$THEME:" || \
+    awk "/color of the frame/,/color for the separator/" \
+    ~/.config/dunst/dunstrc | grep "default:") \
+    | awk -F'#' '{print $3}' | sed -e 's/[[:space:]]*$//'`
+  local fbeg=`grep -n "color of the frame" ~/.config/dunst/dunstrc | awk -F':' '{print $1}'`
+  local fend=`grep -n "color for the separator" ~/.config/dunst/dunstrc | awk -F':' '{print $1}'`
+  sed -ri "${fbeg},${fend}s/(^.*frame_color = \"#)[a-f0-9]{6}/\1$frame/" ~/.config/dunst/dunstrc
+
+  # attempt to kill dunst to reload the config (shouldn't be allowed, since
+  # daemon started from DBUS)
+  pkill dunst
+  if [[ "$norm" == *"default"* ]]; then
+    warn "Reset dunst theme to default"
+  fi
+}
+
+theme_others() {
+  if [ -z $THEME ]; then
+    bold=$(tput bold)
+    error "" "${bold}No theme provided; exiting.${normal}"
+    exit 1
+  fi
+  theme_i3
+  theme_tmux
+  theme_rofi
+}
+
+notify-send -a recolor "changing theme to $THEME"
+
+case $THEME in
+  borealis)
+    refresh_display ~/dotfiles/images/background_main.jpg
+    ;;
+  nikhita)
+    refresh_display ~/dotfiles/images/background_secondary.jpg
+    ;;
+  *)
+    refresh_display
+    ;;
+esac
+
+theme_dunst
+theme_polybar
+theme_others
+notify-send -a recolor "udpated theme to $THEME"

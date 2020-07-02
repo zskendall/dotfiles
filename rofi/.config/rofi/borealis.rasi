@@ -2,12 +2,16 @@
  * Borealis Colors to be used by ROFI themes
  */
 
+@import "general.rasi"
+
 * {
-    purple:                 #723d71;
-    purple-50:              #723d7180;
-    green:                  #7b926f;
-    red:                    #b30000;
-    grey-light:             #c1c1c1;
-    grey-dark:              #222;
-    grey-dark-50:           #22222280;
+    primary:                 #723d71;
+    primary-alt:              #723d7180;
+    text:                  #7b926f;
+    accent:                    #b30000;
+    background:             @grey-dark-50;
+    background-alt:             @primary-alt;
+    selected-background:    @grey-dark;
+    active-foreground:      #000;
+    border-color:           @grey;
 }

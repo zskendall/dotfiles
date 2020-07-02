@@ -4,16 +4,11 @@ configuration {
   font:               "DejaVu Sans 14";
 }
 
-@import "borealis.rasi"
+@import "maqi.rasi"
 
 * {
-    background:                 @purple-50;
-    foreground:                 @green;
-    primary:                    @red;
-
-    selected-background:        @grey-dark;
-    active-foreground:          #000;
-    border-color:               @grey-light;
+    background:                 @background-alt;
+    foreground:                 @text;
 }
 
 window {
@@ -71,7 +66,7 @@ element alternate {
 element selected {
     border:                     0 solid 0px 0px;
     background-color:           @selected-background;
-    text-color:                 @primary;
+    text-color:                 @accent;
 }
 
 /* vim:ft=css

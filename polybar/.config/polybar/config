@@ -11,38 +11,61 @@
 ; COLORS
 ;=====================================================
 [default]
+background = #0000
 background-alt = #222
+module-background = #0000
 foreground = #dfdfdf
 foreground-alt = #555
+focus-foreground = #ff0000
+visible-foreground = #000
+unfocus-foreground = #800000ff
 alert = #bd2c40
 
 
 [nikhita]
-focus-foreground = #fff
+inherit = default
+module-background = #805d0786
+focus-foreground = #a402a5
 unfocus-foreground = #4d4d4d
-visible-foreground = #999
-caps-indicator = #a402a5
+visible-foreground = #8000ff00
 
 [borealis]
+inherit = default
 ; background = #33723d71
 module-background = #4d723d71
-background = #00723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
 visible-foreground = #fff
-caps-indicator = #61995b
+
+[chjara]
+inherit = default
+; module-background = #4d222222
+background = #bf080130
+focus-foreground = #eb8d04
+unfocus-foreground = #a8a8a8
+visible-foreground = #850200
+
+
+[maqi]
+inherit = default
+background = #cc1d007d
+foreground = #b5e2ff
+focus-foreground = #ff5fad
+unfocus-foreground = #00008b
+visible-foreground = #850200
+alert = #ff5fad
 
 
 [colors]
-inherit = default
-
-; Background/theme-specific colors
-background = ${borealis.background}
-focus = ${borealis.focus-foreground}
-unfocused = ${borealis.unfocus-foreground}
-visible = ${borealis.visible-foreground}
-caps = ${borealis.caps-indicator}
-module = ${borealis.module-background}
+background = ${maqi.background}
+background-alt = ${maqi.background-alt}
+focus = ${maqi.focus-foreground}
+unfocused = ${maqi.unfocus-foreground}
+visible = ${maqi.visible-foreground}
+foreground = ${maqi.foreground}
+foreground-alt = ${maqi.foreground-alt}
+alert = ${maqi.alert}
+module = ${maqi.module-background}
 
 
 
@@ -95,7 +118,7 @@ height = 27
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-modules-left = i3 sep-right
+modules-left = i3
 modules-center = weather
 
 ; Float bar; required for auto hide script
@@ -110,14 +133,14 @@ dim-value = 0.5
 [bar/default]
 inherit = bar/common
 
-modules-right = sep-left volume spacer network spacer date spacer
+modules-right = volume spacer network spacer date spacer
 
 
 ; Polybar for laptop with extra modules
 [bar/expanded]
 inherit = bar/common
 
-modules-right = sep-left volume network spacer battery spacer date spacer
+modules-right = volume network spacer battery spacer date spacer
 
 ; Power menu
 [bar/powermenu]
@@ -211,7 +234,7 @@ label-urgent-padding = 2
 [module/weather]
 type = custom/script
 
-exec = ~/dotfiles/polybar/.config/polybar/weather.sh "palo alto"
+exec = ~/dotfiles/polybar/.config/polybar/weather.sh
 interval = 300 ; seconds
 
 
@@ -227,11 +250,9 @@ click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
 [module/volume]
 type = internal/volume
 
-master-soundcard = hw:1
-
 format-volume = <label-volume> <bar-volume>
 label-volume = %{T2}%{T-}
-label-volume-foreground = ${root.foreground}
+label-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.module}
 format-volume-padding = 1
 
@@ -258,31 +279,11 @@ bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-format-prefix = "%{T2}%{T-} "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-background = ${colors.module}
-
-label-layout = %layout%
-label-layout-background = ${colors.module}
-
-label-indicator =
-label-indicator-background = ${colors.module}
-label-indicator-padding = 0
-label-indicator-margin = 0
-label-indicator-underline = ${colors.caps}
-
-format-spacing = 0
-
-
 [module/date]
 type = internal/date
 interval = 5
 
-date = "%{T4}%{T5} %{F#999}%A, %d %B %Y%{F-}  %{T4}%{T5} %{F#999}%H:%M%{F-}%{T-}"
+date = "%{T4}%{T5} %A, %d %B %Y  %{T4}%{T5} %H:%M%%{T-}"
 
 label = %date%
 format-background = ${colors.module}

@@ -6,12 +6,10 @@ configuration {
     theme:        "config";
 }
 
-@import "borealis.rasi"
+@import "maqi.rasi"
 
 * {
-    background:         @grey-dark-50;
-    primary:            @purple;
-    text-color:         @green;
+    text-color:         @text;
 }
 
 mainbox {
