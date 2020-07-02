@@ -1,16 +1,21 @@
 #!/bin/bash
 
-PAD=$(xsetwacom list devices | grep pad | awk -F'  ' '{print $1}')
+PAD=$(xsetwacom list devices | grep pad | awk -F'i' '{print $1}' | xargs)
 MODE=`expr $(($(cat /tmp/wacom) + 1)) % 4`
 
 case $MODE in
   3)
+    notify-send -a wacom "mode $MODE" "changing wheel to brush size"
     xsetwacom set "$PAD" AbsWheelUp key "["
     xsetwacom set "$PAD" AbsWheelDown key "]"
     ;;
-  *)
+  0)
+    notify-send -a wacom "mode 4" "changing wheel to zoom"
     xsetwacom set "$PAD" AbsWheelUp 4
     xsetwacom set "$PAD" AbsWheelDown 5
+    ;;
+  *)
+    notify-send -a wacom "mode $MODE" "wheel is zoom"
     ;;
 esac
 

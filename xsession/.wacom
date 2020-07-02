@@ -1,17 +1,25 @@
 #!/bin/bash
 
+# needed for udev
+export XAUTHORITY=/home/zoe/.Xauthority
+export DISPLAY=:0
+
+# set state of wheel
+echo '1' > /tmp/wacom
+
 # ==============================================================================
 # Settings for Wacom tablet. Optimized for Krita.
 # ==============================================================================
-echo '1' > /tmp/wacom
 
 DISP=$([ -z $1 ] && echo $(xrandr | grep primary | awk -F' ' '{print $1}') || echo $1)
 
-PAD=$(xsetwacom list devices | grep pad | awk -F'  ' '{print $1}') 
+PAD=$(xsetwacom list devices | grep pad | awk -F'i' '{print $1}' | xargs)
 
-PEN=$(xsetwacom list devices | grep stylus | awk -F'  ' '{print $1}') 
+PEN=$(xsetwacom list devices | grep stylus | awk -F'i' '{print $1}' | xargs)
+ERASER=$(xsetwacom list devices | grep eraser | awk -F'i' '{print $1}' | xargs)
 
 xsetwacom set "$PEN" MapToOutput "$DISP"
+xsetwacom set "$ERASER" MapToOutput "$DISP"
 
 : <<'END'
 +-------------------------------------+
@@ -21,7 +29,7 @@ xsetwacom set "$PEN" MapToOutput "$DISP"
 | +------+
 |
 | +------+
-| |  3   |
+| |  3   | --> Insert (add layer)
 | +------+
 |
 | +------+
@@ -60,6 +68,7 @@ END
 
 # Express Keys {{{
 
+xsetwacom set "$PAD" button 3 key "insert"
 xsetwacom set "$PAD" button 8 key "shift"
 xsetwacom set "$PAD" button 9 key "b"
 
@@ -76,5 +85,7 @@ xsetwacom set "$PAD" Button 13 key "ctrl shift z"
 
 xsetwacom set "$PEN" button 2 3
 xsetwacom set "$PEN" button 3 key "ctrl z"
+xsetwacom set "$ERASER" button 2 3
+xsetwacom set "$ERASER" button 3 key "ctrl z"
 
 # }}}

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. /home/zoe/.wacom
+
+chgrp zoe /tmp/wacom
+chmod 664 /tmp/wacom
