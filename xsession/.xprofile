@@ -15,8 +15,8 @@ fi
 
 # If installed, start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
-if [[ $(pacman -Q compton) ]]; then   # for Manjaro
-  compton -b
+if [[ $(pacman -Q picom) ]]; then   # for Manjaro
+  picom -b --experimental-backends
 elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
   compton -b
 fi
