@@ -278,8 +278,7 @@ set $borealis              #7b926f
 set $nikhita               #4d4d4d
 set $chjara                #eb8d04
 set $maqi                  #ff5fad
-set $themed                $maqi
 
 # class                  border        bg             text            indicator    child_border
-client.focused           $themed       $themed        $dark_neutral   $themed      $themed
-client.focused_inactive  $mid_neutral  $dark_neutral  $themed         $indicator   $dark_neutral
+client.focused           $maqi       $maqi        $dark_neutral   $maqi      $maqi
+client.focused_inactive  $mid_neutral  $dark_neutral  $maqi         $indicator   $dark_neutral
