@@ -25,3 +25,7 @@ alias naf='nautilus --no-desktop'
 
 # Switch to Bose headphones; best used with alias to return to default sink.
 alias audiob='pacmd set-default-sink bluez_sink.28_11_A5_73_75_3B.a2dp_sink'
+
+title() {
+  PROMPT_COMMAND="echo -ne \"\033]0;$1\007\""
+}
