@@ -1,4 +1,4 @@
 # --- Gaps
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 5
 gaps inner 30
 gaps outer 20

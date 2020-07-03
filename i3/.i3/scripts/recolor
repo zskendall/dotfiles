@@ -66,9 +66,9 @@ theme_i3() {
     no_theme_error "i3" "$available"
     return
   fi
-  local current=`egrep -o "^client\.focused .*\$" ~/.i3/config \
-    | awk -F' ' '{print $2}' | sed 's/\$//'`
-  sed -ie "/^client/s/\$${current}/\$${THEME}/g" ~/.i3/config
+  local current=`grep "^set \$themed" ~/.i3/config \
+    | awk -F' ' '{print $3}' | sed 's/\$//'`
+  sed -ie "/^set \$themed/s/\$${current}/\$${THEME}/g" ~/.i3/config
 }
 
 theme_tmux() {
