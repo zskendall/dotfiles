@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**
      * Mouse/Media Layer
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |RESET |V Term|  M↑  |      | Bri+ |      |                 |      |      |      |      | MsB3 | PrtSc|
+     * |RESET |V Term|  M↑  |      | Bri+ |      |                 |  F1  |  F2  |  F6  |      | MsB3 | PrtSc|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|  M←  |  M↓  |  M→  | Bri- |//////|                 |  W←  |  W↓  |  W↑  | W→   | Vol+ |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤		             ├──────┼──────┼──────┼──────┼──────┼──────┤
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_MOUSE] = LAYOUT(
-        RESET, VTERM  , KC_MS_U, __x__  , KC_BRIU, __x__,                        __x__  , __x__  , __x__  , __x__,   KC_BTN3, KC_PSCR,
+        RESET, VTERM  , KC_MS_U, __x__  , KC_BRIU, __x__,                        KC_F1  , KC_F2  , KC_F6  , __x__,   KC_BTN3, KC_PSCR,
         _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
         _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____,                        _____  , _____  , _____  , KC_MUTE, KC_VOLD, MS_TOG ,
                                         _____, _____, KC_BTN1,              KC_BTN2, _____, _____
