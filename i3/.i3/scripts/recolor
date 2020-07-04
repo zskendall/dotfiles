@@ -136,6 +136,24 @@ theme_dunst() {
   fi
 }
 
+theme_ncmpcpp() {
+  if [ ! -r "/home/$USER/.ncmpcpp/$THEME.ini" ]; then
+    local available=`ls ~/.ncmpcpp/*.ini | \
+      awk -F'/' '{print $5}' | awk -F'.' '{print $1}'`
+    no_theme_error "ncmpcpp" "$available"
+    return
+  fi
+  local music_dir=`grep music_directory ~/.config/mpd/mpd.conf | \
+    awk -F'  ' '{print $2}'`
+  sed "s~%music_dir%~$music_dir~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
+  IFS=$'\n'
+  for line in $(cat ~/.ncmpcpp/$THEME.ini); do
+    local param=`echo $line | awk -F'=' '{print $1}' | sed "s/ *$//g"`
+    local value=`echo $line | awk -F'=' '{print $2}' | sed "s/^ *//g"`
+    sed -i "s/%$param%/$value/g" ~/.ncmpcpp/config
+  done
+}
+
 theme_others() {
   if [ -z $THEME ]; then
     bold=$(tput bold)
@@ -145,6 +163,7 @@ theme_others() {
   theme_i3
   theme_tmux
   theme_rofi
+  theme_ncmpcpp
 }
 
 notify-send -a recolor "changing theme to $THEME"
