@@ -1,0 +1,50 @@
+[mpd]
+ncmpcpp_directory = "~/.ncmpcpp"
+mpd_music_dir = %music_dir%
+mpd_host = "127.0.0.1"
+mpd_port = "6600"
+
+[global]
+user_interface = alternative
+main_window_color = %main%
+external_editor = vim
+use_console_editor = yes
+
+[library]
+song_library_format = "{{%b - %t}|{%f}}{$R%l}"
+
+[header]
+header_visibility = no
+display_volume_level = no
+titles_visibility = yes
+header_window_color = %header%
+alternative_header_first_line_format = $b$1$aqqu$/a $(%playing%){%t} $1$atqq$/a$/b
+alternative_header_second_line_format = {$(%header_artist%)$b%a$/b}{$(%main%) - $(%header_album%)%b$(%main%)}
+
+[playlist]
+playlist_display_mode = classic
+song_columns_list_format = (25)[]{b} - (50)[]{t} (7f)[]{l}
+song_list_format = "{{%20b - %t}|{%f}} {$R%l}"
+now_playing_prefix = "$b$(%playing%)"
+now_playing_suffix = "$/b$9"
+selected_item_prefix = "$b$(%playing%)"
+selected_item_suffix = "$/b$9"
+current_item_prefix = $(%current%)$r
+current_item_suffix = $/r$9
+
+[statusbar]
+progressbar_look = "─╼ "
+progressbar_elapsed_color = %header%
+statusbar_visibility = no
+
+[visualizer]
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "queue"
+visualizer_in_stereo = yes
+visualizer_sync_interval = 12
+# available: spectrum, wave
+visualizer_type = spectrum
+visualizer_look = "●▮"
+
+# Actions
+execute_on_song_change = notify-send -a tunes "Now Playing" "$(mpc current -f "%album% - %title%" | sed -e 's/([^()]*)//g' | sed -e 's/  -/ -/g')"
