@@ -18,12 +18,18 @@ stow xsession compton
 ```
 or
 ```
-sudo pacman -S feh compton xbindkeys xautomation xdotool xf86-input-wacom
+sudo pacman -S feh xbindkeys xautomation xdotool xf86-input-wacom
 ```
 
 I use [tryone's fork of compton](https://github.com/tryone144/compton) to add
 kawase blur. On Debian/Ubuntu, cloned the repo with git clone and followed the
-build instructions in the repo README.
+build instructions in the repo README. On Arch-based (Manjaro), there's a picom
+fork in the AUR:
+
+```
+pamac search -a picom
+pamac build picom-tryone-git
+```
 
 To experiment with button mappings:
 ```
