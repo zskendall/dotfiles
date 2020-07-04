@@ -250,6 +250,8 @@ click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
 [module/volume]
 type = internal/volume
 
+master-soundcard = hw:1
+
 format-volume = <label-volume> <bar-volume>
 label-volume = %{T2}%{T-}
 label-volume-foreground = ${colors.foreground}
