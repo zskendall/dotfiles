@@ -16,6 +16,27 @@ function default_split() {
     split-window -h \; \
     select-pane -t $SPLIT \; \
     split-window \; \
+    select-pane -t $SPLIT \; \
+    split-window \; \
+    resize-pane -t $(( $SPLIT + 1 )) -D 17 \; \
+    resize-pane -t $SPLIT -D 8 \; \
+    detach
+}
+
+# @arg 1: the command to run in the top side pane
+# @arg 2: the command to run in the middle side pane
+send_keys() {
+  tmux a -t $SESSION \; \
+    select-pane -t $SPLIT \; \
+    send-keys -t $SPLIT "$1" C-m \; \
+    detach
+
+  sleep 1
+
+  tmux a -t $SESSION \; \
+    select-pane -t $(( $SPLIT + 1 )) \; \
+    send-keys -t $(( $SPLIT + 1 )) "$2" C-m \; \
+    select-pane -t $(( 2 - $SPLIT * 2 )) \; \
     detach
 }
 
