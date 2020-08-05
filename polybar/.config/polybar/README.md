@@ -5,7 +5,10 @@
 [Photo by FORREST CAVALE on Unsplash](https://unsplash.com/photos/jwIk4Z3Msi4)
 
 ## Installation Notes
-For Debian or Ubuntu, will need to follow instructions to build from [source](https://github.com/jaagr/polybar).
+```
+sudo pacman -S polybar gsimplecal
+```
+Or for Debian, will need to follow instructions to build from [source](https://github.com/jaagr/polybar).
 
 ### Dependencies
 [Wiki with deps for a few different distros](https://github.com/jaagr/polybar/wiki/Compiling)  
