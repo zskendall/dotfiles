@@ -1,63 +1,48 @@
 #!/bin/bash
 
 ASCII_WEATHER="$(curl -s 'wttr.in?TQu0')"
-CONDITION="STRUGGLES"
+SUN=`curl -s wttr.in?format=j1 | jq .weather[0].astronomy[0]`
+SUNRISE=`date --date="$(echo "$SUN" | jq .sunrise | tr -d '"')" +%s`
+SUNSET=`date --date="$(echo "$SUN" | jq .sunset | tr -d '"')" +%s`
+[ $SUNSET -lt $(date +%s) ] || [ $SUNRISE -gt $(date +%s) ] && NIGHT=1
 
-if grep -iq "Sunny\|clear" <<< "$ASCII_WEATHER"
-then
-  CONDITION="%{T2}%{T-}"
-elif grep -iq "cloudy\|overcast" <<< "$ASCII_WEATHER"
-then
-  CONDITION="%{T2}%{T-}"
-elif grep -iq "haze\|hazy\|mist\|fog" <<< "$ASCII_WEATHER"
-then
+if grep -iq "storm" <<< "$ASCII_WEATHER"; then
+  CONDITION="%{T6}%{T-}"
+elif grep -iq "rain\|shower" <<< "$ASCII_WEATHER"; then
+  if grep -iq "light\|patchy" <<< "$ASCII_WEATHER"; then
+    [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T6}%{T-}"
+  else CONDITION="%{T6}%{T-}"
+  fi
+elif grep -iq "snow" <<< "$ASCII_WEATHER"; then
+  CONDITION="%{T2}%{T-}"
+elif grep -iq "cloudy\|overcast" <<< "$ASCII_WEATHER"; then
+  if grep -iq "partly" <<< "$ASCII_WEATHER"; then
+    [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T6}%{T-}"
+  else CONDITION="%{T2}%{T-}"
+  fi
+elif grep -iq "haze\|hazy\|mist\|fog" <<< "$ASCII_WEATHER"; then
   CONDITION="%{T2}%{T-}"
-elif grep -iq "smoke" <<< "$ASCII_WEATHER"
-then
+elif grep -iq "smoke" <<< "$ASCII_WEATHER"; then
   CONDITION="%{T2}%{T-}"
-elif grep -iq "rain\|shower" <<< "$ASCII_WEATHER"
-then
-  CONDITION="%{T7}%{T-}"
-fi
-
-if grep -iq "struggles" <<< "$CONDITION"
-then
-  echo "%{T6}$CONDITION%{T-}"
+elif grep -iq "Sunny\|clear" <<< "$ASCII_WEATHER"; then
+  [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T2}%{T-}"
+else
+  CONDITION="%{T7}$(curl -s wttr.in?format='%c+%t' | awk -F'[[:space:]]*+' '{print $1}')"
 fi
 
 TEMP=$(echo $ASCII_WEATHER | grep -m 1 -Eo -e '-?[[:digit:]].*°F')
-TEMP=${TEMP%$' °F'}
 
-if [[ $TEMP == *-* ]]
-then
-  # Use regex to extract temperature values
-  re='(-?[[:digit:]]+).*-(-?[[:digit:]]+)'
-  [[ $TEMP =~ $re ]]
-  lower=${BASH_REMATCH[1]}
-  upper=${BASH_REMATCH[2]}
+re='(-?[[:digit:]]+)((.*-|..)(-?[[:digit:]]+))?'
+[[ $TEMP =~ $re ]]
+lower=${BASH_REMATCH[1]}
+upper=${BASH_REMATCH[4]}
+[ ! -z $upper ] && TEMP="$(( (lower + upper) / 2 ))" || TEMP=$lower
 
-  # Calculate average truncated to integer
-  TEMP="$(( (lower + upper) / 2 ))"
-elif [[ $TEMP == *..* ]]
-# Support new weather range format of X..Y
-then
-  re='(-?[[:digit:]]+)..(-?[[:digit:]]+)'
-  [[ $TEMP =~ $re ]]
-  lower=${BASH_REMATCH[1]}
-  upper=${BASH_REMATCH[2]}
-
-  TEMP="$(( (lower + upper) / 2 ))"
-fi
-
-DEG="°F"
-COLOR='#ffffff'
 if [ -z "$TEMP" ]
 then
-  TEMP=$TEMP
-  DEG=""
+  echo "$CONDITION"
 elif [ $TEMP -le 32 ]
 then
-  TEMP="%{T2}%{T-}"
   COLOR="#e6f2ff" # pale blue
 elif [ $TEMP -le 45 ]
 then
@@ -73,11 +58,9 @@ then
   COLOR="#ffcc00" # gold
 elif [ $TEMP -ge 100 ]
 then
-  TEMP="%{T2}%{T-}"
   COLOR="#ff0000" # pure red
-  DEG=""
 else
   COLOR="#ff6600" # orange
 fi
 
-echo "$CONDITION %{T6}| %{F$COLOR}$TEMP%{F-}$DEG%{T-}"
+echo "$CONDITION%{T4}%{F$COLOR} $TEMP%{F-}°F%{T-}"

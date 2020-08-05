@@ -10,9 +10,9 @@ set_vars() {
   NET_TYPE="$(echo $connected | awk -F" " '{print $2}')"
 
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
-    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:}  %{T8}%essid%
-    %signal%%%{T-}%{A}"
-    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:}  %{A}"
+    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#ff5fad} %{F-}%essid%
+    %signal%%%{A}"
+    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#ff5fad} %{F-}%{A}"
   fi
 }
 
@@ -27,8 +27,6 @@ set_vars
 # Launch normal polybar on all monitors, optionally hiding them
 WIDTH=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+' | cut -d"x" -f1)
 for m in $(polybar --list-monitors | cut -d":" -f1); do
-  # Check for a battery power supply as indicator for displaying the expanded
-  # polybar with battery and wifi status.
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
     MONITOR=$m polybar --reload expanded &
   else

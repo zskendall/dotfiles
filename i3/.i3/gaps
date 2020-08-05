@@ -2,3 +2,4 @@
 for_window [class="^.*"] border pixel 5
 gaps inner 30
 gaps outer 20
+for_window [class="Gsimplecal"] border pixel 0

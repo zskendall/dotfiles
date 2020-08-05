@@ -45,7 +45,7 @@ refresh_display() {
 theme_polybar() {
   local current=`egrep -o "^background = .{([a-z]*)" ~/.config/polybar/config \
     | grep -v "colors" | cut -d'{' -f 2`
-  local updated=`[ $(grep "\[$THEME\]" ~/.config/polybar/config) ] \
+  local updated=`[ $(grep "$THEME\]" ~/.config/polybar/config) ] \
     && echo "$THEME" || echo "default"`
   if [[ "$updated" == *"default"* ]]; then
     local available=`awk "/COLORS/,/\[colors\]/" ~/.config/polybar/config | \
@@ -53,10 +53,14 @@ theme_polybar() {
     warn "" "Unknown polybar theme $THEME." \
       "  Available themes are: [${available//$'\n'/ }]" \
       "Using default polybar colors."
-    # echo -e "Unknown polybar theme $THEME;\n  Available themes are:" \
-    #   "[${available//$'\n'/ }]\nUsing default polybar colors."
   fi
   sed -i "s/${current}\./${updated}\./g" ~/.config/polybar/config
+
+  # read and parse focus_foreground for the icon styling
+  local focus=`awk "/\[$THEME\]/,/\[colors\]/" ~/.config/polybar/config | \
+    egrep -m 1 "^focus-foreground" | cut -d'#' -f2`
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/config
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/" ~/.config/polybar/launch.sh
 }
 
 theme_i3() {
