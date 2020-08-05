@@ -47,4 +47,4 @@ visualizer_type = spectrum
 visualizer_look = "●▮"
 
 # Actions
-execute_on_song_change = notify-send -a tunes "Now Playing" "$(mpc current -f "%album% - %title%" | sed -e 's/([^()]*)//g' | sed -e 's/  -/ -/g')"
+execute_on_song_change = notify-send -a tunes --hint=string:x-dunst-stack-tag:tunes "Now Playing" "$(mpc current -f "%album% - %title%" | sed -e 's/([^()]*)//g' | sed -e 's/  -/ -/g')"

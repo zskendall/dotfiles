@@ -61,11 +61,12 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    # frame_width = 3
 
     # Defines color of the frame around the notification window.
     # default: #000000
     # maqi: #ff5fad
+    # chjara: #eb8d04
     frame_color = "#ff5fad"
 
     # Define a color for the separator.
@@ -137,7 +138,7 @@
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
-    show_age_threshold = 60
+    show_age_threshold = -1
 
     # Split notifications into multiple lines if they don't fit into
     # geometry.
@@ -287,7 +288,7 @@
     # default: #285577 #ffffff
     # borealis: #723d71 #7b926f
     # nikhita: #5d0786 #ffffff
-    # chjara: #eb8d04 #080130
+    # chjara: #080130 #eb8d04
     # maqi: #1d007d #b5e2ff
     background = "#1d007d"
     foreground = "#b5e2ff"
@@ -346,6 +347,10 @@
 # to "".
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
+
+[ncmpcpp]
+    appname = "tunes"
+    timeout = 120
 
 # Disable the transient hint so that idle_threshold cannot be bypassed from the
 # client
