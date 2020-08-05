@@ -3,6 +3,7 @@ BACKLIGHT_ENABLE = no
 MOUSEKEY_ENABLE = yes
 TAP_DANCE_ENABLE = no
 LEADER_ENABLE = no
+EXTRAKEY_ENABLE = yes
 
 # Bootloader
 #     This definition is optional, and if your keyboard supports multiple
