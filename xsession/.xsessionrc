@@ -3,6 +3,4 @@
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 # Run any machine-specific setup
-if [ -r ~/.xsessionrc.$HOSTNAME ];
-  . ~/.xsessionrc.$HOSTNAME
-fi
+[ -f ~/.xsessionrc.$HOSTNAME ] && . ~/.xsessionrc.$HOSTNAME

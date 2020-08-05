@@ -16,12 +16,12 @@ fi
 # If installed, start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
 if [[ $(pacman -Q picom) ]]; then   # for Manjaro
-  picom -b --experimental-backends
+  picom -b --experimental-backends --config ~/.compton.conf
 elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
   compton -b
 fi
 
-[ -r ~/.xbindkeysrc ] && xbindkeys &
+[ -r ~/.xbindkeysrc ] && xbindkeys -f ~/.xbindkeysrc &
 
 if [ -r ~/.wacom ]; then
   if [[ $(pacman -Q xf86-input-wacom) ]]; then # for Manjaro
