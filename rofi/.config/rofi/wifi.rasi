@@ -1,28 +1,19 @@
-configuration {
-  theme:              "config";
-  font:               "DejaVu Sans 14";
-}
-
 @import "launcher.rasi"
-
-* {
-    background:                 @grey-dark-80;
-}
 
 window {
     border:                     2;
-    height:                     300;
+    height:                     30%;
     location:                   northeast;
-    width:                      400;
+    width:                      20%;
     x-offset:                   -140;
 }
 
 entry {
-    text-color:                 @selected;
+    placeholder:                "Network";
 }
 
 element selected {
-    background-color:           @selected;
+    border:                     0;
     text-color:                 #000;
 }
 

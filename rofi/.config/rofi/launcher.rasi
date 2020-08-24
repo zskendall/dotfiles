@@ -1,72 +1,79 @@
-/* ROFI theme for application launcher */
+/*
+ * ROFI theme for application launcher
+ * Based on theme by adi1090x:
+ * https://github.com/ManuLosta/dotfiles/blob/master/August-2020/.config/rofi/launchers-git/appdrawer.rasi
+ * (uses rofi-git version from AUR)
+ */
 configuration {
-  theme:              "config";
-  font:               "DejaVu Sans 14";
+  drun-display-format:  "{name}";
+  font:                 "DejaVu Sans 14";
+  show-icons:           true;
 }
 
-@import "maqi.rasi"
+@import "colorschemes/maqi.rasi"
 
 * {
     background:                 @background-alt;
-    foreground:                 @text;
+    text-color:                 @text;
 }
 
 window {
-    border:                     1;
-    height:                     40%;
+    border:                     2;
+    height:                     400;
     location:                   north;
     padding:                    5;
-    width:                      20%;
+    width:                      25%;
     y-offset:                   27;
 }
 
 mainbox {
     children:                   [ inputbar, listview ];
-    padding:                    0;
+    padding:                    8 15;
+    spacing:                    10;
 }
 
 inputbar {
-    children:                   [ prompt, entry ];
-    border:                     0 0px 2px solid;
-    border-color:               @active-foreground;
-    margin:                     0 0 2;
+    background-color:           @background;
+    children:                   [ entry ];
+    border-radius:              30;
+    expand:                     false;
+    padding:                    0;
+    position:                   center;
 }
 
 entry {
-    border:                     2;
-    border-color:               @foreground;
     expand:                     true;
+    padding: 10 10 10 20;
+    placeholder:                "launch";
+    placeholder-color:          @text;
     text-color:                 @active-foreground;
-}
-
-prompt {
-    horizontal-align:           1;
-    padding:                    8 0 8 8;
-    spacing:                    0;
-    text-color:                 @active-foreground;
-    vertical-align:             0.5;
 }
 
 listview {
-    padding:                    2 0px 0px;
+    columns:                    2;
+    dynamic:                    true;
+    layout:                     vertical;
+    spacing:                    4;
 }
 
 element {
-    padding:                    5 10px;
+    orientation:      vertical;
 }
 
-element normal {
-    text-color:                 @foreground;
+element-icon {
+  border: 0;
+  padding: 6;
+  size: 50;
 }
 
-element alternate {
-    text-color:                 @foreground;
+element-text {
+  font: "DejaVu Sans 12";
 }
 
 element selected {
-    border:                     0 solid 0px 0px;
+    border:                     0 0 2 0;
     background-color:           @selected-background;
-    text-color:                 @accent;
+    text-color:                 @primary;
 }
 
 /* vim:ft=css

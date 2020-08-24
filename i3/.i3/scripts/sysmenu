@@ -9,9 +9,9 @@ RESTART=""
 SHUTDOWN=""
 
 rofi_confirm() {
-  case "$(echo -e 'Cancel\nConfirm' | rofi -dmenu -theme confirm -mesg "$1")" in
-    "Cancel") exit 1;;
-    "Confirm") exit 0;;
+  case "$(echo -e '\n' | rofi -dmenu -theme confirm -mesg "$1")" in
+    "") exit 1;;
+    "") exit 0;;
   esac
   exit 1
 }
@@ -45,5 +45,5 @@ handle_option() {
   esac
 }
 
-SELECTION="$(list_icons | rofi -dmenu -theme options_menu -mesg 'System')"
+SELECTION="$(list_icons | rofi -dmenu -theme sysmenu -mesg 'System')"
 handle_option $SELECTION &

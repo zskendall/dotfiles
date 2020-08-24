@@ -6,12 +6,14 @@
 
 * {
     primary:                 #723d71;
-    primary-alt:              #723d7180;
+    secondary:               #7b926f;
     text:                  #7b926f;
     accent:                    #b30000;
     background:             @grey-dark-50;
-    background-alt:             @primary-alt;
+    background-alt:              #723d7180;
     selected-background:    @grey-dark;
     active-foreground:      #000;
     border-color:           @grey;
 }
+
+/* vim:ft=css */

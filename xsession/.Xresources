@@ -1,5 +1,7 @@
 rofi.kb-row-down:       Alt-n,Alt-j
 rofi.kb-row-up:         Alt-p,Alt-k
+rofi.kb-row-left:       Alt-h
+rofi.kb-row-right:      Alt-l
 rofi.kb-delete-entry:   Alt-x
 
 ! default from manjaro-i3 {{{

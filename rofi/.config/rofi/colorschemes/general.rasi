@@ -1,6 +1,4 @@
-/**
- * Generic Colors to be shared by ROFI color themes
- */
+/* Generic Colors to be shared by ROFI color themes */
 
 * {
     grey:                     #c1c1c1;
@@ -8,3 +6,5 @@
     grey-dark-50:             #22222280;
     grey-dark-80:             #222222cc;
 }
+
+/* vim:ft=css

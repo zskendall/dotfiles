@@ -1,0 +1,17 @@
+/* Custom Colors based on characters Maqi and A to be used by ROFI themes */
+
+@import "general.rasi"
+
+* {
+    primary:                 #ff5fad;
+    secondary:               #00008b;
+    text:                    #b5e2ff;
+    accent:                  @primary;
+    background:              #1d007dbf;
+    background-alt:          @grey-dark-80;
+    selected-background:     #1d007dcc;
+    active-foreground:       @primary;
+    border-color:            @text;
+}
+
+/* vim:ft=css

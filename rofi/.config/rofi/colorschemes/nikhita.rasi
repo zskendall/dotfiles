@@ -1,17 +1,17 @@
-/**
- * Nikhita Colors to be used by ROFI themes
- */
+/* Nikhita Colors to be used by ROFI themes */
 
 @import "general.rasi"
 
 * {
   primary: #a402a5;
-  primary-alt: #5d078680;
+  secondary:  #4d4d4d;
   text: #999;
   accent: #000;
   background: @grey-dark-50;
-  background-alt: @primary-alt;
+  background-alt: #5d078680;
   selected-background: #00ff0099;
   active-foreground: @primary;
   border-color:           @grey;
 }
+
+/* vim:ft=css

@@ -50,7 +50,7 @@ bindsym $mod+Return exec xfce4-terminal
 bindsym Mod1+Return exec xfce4-terminal
 # start rofi (program laucher mode)
 bindsym $mod+f exec rofi -show drun -display-drun "launch" -theme launcher
-bindsym $mod+q exec --no-startup-id ~/.i3/scripts/rofi_option_menu
+bindsym $mod+q exec --no-startup-id ~/.i3/scripts/sysmenu
 bindsym $mod+ctrl+w exec ~/.i3/scripts/wifi
 bindsym $mod+ctrl+shift+w exec "~/.i3/scripts/wifi all
 

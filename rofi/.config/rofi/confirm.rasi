@@ -2,24 +2,25 @@
  * Based on theme by ntcarlson:
  * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/confirmation_dialog.rasi
  */
-configuration {
-    theme:        "config";
-}
 
-@import "maqi.rasi"
+@import "colorschemes/maqi.rasi"
 
 * {
     text-color:         @text;
 }
 
-mainbox {
+window {
     children:           [ message, listview ];
-    padding:            40% 0;
+    padding:            36% 0;
 }
 
 textbox {
     border:             0px 0px 2px;
+    border-color:       @primary;
     font:               "Material Icons 70";
+    horizontal-align:   0.5;
+    margin:             12px 30%;
+    padding:            12px;
 }
 
 listview {
@@ -28,26 +29,20 @@ listview {
   fixed-height:       1;
   dynamic:            true;
   horizontal-align:   0.5;
-  margin: 0 38%;
+  margin: 0 40%;
+  padding: 0 0 0 1%;
   expand: true;
 }
 
 element {
-    width:            11%;
-    border:           1% 1% solid 1% 1%;
-    border-color:     transparent;
-    horizontal-align: 0.5;
-    vertical-align:   0.5;
-}
-
-element-text {
-    horizontal-align:   0.5;
-    vertical-align:   0.5;
-    padding: 0px;
+    width:            8%;
 }
 
 element selected {
-    border-color:     @primary;
+    background-color: @background-alt;
+    border: 0 0 2 0;
+    border-color: @text;
+    color: @primary;
 }
 
 /* vim:ft=css
