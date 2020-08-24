@@ -15,8 +15,8 @@
 
 set $mod Mod4
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Use Mouse+shift to drag floating windows to their wanted position
+floating_modifier shift
 
 
 
@@ -47,10 +47,9 @@ font pango:monospace 8
 
 # --- Startups ---
 bindsym $mod+Return exec xfce4-terminal
-bindsym Mod3+Return exec xfce4-terminal
 bindsym Mod1+Return exec xfce4-terminal
 # start rofi (program laucher mode)
-bindsym $mod+f exec rofi -show run -p run -display-run "launch" -theme launcher
+bindsym $mod+f exec rofi -show drun -display-drun "launch" -theme launcher
 bindsym $mod+q exec --no-startup-id ~/.i3/scripts/rofi_option_menu
 bindsym $mod+ctrl+w exec ~/.i3/scripts/wifi
 bindsym $mod+ctrl+shift+w exec "~/.i3/scripts/wifi all
@@ -72,7 +71,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock screen with i3lock
-bindsym $mod+l exec ~/.i3/scripts/locker -i ~/weather.png -l 999999
+bindsym $mod+semicolon exec ~/.i3/scripts/locker -i ~/weather.png -l 999999
 exec --no-startup-id xautolock -time 1 -noclose -locker '~/.i3/scripts/locker -i ~/weather.png -l 999999' &
 
 
@@ -83,11 +82,11 @@ bindsym $mod+s focus down
 bindsym $mod+w focus up
 bindsym $mod+d focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+# alternatively, vim style:
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # move focused window
 bindsym $mod+Shift+a move left
@@ -95,31 +94,31 @@ bindsym $mod+Shift+s move down
 bindsym $mod+Shift+w move up
 bindsym $mod+Shift+d move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+# alternatively, vim style:
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # move workspace
-bindsym $mod+Shift+h move workspace to output left
-bindsym $mod+Shift+l move workspace to output right
+bindsym $mod+ctrl+h move workspace to output left
+bindsym $mod+ctrl+l move workspace to output right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+slash split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+minus split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+g fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+y layout stacking
-bindsym $mod+t layout tabbed
+# bindsym $mod+y layout stacking
+# bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # Tiling / Floating {{{
@@ -131,8 +130,8 @@ bindsym $mod+b exec ~/.i3/scripts/toggle_float
 bindsym $mod+shift+b move scratchpad
 bindsym $mod+mod1+b exec ~/.i3/scripts/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
-bindsym $mod+mod1+c [class="Google-chrome"] scratchpad show
-bindsym $mod+shift+space floating toggle
+bindsym $mod+mod1+c [class="Google-chrome|whatsapp*"] scratchpad show move position center
+bindsym $mod+ctrl+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -168,6 +167,17 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+# more convenient mods for corne keymap
+bindsym $mod+Ctrl+1 move container to workspace 1
+bindsym $mod+Ctrl+2 move container to workspace 2
+bindsym $mod+Ctrl+3 move container to workspace 3
+bindsym $mod+Ctrl+4 move container to workspace 4
+bindsym $mod+Ctrl+5 move container to workspace 5
+bindsym $mod+Ctrl+6 move container to workspace 6
+bindsym $mod+Ctrl+7 move container to workspace 7
+bindsym $mod+Ctrl+8 move container to workspace 8
+bindsym $mod+Ctrl+9 move container to workspace 9
+bindsym $mod+Ctrl+0 move container to workspace 10
 
 
 # resize window (you can also use the mouse for that)
@@ -182,12 +192,6 @@ mode "resize" {
         bindsym j resize shrink height 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize grow width 10 px or 10 ppt
-        bindsym Down resize shrink height 10 px or 10 ppt
-        bindsym Up resize grow height 10 px or 10 ppt
-        bindsym Right resize shrink width 10 px or 10 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
