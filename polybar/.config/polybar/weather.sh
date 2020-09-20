@@ -8,8 +8,8 @@ SUNSET=`date --date="$(echo "$SUN" | jq .sunset | tr -d '"')" +%s`
 
 if grep -iq "storm" <<< "$ASCII_WEATHER"; then
   CONDITION="%{T6}%{T-}"
-elif grep -iq "rain\|shower" <<< "$ASCII_WEATHER"; then
-  if grep -iq "light\|patchy" <<< "$ASCII_WEATHER"; then
+elif grep -iq "rain\|shower\|drizzle" <<< "$ASCII_WEATHER"; then
+  if grep -iq "light\|patchy\|drizzle" <<< "$ASCII_WEATHER"; then
     [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T6}%{T-}"
   else CONDITION="%{T6}%{T-}"
   fi
