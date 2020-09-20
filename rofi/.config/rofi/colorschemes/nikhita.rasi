@@ -3,15 +3,14 @@
 @import "general.rasi"
 
 * {
-  primary: #a402a5;
-  secondary:  #4d4d4d;
-  text: #999;
-  accent: #000;
-  background: @grey-dark-50;
-  background-alt: #5d078680;
-  selected-background: #00ff0099;
-  active-foreground: @primary;
-  border-color:           @grey;
+  primary:                #0f0;
+  secondary:              black;
+  text-color:             #d534b8;
+  accent:                 @secondary;
+  background:             @grey50;
+  background-alt:         #5d078680;
+  selected-background:    #4d4d4d;
+  border-color:           #c1c1c1;
 }
 
 /* vim:ft=css

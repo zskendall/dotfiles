@@ -5,75 +5,75 @@
  * (uses rofi-git version from AUR)
  */
 configuration {
-  drun-display-format:  "{name}";
-  font:                 "DejaVu Sans 14";
-  show-icons:           true;
+  display-drun:               "";
+  drun-display-format:        "{name}";
+  font:                       "DejaVu Sans 14";
+  show-icons:                 true;
 }
 
 @import "colorschemes/maqi.rasi"
 
-* {
-    background:                 @background-alt;
-    text-color:                 @text;
-}
-
 window {
-    border:                     2;
-    height:                     400;
-    location:                   north;
-    padding:                    5;
-    width:                      25%;
-    y-offset:                   27;
+  border:                     2;
+  height:                     400;
+  location:                   north;
+  padding:                    5;
+  width:                      25%;
+  y-offset:                   27;
 }
 
 mainbox {
-    children:                   [ inputbar, listview ];
-    padding:                    8 15;
-    spacing:                    10;
+  children:                   [ inputbar, listview ];
+  padding:                    8 15;
+  spacing:                    10;
 }
 
 inputbar {
-    background-color:           @background;
-    children:                   [ entry ];
-    border-radius:              30;
-    expand:                     false;
-    padding:                    0;
-    position:                   center;
+  background-color:           @background;
+  children:                   [ prompt, entry ];
+  border-radius:              30;
+  expand:                     false;
+  position:                   center;
+}
+
+prompt {
+  font:                       "Material Icons 20";
+  margin:                     8 0 0 15;
 }
 
 entry {
-    expand:                     true;
-    padding: 10 10 10 20;
-    placeholder:                "launch";
-    placeholder-color:          @text;
-    text-color:                 @active-foreground;
+  expand:                     true;
+  padding:                    10 10 10 0;
+  placeholder-color:          @text-color;
+  text-color:                 @primary;
 }
 
 listview {
-    columns:                    2;
-    dynamic:                    true;
-    layout:                     vertical;
-    spacing:                    4;
+  columns:                    2;
+  dynamic:                    true;
+  layout:                     vertical;
+  spacing:                    4;
 }
 
 element {
-    orientation:      vertical;
+  orientation:                vertical;
 }
 
 element-icon {
-  border: 0;
-  padding: 6;
-  size: 50;
+  border:                     0;
+  padding:                    6;
+  size:                       50;
 }
 
 element-text {
-  font: "DejaVu Sans 12";
+  font:                       "DejaVu Sans 12";
 }
 
 element selected {
-    border:                     0 0 2 0;
-    background-color:           @selected-background;
-    text-color:                 @primary;
+  border:                     0 0 2 0;
+  border-color:               @primary;
+  background-color:           @selected-background;
+  text-color:                 @primary;
 }
 
 /* vim:ft=css

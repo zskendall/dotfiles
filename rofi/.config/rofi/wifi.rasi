@@ -1,20 +1,31 @@
 @import "launcher.rasi"
 
 window {
-    border:                     2;
-    height:                     30%;
-    location:                   northeast;
-    width:                      20%;
-    x-offset:                   -140;
+  height:                     30%;
+  location:                   northeast;
+  width:                      20%;
+  x-offset:                   -140;
 }
 
 entry {
-    placeholder:                "Network";
+  margin:                     0 7;
+  placeholder:                "Network";
+}
+
+element {
+  padding:                    5 10;
+}
+
+element-icon {
+  enabled:                    false;
+}
+
+element-text {
+  horizontal-align:           0;
 }
 
 element selected {
-    border:                     0;
-    text-color:                 #000;
+  border:                     0;
 }
 
 /* vim:ft=css

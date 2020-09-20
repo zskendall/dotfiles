@@ -32,7 +32,7 @@ list_networks() {
 }
 
 OPTIONS=$1
-SELECTION="$(list_networks | rofi -dmenu -i -p 'Network' -theme wifi)"
+SELECTION="$(list_networks | rofi -dmenu -i -p '' -theme wifi)"
 if [ ! -z $SELECTION ]; then
   # echo $SELECTION
   eval "nmcli c up $SELECTION"

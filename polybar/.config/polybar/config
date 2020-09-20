@@ -27,9 +27,10 @@ vol-high = #ff5555
 
 [nikhita]
 inherit = default
-focus-foreground = #a402a5
+focus-foreground = #00ff00
 unfocus-foreground = #4d4d4d
 visible-foreground = #5d0786
+alert = #a402a5
 
 [borealis]
 inherit = default
@@ -37,6 +38,7 @@ background = #4d723d71
 focus-foreground = #b30000
 unfocus-foreground = #7b926f
 visible-foreground = #fff
+alert = #b30000
 
 [chjara]
 inherit = default
@@ -44,17 +46,21 @@ background = #bf080130
 focus-foreground = #eb8d04
 unfocus-foreground = #a8a8a8
 visible-foreground = #850200
+alert = ${maqi.visible-foreground}
+vol-low = #1d6e1d
+vol-med = #eb8d04
+vol-high = ${maqi.visible-foreground}
 
 
 [maqi]
 inherit = default
-background = #cc1d007d
+background = #bf1d007d
 foreground = #b5e2ff
 focus-foreground = #ff5fad
 unfocus-foreground = #00008b
 visible-foreground = #850200
-alert = #ff5fad
-vol-low = #00008b
+alert = ${self.focus-foreground}
+vol-low = ${maqi.unfocus-foreground}
 vol-med = #690095
 vol-high = #a2189e
 
@@ -239,7 +245,7 @@ click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
 type = internal/volume
 
 label-volume = %percentage:02%%
-format-volume = <ramp-volume><bar-volume><label-volume>
+format-volume = <ramp-volume><bar-volume>
 
 label-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.module}
@@ -250,11 +256,11 @@ format-muted-background = ${colors.module}
 format-muted-padding = 1
 label-muted = %{T2}%{T-}
 
-ramp-volume-0 = %{F#ff5fad}%{F-}
-ramp-volume-1 = %{F#ff5fad}%{F-}
-ramp-volume-2 = %{F#ff5fad}%{F-}
+ramp-volume-0 = %{F#ff5fad} %{F-}
+ramp-volume-1 = %{F#ff5fad} %{F-}
+ramp-volume-2 = %{F#ff5fad} %{F-}
 
-ramp-headphones-0 = %{F#ff5fad} %{F-}
+ramp-headphones-0 = %{F#ff5fad}  %{F-}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = ${colors.vol-low}
@@ -267,10 +273,10 @@ bar-volume-foreground-6 = ${colors.vol-high}
 bar-volume-gradient = false
 bar-volume-indicator =
 bar-volume-indicator-font = 2
-bar-volume-fill = ﭳ
-bar-volume-fill-font = 5
-bar-volume-empty = ﭳ
-bar-volume-empty-font = 5
+bar-volume-fill = ━
+bar-volume-fill-font = 6
+bar-volume-empty = ━
+bar-volume-empty-font = 6
 bar-volume-empty-foreground = ${colors.empty}
 
 
@@ -335,7 +341,7 @@ type = internal/network
 interface = ${env:NETWORK:enp2s0}
 
 label-connected = ${env:NETWORK_CONNECTED_LABEL:%{F#ff5fad} %{F-}eth }
-label-disconnected = ${env:NETWORK_DISCONNECTED_LABEL:%{F#333}null%{F-}}
+label-disconnected = ${env:NETWORK_DISCONNECTED_LABEL:%{F#ff5fad}null%{F-}}
 label-connected-background = ${colors.module}
 label-disconnected-background = ${colors.module}
 

@@ -5,22 +5,19 @@
 
 @import "colorschemes/maqi.rasi"
 
-* {
-    text-color:         @text;
-}
-
 window {
-    children:           [ message, listview ];
-    padding:            36% 0;
+  background-color:   @background-alt;
+  children:           [ message, listview ];
+  padding:            36% 0;
 }
 
 textbox {
-    border:             0px 0px 2px;
-    border-color:       @primary;
-    font:               "Material Icons 70";
-    horizontal-align:   0.5;
-    margin:             12px 30%;
-    padding:            12px;
+  border:             0px 0px 2px;
+  border-color:       @primary;
+  font:               "Material Icons 70";
+  horizontal-align:   0.5;
+  margin:             12px 30%;
+  padding:            12px;
 }
 
 listview {
@@ -29,20 +26,20 @@ listview {
   fixed-height:       1;
   dynamic:            true;
   horizontal-align:   0.5;
-  margin: 0 40%;
-  padding: 0 0 0 1%;
-  expand: true;
+  margin:             0 40%;
+  padding:            0 0 0 1%;
+  expand:             true;
 }
 
 element {
-    width:            8%;
+  width:              8%;
 }
 
 element selected {
-    background-color: @background-alt;
-    border: 0 0 2 0;
-    border-color: @text;
-    color: @primary;
+  background-color:   @background;
+  border:             0 0 2 0;
+  border-color:       @text-color;
+  color:              @primary;
 }
 
 /* vim:ft=css

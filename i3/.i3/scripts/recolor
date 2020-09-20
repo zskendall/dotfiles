@@ -72,7 +72,8 @@ theme_i3() {
   fi
   local current=`egrep -o "^client\.focused .*\$" ~/.i3/config \
     | awk -F' ' '{print $2}' | sed 's/\$//'`
-  sed -ie "/^client/s/\$${current}/\$${THEME}/g" ~/.i3/config
+  sed -ie "/^client/s/${current}/\$${THEME}/g" ~/.i3/config
+  i3-msg reload
 }
 
 theme_tmux() {
@@ -90,14 +91,14 @@ theme_tmux() {
 }
 
 theme_rofi() {
-  if [ ! -r "/home/$USER/.config/rofi/$THEME.rasi" ]; then
+  if [ ! -r "/home/$USER/.config/rofi/colorschemes/$THEME.rasi" ]; then
     local available=`grep -r "@import \"general.rasi\"" ~/.config/rofi | \
       awk -F':' '{print $1}' | awk -F'.' '{print $2}' | awk -F'/' '{print $3}'`
     no_theme_error "rofi" "$available"
     return
   fi
   local line=`egrep -o "^@import .*\.rasi" ~/.config/rofi/launcher.rasi`
-  local re='.*"([a-z]+).rasi'
+  local re='.*/([a-z]+).rasi'
   [[ $line =~ $re ]]
   local current=${BASH_REMATCH[1]}
   for f in $(grep -r $current ~/.config/rofi | cut -d':' -f 1); do

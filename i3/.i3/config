@@ -49,7 +49,7 @@ font pango:monospace 8
 bindsym $mod+Return exec xfce4-terminal
 bindsym Mod1+Return exec xfce4-terminal
 # start rofi (program laucher mode)
-bindsym $mod+f exec rofi -show drun -display-drun "launch" -theme launcher
+bindsym $mod+f exec rofi -show drun -theme launcher
 bindsym $mod+q exec --no-startup-id ~/.i3/scripts/sysmenu
 bindsym $mod+ctrl+w exec ~/.i3/scripts/wifi
 bindsym $mod+ctrl+shift+w exec "~/.i3/scripts/wifi all
@@ -131,6 +131,7 @@ bindsym $mod+shift+b move scratchpad
 bindsym $mod+mod1+b exec ~/.i3/scripts/to_scratchpad
 bindsym $mod+mod1+n scratchpad show
 bindsym $mod+mod1+c [class="Google-chrome|whatsapp*"] scratchpad show move position center
+bindsym $mod+mod1+d [class="discord"] scratchpad show move position center
 bindsym $mod+ctrl+space floating toggle
 
 # change focus between tiling / floating windows
@@ -278,8 +279,8 @@ set $dark_neutral            #222222
 set $indicator               #292d2e
 
 # themed
-set $borealis              #7b926f
-set $nikhita               #4d4d4d
+set $borealis              #b30000
+set $nikhita               #00ff00
 set $chjara                #eb8d04
 set $maqi                  #ff5fad
 

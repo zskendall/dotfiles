@@ -5,33 +5,28 @@
 
 @import "colorschemes/maqi.rasi"
 
-* {
-    text-color:                     @text;
-}
-
 window {
-    height:                         200;
-    width:                          600;
-    location:                       center;
-
-    children:                       [ listview ];
-    background-color:               @background;
-    border-radius:                  12;
-    padding:                        12px 0;
+  height:                         200;
+  width:                          600;
+  location:                       center;
+  children:                       [ listview ];
+  background-color:               @background-alt;
+  border-radius:                  12;
+  padding:                        12px 0;
 }
 
 listview {
-    layout:                         horizontal;
-    margin:                         42 78;
-    padding:                        0 0 0 1;
-    spacing:                        20;
+  layout:                         horizontal;
+  margin:                         42 78;
+  padding:                        0 0 0 1;
+  spacing:                        20;
 }
 
 element {
-    background-color:               @secondary;
-    border-radius:                  20;
-    padding:                        10;
-    width:                          95;
+  background-color:               @secondary;
+  border-radius:                  20;
+  padding:                        10;
+  width:                          95;
 }
 
 element selected {
