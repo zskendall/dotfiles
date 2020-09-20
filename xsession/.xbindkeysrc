@@ -11,6 +11,8 @@ b:2 + Release
 Alt + b:1
 "/usr/bin/xdotool key --clearmodifiers control+Page_Down"
 Alt + b:10
+"/usr/bin/xdotool key --clearmodifiers control+Page_Down"
+Alt + b:3
 
 # Mods for copy, paste, and enter (useful in Chrome)
 "/usr/bin/xdotool key --clearmodifiers control+c"
