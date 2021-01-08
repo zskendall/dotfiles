@@ -5,37 +5,35 @@ keys show the modifier on the bottom and the tap on top.
 
 ## Layers
 All the layout images were made with
-[KLE](http://www.keyboard-layout-editor.com/).
+[KLE](http://www.keyboard-layout-editor.com/). Grey keys have no function,
+otherwise, keys with no label fall through.
 
 ### Alpha
 The base layer is generic QWERTY. Don't mind the layer definition for Colemak,
 I was briefly dabbling and there is no longer a way to swap into this layer but
 it hasn't been deleted.
 
-![Base
-layout](https://lh3.googleusercontent.com/3wPjZl4bZpClQuuDOWsa85Y4pA97MOf9VsDeDE-vWlDvkUs_bGZpub1GUGZxfdIHP-bwuiB8YdBzNUYPx_HiJjlEpDg3TS7hraMXD-f5Zf1JzIK3lc2RRvj3gad9XRFjBzaRMLQppg=w830-h282-no)
+[![Base layout](https://lh3.googleusercontent.com/pw/ACtC-3dLXS_2Eux6AET-Kd3fSRPqApWzFEWnx2sbOavHVsgDR01DS80R4dNZ3REDGNKrBdkmlwcUOblQiOpAv3Iq6dcvrtX2balNje7EeshQwQFKSM8ZkavpNDOBD_68ilsMgoIWduEDRLzgtM0OEaN4oWME=w830-h282-no?authuser=0)](http://www.keyboard-layout-editor.com/#/gists/d9eabc2c9c8a767cf8e48dfd4ce3662b)
 
 ### Numeric
 Holding the innermost left thumb key activates the hex-compatible numeric layer
-while the key is pressed. Grey keys have no function, otherwise, keys with no
-label fall through.
+while the key is pressed.
 
-![Numeric
-layout](https://lh3.googleusercontent.com/Wcqo_oh72g7l2c3UKetVSdE_qhrtSULwlIGaOEKOEaId2u2M0qFLFYyzEmXcqPphxNzZptox5HUK2GP5lr50gJHEkpbUV9nVErtcgj5nsRPu2Cks8RpuYNkBaSVMXjJx-6L9IZ7_0A=w830-h282-no)
+[![Numeric layout](https://lh3.googleusercontent.com/Wcqo_oh72g7l2c3UKetVSdE_qhrtSULwlIGaOEKOEaId2u2M0qFLFYyzEmXcqPphxNzZptox5HUK2GP5lr50gJHEkpbUV9nVErtcgj5nsRPu2Cks8RpuYNkBaSVMXjJx-6L9IZ7_0A=w830-h282-no)](http://www.keyboard-layout-editor.com/#/gists/bc9bdcb085371ebac15fa6449208bab3)
 
 ### Navigation
 Holding the innermost right thumb key activates the combined navigation and
 adjust layer while the key is pressed.
 
-![Navigation
-layout](https://lh3.googleusercontent.com/y3siTYRNB5Jzw1JuLuxmloHdpn5b0KnZ-6q88qVBi9EFX2CvxVzCiUvoJNrKMvWE0zlvXKR_xoms7CG98q-XBb3-XyncvAxckHWboCQx8ZdXL1eqIh_60039xPZDkup91YahBRVWMQ=w830-h282-no)
+[![Navigation
+layout](https://lh3.googleusercontent.com/pw/ACtC-3dOzrN3k7GyGOtluc_g1_sSRT5I8nDQ22kssxI8GKYJNEjdFXITDCFHYShPQLYiYHQdsXYYxVg79ER91O8LKikSfI1W22cVBcOuX27Ee6kjDCxh2PmNI0DbtMNUCCuCif2K3pTBlNdaRIlZ6gezHoSH=w830-h282-no?authuser=0)](http://www.keyboard-layout-editor.com/#/gists/477ba2ba740a8949c84c1dcafca9aa75)
 
 ### Mouse and Media
 This layer allows for moving the mouse with the keyboard, though only small
 movements are recommended, and also includes some GUI features.
 
-![Mouse
-layout](https://lh3.googleusercontent.com/k4-5c8pwwa_baEcdl_WUfaEwuXiAFjlRMvuQulLoj6k2ZPGAyak87zBK3VQrGfbawTaXuMku6w8ej4W8wuZgLUq6omVBdJqwim83vEBST4BkMq6sr3-2-Nxz8HMLeqv9ywtWvIfnuA=w830-h282-no)
+[![Mouse
+layout](https://lh3.googleusercontent.com/pw/ACtC-3cE3NTJ7tn5gh0urtioHgWgZ6TD4snP56TozDNjzmCA9KlTBXrwF5h3RJX_Zhg53v1rw3qH2MGYDUY-80SKwKM-umQ1lRDe8LWG6bVriP2KJc3Xwyl4wX7tYwrdM3oziG4Vanks9Xr1iKusqQrvKy_E=w830-h282-no?authuser=0)](http://www.keyboard-layout-editor.com/#/gists/e5eaf4bfe8d2d3a86cf00d8460120ad4)
 
 ## Flashing
 Currently uses pro micros, with EE_HANDS to protect agaginst shearing the socket
@@ -49,7 +47,8 @@ ln -sf ~/dotfiles/keyboards/corne/qmk/config.h ~/qmk_firmware/keyboards/crkbd/ke
 ln -sf ~/dotfiles/keyboards/corne/qmk/rules.mk ~/qmk_firmware/keyboards/crkbd/keymaps/zskendall/rules.mk
 ln -sf ~/dotfiles/keyboards/corne/qmk/keymap.c ~/qmk_firmware/keyboards/crkbd/keymaps/zskendall/keymap.c
 cd qmk_firmware
-make crkbd/rev1:zskendall:avrdude
+make crkbd:zskendall:avrdude-split-right
+make crkbd:zskendall:avrdude-split-left
 ```
 
 There are two ways to reset the keyboard:

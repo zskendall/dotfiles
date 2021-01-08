@@ -18,3 +18,6 @@
 #define MOUSEKEY_TIME_TO_MAX 60
 #define MOUSEKEY_MAX_SPEED 7
 #define MOUSEKEY_WHEEL_DELAY 0
+
+// Prevent fast combos registering as mods
+#define IGNORE_MOD_TAP_INTERRUPT

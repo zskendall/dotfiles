@@ -459,9 +459,9 @@ portability of the Corne compared to the Iris.
 I don't know whether my Corne is endgame, though. I'm still on the fence about a
 build with an integrated trackball, maybe a [dactyl
 manuform](https://github.com/abstracthat/dactyl-manuform), and going wireless.
-Regardless of whether I build one (or more) keyboard(s), I think that building
-and using my Corne has firmly cemented my preference for split 40% and it will
-remain a one of my go-to keebs.
+Regardless of whether I build one (or more) more keyboard(s), I think that
+building and using my Corne has firmly cemented my preference for split 40% and
+it will remain a one of my go-to keebs.
 
 <div align="center">
   <img alt="Finished Corne #2"

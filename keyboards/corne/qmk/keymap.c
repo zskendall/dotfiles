@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | Esc  |  A   |  S   |  D   |  F   |  G   |                 |   H  |   J  |   K  |   L  |   ;  |   '  |
      * | LCtrl|      |      |      |      |      |                 |      |      |      |      |      | LCtrl|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * | ART  |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
+     * |      |  Z   |  X   |  C   |  V   |  B   |                 |   N  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |  (   | Spc  |  [   |          |   ]  |  Ret |   )  |
      *                         |LShft | LAlt |*Num* |          | *Nav*| Meta | RShft|
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_BSPC,
         CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_QUOT,
-        ART_TOG, KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
+        __x__  , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
                         KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, META_RET, KC_RSPC
     ),
 
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////|//////|      |  D   |  F   |  \   |                 |   /  |   4  |   5  |   6  |   +  |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤		             ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * | TERM |      |      |//////|      |//////|                 |   =  |   1  |   2  |   3  |   .  |  Del |
+     * | TERM |      |//////|//////|      |//////|                 |   =  |   1  |   2  |   3  |   .  |  Del |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |//////|//////|*Pad* |          | 0    |//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
@@ -104,14 +104,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├──────┼──────┼──────┼──────┼──────┼──────┤		             ├──────┼──────┼──────┼──────┼──────┼──────┤
      * |//////| tab1 | tab2 | tab3 | tab4 | tab5 |                 | tab6 | tab7 | tab8 | tabX |      |MS_TOG|
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-     *                         |//////|//////|//////|          | *Nav*|//////|//////|
+     *                         |//////|//////| ART  |          | *Nav*|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_NAV] = LAYOUT(
         _____, RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5),    RGUI(KC_6), RGUI(KC_7), RGUI(KC_8), RGUI(KC_9), RGUI(KC_0),  _____,
         _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, __x__,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, __x__, LGUI(KC_L),
         _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5),    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), __x__,  MS_TOG,
-                                        _____, _____, _____,              _____, _____, _____
+                                        _____, _____, ART_TOG,              _____, _____, _____
     ),
 
     /**
