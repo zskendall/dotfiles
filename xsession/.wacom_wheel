@@ -5,17 +5,17 @@ MODE=`expr $(($(cat /tmp/wacom) + 1)) % 4`
 
 case $MODE in
   3)
-    notify-send -a wacom "mode $MODE" "changing wheel to brush size"
+    notify-send -a wacom --hint=string:x-dunst-stack-tag:wacom "mode $MODE" "changing wheel to brush size"
     xsetwacom set "$PAD" AbsWheelUp key "["
     xsetwacom set "$PAD" AbsWheelDown key "]"
     ;;
   0)
-    notify-send -a wacom "mode 4" "changing wheel to zoom"
+    notify-send -a wacom --hint=string:x-dunst-stack-tag:wacom "mode 4" "changing wheel to zoom"
     xsetwacom set "$PAD" AbsWheelUp 4
     xsetwacom set "$PAD" AbsWheelDown 5
     ;;
   *)
-    notify-send -a wacom "mode $MODE" "wheel is zoom"
+    notify-send -a wacom --hint=string:x-dunst-stack-tag:wacom "mode $MODE" "wheel is zoom"
     ;;
 esac
 
