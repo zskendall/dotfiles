@@ -16,6 +16,7 @@ elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
 fi
 
 [ -r ~/.xbindkeysrc ] && xbindkeys -f ~/.xbindkeysrc &
+[ -r ~/.inputrc ] && bind -f ~/.inputrc &
 
 if [ -r ~/.wacom_udev ]; then
   if [[ $(pacman -Q xf86-input-wacom) ]]; then # for Manjaro
