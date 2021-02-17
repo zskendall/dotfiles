@@ -13,7 +13,7 @@
 [default]
 background = #0000
 background-alt = #222
-module-background = #0000
+module-background = ${self.background}
 foreground = #dfdfdf
 focus-foreground = #ff0000
 visible-foreground = #000
@@ -63,6 +63,29 @@ alert = ${self.focus-foreground}
 vol-low = ${maqi.unfocus-foreground}
 vol-med = #690095
 vol-high = #a2189e
+
+
+[astral]
+inherit = default
+background-alt = #0000
+focus-foreground = #ffffff
+unfocus-foreground = #5e3a92
+visible-foreground = #498db9
+vol-low = ${self.unfocus-foreground}
+vol-med = #515fcf
+vol-high = #8ac6ea
+
+
+[autumnal]
+inherit = default
+background = #99222222
+background-alt = #0000
+focus-foreground = #a33b2a
+unfocus-foreground = #478ba9
+visible-foreground = #c9680a
+vol-low = #889b1c
+vol-med = #b47512
+vol-high = #63120e
 
 
 [colors]
@@ -244,6 +267,8 @@ click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
 [module/volume]
 type = internal/volume
 
+master-soundcard = hw:1
+
 label-volume = %percentage:02%%
 format-volume = <ramp-volume><bar-volume>
 
@@ -344,6 +369,12 @@ label-connected = ${env:NETWORK_CONNECTED_LABEL:%{F#ff5fad} %{F-}eth }
 label-disconnected = ${env:NETWORK_DISCONNECTED_LABEL:%{F#ff5fad}null%{F-}}
 label-connected-background = ${colors.module}
 label-disconnected-background = ${colors.module}
+
+
+[module/chat]
+type = custom/text
+content = 
+click-left = i3-msg scratchpad show move window to position 2500 200
 
 
 

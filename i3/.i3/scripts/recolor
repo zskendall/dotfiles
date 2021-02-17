@@ -27,14 +27,12 @@ no_theme_error() {
     "Leaving $1 configuration as-is."
 }
 
-# @arg1 the default image to use
 refresh_display() {
-  if [ ! -z $1 ]; then
-    feh --bg-scale $1
-  elif (( $argv < 2 )); then
-    warn "No default image for theme $THEME. Leaving background as-is."
+  if (( ${#IMAGES[@]} < 1 )); then
+    warn "No images for theme $THEME. Leaving background as-is."
   else
-    display="feh --bg-scale "
+    local display="feh --bg-scale "
+    [[ $THEME == "borealis" ]] && display="feh --bg-fill "
     for i in "${IMAGES[@]}"; do
       display+="'$i' "
     done
@@ -54,7 +52,9 @@ theme_polybar() {
       "  Available themes are: [${available//$'\n'/ }]" \
       "Using default polybar colors."
   fi
-  sed -i "s/${current}\./${updated}\./g" ~/.config/polybar/config
+  local nbeg=`grep -n "\[colors\]" ~/.config/polybar/config | awk -F':' '{print $1}'`
+  local nend=`grep -n "FONTS" ~/.config/polybar/config | awk -F':' '{print $1}'`
+  sed -ri "${nbeg},${nend}s/${current}\./${updated}\./g" ~/.config/polybar/config
 
   # read and parse focus_foreground for the icon styling
   local focus=`awk "/\[$THEME\]/,/\[colors\]/" ~/.config/polybar/config | \
@@ -72,7 +72,7 @@ theme_i3() {
   fi
   local current=`egrep -o "^client\.focused .*\$" ~/.i3/config \
     | awk -F' ' '{print $2}' | sed 's/\$//'`
-  sed -ie "/^client/s/${current}/\$${THEME}/g" ~/.i3/config
+  sed -i "/^client/s/${current}/\$${THEME}/g" ~/.i3/config
   i3-msg reload
 }
 
@@ -102,7 +102,7 @@ theme_rofi() {
   [[ $line =~ $re ]]
   local current=${BASH_REMATCH[1]}
   for f in $(grep -r $current ~/.config/rofi | cut -d':' -f 1); do
-    sed -ie "/^@import/s/${current}/${THEME}/g" $f
+    sed -i "/^@import/s/${current}/${THEME}/g" $f
   done
 }
 
@@ -159,6 +159,18 @@ theme_ncmpcpp() {
   done
 }
 
+theme_vim() {
+  if [[ ! $(grep "$THEME:" ~/.vimrc) ]]; then
+    local available=`awk "/Split bar/,/}}}/" ~/.vimrc | \
+      egrep "^\".*[a-z]+:.*[0-9]+" | awk -F':' '{print $1}' | sed 's/\" //'`
+    no_theme_error "vim" "$available"
+    return
+  fi
+  local themed=`grep "$THEME:" ~/.vimrc | awk -F': ' '{print $2}'`
+  sed -ri "/VertSplit/s/(ctermfg=)[0-9]+/\1$themed/" ~/.vimrc
+  sed -ri "/OverLength/s/(ctermbg=)[0-9]+/\1$themed/" ~/.vimrc
+}
+
 theme_others() {
   if [ -z $THEME ]; then
     bold=$(tput bold)
@@ -169,23 +181,38 @@ theme_others() {
   theme_tmux
   theme_rofi
   theme_ncmpcpp
+  theme_vim
+  # TODO(zskendall): theme xfce4-terminal for light bg (paracosm)
 }
 
-notify-send -a recolor "changing theme to $THEME"
+if (( `ps -aux | grep polybar | wc -l` > 1 )) ; then
+  notify-send -a recolor "changing theme to $THEME"
+fi
 
-case $THEME in
-  borealis)
-    refresh_display ~/dotfiles/images/background_main.jpg
-    ;;
-  nikhita)
-    refresh_display ~/dotfiles/images/background_secondary.jpg
-    ;;
-  *)
-    refresh_display
-    ;;
-esac
+if (( ${#IMAGES[@]} != `xrandr | egrep "[^dis]connected" | wc -l` )); then
+  case $THEME in
+    borealis)
+      IMAGES=(~/dotfiles/images/background_main.jpg \
+        ~/dotfiles/images/aurora_secondary.jpg)
+      ;;
+    nikhita)
+      IMAGES=(~/dotfiles/images/background_secondary.jpg \
+        ~/dotfiles/images/nikhita_secondary.jpg)
+      ;;
+    astral)
+      IMAGES=(~/dotfiles/images/astral_main.jpg ~/dotfiles/images/DSC_4419.jpg)
+      ;;
+    autumnal)
+      IMAGES=(~/dotfiles/images/autumnal_main.jpg \
+        ~/dotfiles/images/autumnal_secondary.jpg)
+      ;;
+  esac
+fi
+refresh_display
 
 theme_dunst
 theme_polybar
 theme_others
-notify-send -a recolor "udpated theme to $THEME"
+if (( `ps -aux | grep polybar | wc -l` > 1 )) ; then
+  notify-send -a recolor "udpated theme to $THEME"
+fi

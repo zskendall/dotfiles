@@ -67,6 +67,7 @@
     # default: #000000
     # maqi: #ff5fad
     # chjara: #eb8d04
+    # autumnal: #a33b2a
     frame_color = "#ff5fad"
 
     # Define a color for the separator.
@@ -290,6 +291,8 @@
     # nikhita: #5d0786 #ffffff
     # chjara: #080130 #eb8d04
     # maqi: #1d007d #b5e2ff
+    # autumnal: #000000 #478ba9
+    # astral: #498db9 #000824
     background = "#1d007d"
     foreground = "#b5e2ff"
     timeout = 10

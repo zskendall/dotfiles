@@ -1,6 +1,10 @@
 " Enable modern Vim features not compatible with Vi spec.
 set nocompatible
 
+" Swap for lighter background themes {{{
+colorscheme murphy
+" }}}
+
 " ==============================================================================
 " Configure plugins (e.g. - Vundle) here.
 " ==============================================================================
@@ -13,6 +17,8 @@ Plug 'mhinz/vim-signify'
 Plug 'RRethy/vim-illuminate'
 Plug 'raimondi/delimitmate'
 Plug 'markonm/traces.vim'
+
+Plug 'tsiemens/vim-aftercolors'
 
 " Source any machine-specific plugins
 if filereadable(glob('~/.vim.plugins.$HOSTNAME'))
@@ -59,7 +65,7 @@ syntax on
 hi Visual ctermbg=235 ctermfg=none
 
 " Highlight overlength lines
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+highlight OverLength ctermbg=88 ctermfg=white guibg=#592929
 augroup autohighlight
   autocmd!
   autocmd FileType * match OverLength /\%81v.\+/
@@ -146,8 +152,14 @@ set ttimeoutlen=0
 " ==============================================================================
 
 " Split bar: {{{
+" borealis: 114
+" nikhita: 90
+" chjara: 88
+" maqi: 88
+" astral: 75
+" autumnal: 202
 set fillchars+=vert:│
-hi VertSplit ctermbg=90 ctermfg=16
+hi VertSplit cterm=none ctermfg=88
 " }}}
 
 " Build status: {{{
@@ -219,7 +231,7 @@ hi User4 ctermfg=22 cterm=bold
 " Change User4 color when entering and leaving INSERT mode. {{{
 function! InsertStatusLineColor(mode)
   if a:mode == 'r'
-    hi User4 ctermfg=red cterm=bold
+    hi User4 ctermfg=88 cterm=bold
   elseif a:mode == 'i'
     hi User4 ctermfg=27 cterm=bold
   else

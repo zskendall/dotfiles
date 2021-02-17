@@ -1,0 +1,19 @@
+/* Astral Colors to be used by ROFI themes */
+
+@import "general.rasi"
+
+/* #5e3a92 */
+/* +  73 visible-foreground = #498db9 */
+
+* {
+  primary:                 #5e3a92;
+  secondary:               #070916;
+  text-color:              #498db9;
+  accent:                  @primary;
+  background:              @grey50;
+  background-alt:          #00082499;
+  selected-background:     #070916cc;
+  border-color:            @text-color;
+}
+
+/* vim:ft=css

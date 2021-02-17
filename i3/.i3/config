@@ -279,10 +279,12 @@ set $dark_neutral            #222222
 set $indicator               #292d2e
 
 # themed
-set $borealis              #b30000
-set $nikhita               #00ff00
-set $chjara                #eb8d04
-set $maqi                  #ff5fad
+set $borealis             #b30000
+set $nikhita              #00ff00
+set $chjara               #eb8d04
+set $maqi                 #ff5fad
+set $astral               #5e3a92
+set $autumnal             #a33b2a
 
 # class                  border        bg             text            indicator    child_border
 client.focused           $maqi       $maqi        $dark_neutral   $maqi      $maqi

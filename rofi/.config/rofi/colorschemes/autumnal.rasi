@@ -1,0 +1,16 @@
+/* Autumnal Colors to be used by ROFI themes */
+
+@import "general.rasi"
+
+* {
+  primary:                 #a33b2a;
+  secondary:               #000109;
+  text-color:              #c9680a;
+  accent:                  @primary;
+  background:              #2229;
+  background-alt:          #120b06bf;
+  selected-background:     #120b06cc;
+  border-color:            @text-color;
+}
+
+/* vim:ft=css
