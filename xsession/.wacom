@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # needed for udev
-export XAUTHORITY=/home/zoe/.Xauthority
+user="$(users)"
+export XAUTHORITY="/home/$user/.Xauthority"
 export DISPLAY=:0
 
 # set state of wheel

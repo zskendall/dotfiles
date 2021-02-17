@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. /home/zoe/.wacom
+user="$(users)"
+. "/home/$user/.wacom"
 
-chgrp zoe /tmp/wacom
+chgrp "$user" /tmp/wacom
 chmod 664 /tmp/wacom
