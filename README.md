@@ -1,27 +1,48 @@
 # dotfiles
 Config files versioned with git and managed by GNU stow. I use Debian on some
 machines, Manjaro (Arch-based) on others; install commands for both are listed
-just for completeness.
-```
-sudo apt-get install git stow
-```
-or
+if any package names are different; otherwise, Manjaro preferred.
 ```
 sudo pacman -S git stow
 ```
 
-## X Session
-Configuration for display and input devices.
+**New and improved!** Initial install script to simplify package fetching:
 ```
-sudo apt-get install feh xbindkeys xautomation xdotool xsetwacom
-stow xsession compton
-bind -f ~/.inputrc
+git clone https://github.com/zskendall/dotfiles
+./dotfiles/install.sh
+```
+As I've never clean installed after creating, might need to install git and/or
+`chmod u+x` the script.
+
+## i3 window manager
+Keyboard-driven. What more do I need to say?
+```
+sudo apt-get install i3-wm suckless-tools
 ```
 or
 ```
-sudo pacman -S feh xbindkeys xautomation xdotool xf86-input-wacom
+sudo pacman -S i3-gaps
+stow i3
 ```
+[User guide](https://i3wm.org/docs/userguide.html)
 
+If running `i3-gaps` on Debian/Ubuntu, followed instructions to build and
+install from [source](https://www.github.com/Airblader/i3) found
+[here](benjames.io/2017/09/03/installing-i3-gaps-on-ubuntu-16-04/).
+
+The lock screen is [a branch of i3lock](https://github.com/Lixxia/i3lock) that
+provides a clock and other customization. To use 24h time, the boolean use24hour
+in `i3lock.c` must be set to true before making and installing.
+
+I use a bash wrapper around i3lock. This allows specifying the same set of args
+in the i3 bindsym but only using ones that are applicable for a given host. For
+example, the i3 bindsym might include an image path; the locker script will only
+pass that along to i3lock if the file exists.
+
+## X Session
+Configuration for display, input devices, and optional system monitoring.
+
+### Compositor
 I use [tryone's fork of compton](https://github.com/tryone144/compton) to add
 kawase blur. On Debian/Ubuntu, cloned the repo with git clone and followed the
 build instructions in the repo README. On Arch-based (Manjaro), there's a picom
@@ -32,12 +53,42 @@ pamac search -a picom
 pamac build picom-tryone-git
 ```
 
-(July 2020): more recent versions of picom were having trouble with opacity of
-polybar not obeying rules, so used the normal version and downgraded to 7.5:
+**[July 2020 Update]**: more recent versions of picom were having trouble with
+opacity of polybar not obeying rules, so used the normal version and downgraded
+to 7.5 (no kawase support but it still does a good job):
 
 ```
 sudo pacman -S picom
 DOWNGRADE_FROM_ALA=1 && downgrade picom
+```
+or as done in the install script
+```
+sudo pacman -U https://archive.archlinux.org/packages/p/picom/picom-7.5.1-x86_64.pkg.tar.xz
+```
+
+Configure and start compositor:
+```
+stow compton
+picom -b --experimental-backends --config ~/.compton.conf
+```
+
+### General Configuration
+```
+sudo pacman -S feh xbindkeys xautomation xdotool xfce4-terminal
+```
+
+Most of the programs listed above are themed to use similar colors that go well
+with the background. The wrapper script can quickly change between existing
+themes:
+```
+~/.i3/scripts/recolor borealis
+```
+
+For clean install, configure the X session (done automatically on login
+afterwards):
+```
+stow i3 rofi polybar vim tmux media dunst xsession
+~/.xprofile
 ```
 
 To experiment with button mappings:
@@ -48,6 +99,7 @@ xbindkeys -n -v
 xbindkeys &
 ```
 
+### System monitoring
 System monitoring with [gotop](https://github.com/cjbassi/gotop). On Debian,
 cloned the repo into the home directory and ran cjbassi's `download.sh` script.
 It's also in the AUR:
@@ -60,45 +112,40 @@ Run the monitor with `~/gotop -p -a` or `gotop -a -l minimal` to drop network.
 To avoid compton auto-dimming the monitoring when inactive, named terminal tab
 'sysmon' and excluded it in compton config.
 
-## i3 window manager
+### Wacom Drawing Tablet
+I do digital art with a [Wacom](https://www.wacom.com/en-us) drawing tablet.
+While it's plug-and-play to a certain extent, I like a custom setup that
+configures the pen, screen mapping, and tablet buttons/wheel. 
+
 ```
-sudo apt-get install i3-wm suckless-tools xfce4-terminal rofi
-stow i3
+sudo apt-get install xsetwacom
 ```
 or
 ```
-sudo pacman -S i3-gaps xfce4-terminal rofi
-```
-[User guide](https://i3wm.org/docs/userguide.html)
-
-If running `i3-gaps` on Debian/Ubuntu, followed instructions to build and
-install from [source](https://www.github.com/Airblader/i3) found
-[here](benjames.io/2017/09/03/installing-i3-gaps-on-ubuntu-16-04/).
-
-Application launcher is rofi. Its key maps, as well as configuration for other
-applications are in .Xresources. Rofi also uses custom rasi themes that can be
-specified with `-theme <theme>` in i3 config bindsym.
-```
-stow rofi
-xrdb -merge ~/.Xresources
+sudo pacman -S feh xf86-input-wacom
 ```
 
-Lock screen is [a branch of i3lock](https://github.com/Lixxia/i3lock) that
-provides a clock and other customization. To use 24h time, the boolean use24hour
-in `i3lock.c` must be set to true before making and installing.
+To configure the tablet for the first time or after a reboot, run `~/.wacom`.
 
-I use a bash wrapper around i3lock. This allows specifying the same set of args
-in the i3 bindsym but only using ones that are applicable for a given host. For
-example, the i3 bindsym might include an image path; the locker script will only
-pass that along to i3lock if the file exists.
+To support computer hopping with a single tablet (and mitigate reboot strain), I
+configured udev rules in `/etc/udev/rules.d/` so that it will auto-configure
+next time the tablet is plugged in.
 
-Notification daemon is [Dunst](https://wiki.archlinux.org/index.php/Dunst),
-themed to match i3, polybar, etc. If the theme doesn't exist, will return to the
-default theme white on blue.
 ```
-stow dunst
-~/.i3/scripts/recolor borealis
+ACTION=="add", SUBSYSTEM=="input", KERNEL=="mouse*", ATTRS{idVendor}=="<VID>", ATTRS{idProduct}=="<PID>", RUN+="/home/<USER>/.wacom_udev"
+ACTION=="add", SUBSYSTEM=="input", KERNEL=="mouse*", ATTRS{idVendor}=="<VID>", ATTRS{idProduct}=="<PID>", RUN+="/home/<USER>/.wacom_udev"
 ```
+
+The vendor and product IDs can be found by plugging the tablet in and running:
+```
+lsusb | grep Wacom
+Bus ... ID <vendor>:<product> Wacom Co., Ltd <product name>
+```
+
+Note that the udev rules [seem to] need the user to be hardcoded (at least, I
+didn't manage to get them to execute otherwise). The scripts also assume a
+single user system, such as a PC; if there isn't a single user, the user will
+need to be hardcoded for root to know which one to set permissions for.
 
 ## Polybar
 System bar is Polybar; see
@@ -110,13 +157,31 @@ stow polybar
 
 ## Tmux
 ```
-sudo apt-get install tmux
+sudo pacman -S tmux
 stow tmux
 ```
-or
+
+## Launcher
+Application launcher is rofi. Its key maps, as well as configuration for other
+applications are in .Xresources. Rofi also uses custom rasi themes that can be
+specified with `-theme <theme>` in i3 config bindsym.
 ```
-sudo pacman -S tmux
+sudo pacman -S rofi
+stow rofi
+xrdb -merge ~/.Xresources
 ```
+
+## Notifications
+Notification daemon is [Dunst](https://wiki.archlinux.org/index.php/Dunst),
+themed to match i3, polybar, etc. If the theme doesn't exist, will return to the
+default theme white on blue.
+```
+sudo pacman -S dunst
+stow dunst
+```
+Note that if a `dunstrc` file already exists, `stow` will not overwrite it. To
+get the config stored here, simply remove the existing files and run `stow`
+again.
 
 ## Media
 Daemon is [mpd](https://wiki.archlinux.org/index.php/Music_Player_Daemon) using
@@ -127,15 +192,12 @@ ncmpcpp only have templates, the correct settings will need to be sed replaced.
 sudo pacman -S mpd ncmpcpp
 pamac build cava
 stow media
-sed 
+
 sed "s~%music_dir%~<music_dir_here>~" ~/.config/mpd/template > ~/.config/mpd/mpd.conf
 sed "s~%music_dir%~<music_dir_here>~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
 ```
 The colors for ncmpcpp are also themed, will need to be changed manually or can
-be auto-updated with the recolor script if a theme exists:
-```
-~/.i3/scripts/recolor borealis
-```
+be auto-updated with the recolor script if a theme exists.
 
 ### Headphones (Debian)
 Generally use Bose QC35_II headphones, which are bluetooth. For desktops, will
