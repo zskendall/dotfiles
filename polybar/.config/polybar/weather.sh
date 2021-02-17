@@ -32,7 +32,7 @@ fi
 
 TEMP=$(echo $ASCII_WEATHER | grep -m 1 -Eo -e '-?[[:digit:]].*°F')
 
-re='(-?[[:digit:]]+)((.*-|..)(-?[[:digit:]]+))?'
+re='([-\+]?[[:digit:]]+)((.*-|..)([-\+]?[[:digit:]]+))?'
 [[ $TEMP =~ $re ]]
 lower=${BASH_REMATCH[1]}
 upper=${BASH_REMATCH[4]}
