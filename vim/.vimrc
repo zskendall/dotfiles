@@ -1,10 +1,6 @@
 " Enable modern Vim features not compatible with Vi spec.
 set nocompatible
 
-" Swap for lighter background themes {{{
-colorscheme murphy
-" }}}
-
 " ==============================================================================
 " Configure plugins (e.g. - Vundle) here.
 " ==============================================================================
@@ -63,6 +59,10 @@ syntax on
 
 " Change visual highlight to dark because WHITE???
 hi Visual ctermbg=235 ctermfg=none
+
+" change some colors to also support lighter backgrounds
+hi Constant ctermfg=Yellow
+hi Statement ctermfg=DarkGreen
 
 " Highlight overlength lines
 highlight OverLength ctermbg=88 ctermfg=white guibg=#592929
