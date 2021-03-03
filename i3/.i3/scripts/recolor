@@ -91,9 +91,9 @@ theme_tmux() {
 }
 
 theme_rofi() {
-  if [ ! -r "/home/$USER/.config/rofi/colorschemes/$THEME.rasi" ]; then
+  if [ ! -r "$HOME/.config/rofi/colorschemes/$THEME.rasi" ]; then
     local available=`grep -r "@import \"general.rasi\"" ~/.config/rofi | \
-      awk -F':' '{print $1}' | awk -F'.' '{print $2}' | awk -F'/' '{print $3}'`
+      awk -F':' '{print $1}' | awk -F'.' '{print $2}' | awk -F'/' '{print $4}'`
     no_theme_error "rofi" "$available"
     return
   fi
@@ -167,8 +167,11 @@ theme_vim() {
     return
   fi
   local themed=`grep "$THEME:" ~/.vimrc | awk -F': ' '{print $2}'`
-  sed -ri "/VertSplit/s/(ctermfg=)[0-9]+/\1$themed/" ~/.vimrc
-  sed -ri "/OverLength/s/(ctermbg=)[0-9]+/\1$themed/" ~/.vimrc
+  local bg=`echo $themed | awk -F',' '{print $1}'`
+  local fg=`echo $themed | awk -F',' '{print $2}'`
+  sed -ri --follow-symlinks "/VertSplit/s/(ctermfg=)[0-9]+/\1$bg/" ~/.vimrc
+  sed -ri --follow-symlinks "/OverLength/s/(ctermbg=)[0-9]+/\1$bg/" ~/.vimrc
+  sed -ri --follow-symlinks "/OverLength/s/(ctermfg=)[0-9]+/\1$fg/" ~/.vimrc
 }
 
 theme_others() {
