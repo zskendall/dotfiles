@@ -65,7 +65,7 @@ hi Constant ctermfg=Yellow
 hi Statement ctermfg=DarkGreen
 
 " Highlight overlength lines
-highlight OverLength ctermbg=88 ctermfg=white guibg=#592929
+highlight OverLength ctermbg=88 ctermfg=15 guibg=#592929
 augroup autohighlight
   autocmd!
   autocmd FileType * match OverLength /\%81v.\+/
@@ -152,7 +152,7 @@ set ttimeoutlen=0
 " ==============================================================================
 
 " Split bar: {{{
-" borealis: 114
+" borealis: 114,0
 " nikhita: 90
 " chjara: 88
 " maqi: 88

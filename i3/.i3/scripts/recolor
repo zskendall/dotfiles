@@ -21,7 +21,6 @@ error() {
 # @arg1 the config without the theme
 # @arg2 the available themes for the config
 no_theme_error() {
-  # printf "\n%s\n%s\n%s\n" "${red}No $1 configuration for theme $THEME." \
   error "" "No $1 configuration for theme $THEME." \
     "  Available themes are [${2//$'\n'/ }]" \
     "Leaving $1 configuration as-is."
@@ -40,9 +39,19 @@ refresh_display() {
   fi
 }
 
+# @arg1 the delimiter
+# @arg2 index to extract
+extract() {
+  awk -F"$1" "{print \$$2}"
+}
+
+line_no() {
+  extract ':' '1'
+}
+
 theme_polybar() {
   local current=`egrep -o "^background = .{([a-z]*)" ~/.config/polybar/config \
-    | grep -v "colors" | cut -d'{' -f 2`
+    | grep -v "colors" | extract '{' '2'`
   local updated=`[ $(grep "$THEME\]" ~/.config/polybar/config) ] \
     && echo "$THEME" || echo "default"`
   if [[ "$updated" == *"default"* ]]; then
@@ -52,26 +61,26 @@ theme_polybar() {
       "  Available themes are: [${available//$'\n'/ }]" \
       "Using default polybar colors."
   fi
-  local nbeg=`grep -n "\[colors\]" ~/.config/polybar/config | awk -F':' '{print $1}'`
-  local nend=`grep -n "FONTS" ~/.config/polybar/config | awk -F':' '{print $1}'`
+  local nbeg=`grep -n "\[colors\]" ~/.config/polybar/config | line_no`
+  local nend=`grep -n "FONTS" ~/.config/polybar/config | line_no`
   sed -ri "${nbeg},${nend}s/${current}\./${updated}\./g" ~/.config/polybar/config
 
   # read and parse focus_foreground for the icon styling
-  local focus=`awk "/\[$THEME\]/,/\[colors\]/" ~/.config/polybar/config | \
-    egrep -m 1 "^focus-foreground" | cut -d'#' -f2`
+  local focus=`awk "/\[$updated\]/,/\[colors\]/" ~/.config/polybar/config | \
+    egrep -m 1 "^focus-foreground" | extract '#' '2'`
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/config
-  sed -ri "s/F#[a-f0-9]{6}/F#$focus/" ~/.config/polybar/launch.sh
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/launch.sh
 }
 
 theme_i3() {
   if [[ ! $(grep "^set \$$THEME" ~/.i3/config) ]]; then
     local available=`awk "/# themed/,/# class/" ~/.i3/config | \
-      egrep "set .[a-z]+.*" | awk -F' ' '{print $2}' | sed 's/\\$//'`
+      egrep "set .[a-z]+.*" | extract ' ' '2' | sed 's/\$//'`
     no_theme_error "i3" "$available"
     return
   fi
   local current=`egrep -o "^client\.focused .*\$" ~/.i3/config \
-    | awk -F' ' '{print $2}' | sed 's/\$//'`
+    | extract ' ' '2' | sed 's/\$//'`
   sed -i "/^client/s/${current}/\$${THEME}/g" ~/.i3/config
   i3-msg reload
 }
@@ -79,7 +88,7 @@ theme_i3() {
 theme_tmux() {
   if [[ ! $(grep "^${THEME}_" ~/.tmux.conf) ]]; then
     local available=`awk "/# Themed colors/,/\}\}\}/" ~/.tmux.conf | \
-      grep ".*_status_active" | awk -F'_' '{print $1}'`
+      grep ".*_status_active" | extract '_' '1'`
     no_theme_error "tmux" "$available"
     return
   fi
@@ -87,13 +96,15 @@ theme_tmux() {
   local re='.*\$([a-z]+)_.*'
   [[ $line =~ $re ]]
   local current=${BASH_REMATCH[1]}
+
+  # must search for and replace literal $ to avoid overwriting color defs
   sed -i "s/\$${current}_/\$${THEME}_/g" ~/dotfiles/tmux/.tmux.conf
 }
 
 theme_rofi() {
   if [ ! -r "$HOME/.config/rofi/colorschemes/$THEME.rasi" ]; then
     local available=`grep -r "@import \"general.rasi\"" ~/.config/rofi | \
-      awk -F':' '{print $1}' | awk -F'.' '{print $2}' | awk -F'/' '{print $4}'`
+      extract ':' '1' | extract '.' '2' | extract '/' '4'`
     no_theme_error "rofi" "$available"
     return
   fi
@@ -101,60 +112,55 @@ theme_rofi() {
   local re='.*/([a-z]+).rasi'
   [[ $line =~ $re ]]
   local current=${BASH_REMATCH[1]}
-  for f in $(grep -r $current ~/.config/rofi | cut -d':' -f 1); do
+  for f in $(grep -r $current ~/.config/rofi | extract ':' '1'); do
     sed -i "/^@import/s/${current}/${THEME}/g" $f
   done
 }
 
 theme_dunst() {
   # read the [urgency_normal] section and parse the background and foreground
-  # colors based on either the theme or the default
-  norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" \
-    ~/.config/dunst/dunstrc | grep "$THEME:" || \
-    awk "/\[urgency_normal\]/,/\[urgency_critical/" \
-    ~/.config/dunst/dunstrc | grep "default:"`
-  local norm_bg=$(echo $norm | awk -F'#' '{print $3}' | sed -e 's/[[:space:]]*$//')
-  local norm_fg=$(echo $norm | awk -F'#' '{print $4}' | sed -e 's/[[:space:]]*$//')
-  local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | \
-    awk -F':' '{print $1}'`
-  local nend=`grep -n "\[urgency_critical\]" ~/.config/dunst/dunstrc | \
-    awk -F':' '{print $1}'`
-  echo
+  norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" ~/.config/dunst/dunstrc`
+  local line=`grep "$THEME:" <<< "$norm"`
+  local updated=`[[ ! -z "$line" ]] && echo $THEME || echo "default"`
+  local norm_bg=$(echo $line | extract '#' '3' | sed -e 's/[[:space:]]*$//')
+  local norm_fg=$(echo $line | extract '#' '4')
+  local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | line_no`
+  local nend=`grep -n "\[urgency_critical\]" ~/.config/dunst/dunstrc | line_no`
+
   sed -ri "${nbeg},${nend}s/(^.*background = \"#)[a-f0-9]{6}/\1$norm_bg/" ~/.config/dunst/dunstrc
   sed -ri "${nbeg},${nend}s/(^.*foreground = \"#)[a-f0-9]{6}/\1$norm_fg/" ~/.config/dunst/dunstrc
 
-  # read and parse the frame color based on either theme or default
-  local frame=`echo $(awk "/color of the frame/,/color for the separator/" \
-    ~/.config/dunst/dunstrc | grep "$THEME:" || \
-    awk "/color of the frame/,/color for the separator/" \
-    ~/.config/dunst/dunstrc | grep "default:") \
-    | awk -F'#' '{print $3}' | sed -e 's/[[:space:]]*$//'`
-  local fbeg=`grep -n "color of the frame" ~/.config/dunst/dunstrc | awk -F':' '{print $1}'`
-  local fend=`grep -n "color for the separator" ~/.config/dunst/dunstrc | awk -F':' '{print $1}'`
+  # read and parse the frame color
+  local frame=`awk "/color of the frame/,/color for the separator/" \
+    ~/.config/dunst/dunstrc`
+  local line=`grep "$THEME:" <<< "$frame"`
+  local frame=`([[ ! -z $line ]] && echo $line || \
+    echo $(grep "default" <<< "$frame")) | extract '#' '3'`
+  local fbeg=`grep -n "color of the frame" ~/.config/dunst/dunstrc | line_no`
+  local fend=`grep -n "color for the separator" ~/.config/dunst/dunstrc |
+    line_no`
   sed -ri "${fbeg},${fend}s/(^.*frame_color = \"#)[a-f0-9]{6}/\1$frame/" ~/.config/dunst/dunstrc
 
   # attempt to kill dunst to reload the config (shouldn't be allowed, since
   # daemon started from DBUS)
   pkill dunst
-  if [[ "$norm" == *"default"* ]]; then
+  if [[ "$updated" == *"default"* ]]; then
     warn "Reset dunst theme to default"
   fi
 }
 
 theme_ncmpcpp() {
-  if [ ! -r "/home/$USER/.ncmpcpp/$THEME.ini" ]; then
-    local available=`ls ~/.ncmpcpp/*.ini | \
-      awk -F'/' '{print $5}' | awk -F'.' '{print $1}'`
+  if [ ! -r "$HOME/.ncmpcpp/$THEME.ini" ]; then
+    local available=`ls ~/.ncmpcpp/*.ini | extract '/' '5' | extract '.' '1'`
     no_theme_error "ncmpcpp" "$available"
     return
   fi
-  local music_dir=`grep music_directory ~/.config/mpd/mpd.conf | \
-    awk -F'  ' '{print $2}'`
+  local music_dir=`grep music_directory ~/.config/mpd/mpd.conf | extract '  ' '2'`
   sed "s~%music_dir%~$music_dir~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
   IFS=$'\n'
   for line in $(cat ~/.ncmpcpp/$THEME.ini); do
-    local param=`echo $line | awk -F'=' '{print $1}' | sed "s/ *$//g"`
-    local value=`echo $line | awk -F'=' '{print $2}' | sed "s/^ *//g"`
+    local param=`echo $line | extract '=' '1' | sed "s/ *$//g"`
+    local value=`echo $line | extract '=' '2' | sed "s/^ *//g"`
     sed -i "s/%$param%/$value/g" ~/.ncmpcpp/config
   done
 }
@@ -162,13 +168,14 @@ theme_ncmpcpp() {
 theme_vim() {
   if [[ ! $(grep "$THEME:" ~/.vimrc) ]]; then
     local available=`awk "/Split bar/,/}}}/" ~/.vimrc | \
-      egrep "^\".*[a-z]+:.*[0-9]+" | awk -F':' '{print $1}' | sed 's/\" //'`
+      egrep "^\".*[a-z]+:.*[0-9]+" | extract ':' '1' | sed 's/\" //'`
     no_theme_error "vim" "$available"
     return
   fi
-  local themed=`grep "$THEME:" ~/.vimrc | awk -F': ' '{print $2}'`
-  local bg=`echo $themed | awk -F',' '{print $1}'`
-  local fg=`echo $themed | awk -F',' '{print $2}'`
+  local themed=`grep "$THEME:" ~/.vimrc | extract ': ' '2'`
+  local bg=`echo $themed | extract ',' '1'`
+  local fg=`[[ $(grep ',' <<< "$themed") ]] && \
+    echo $(echo $themed | extract ',' '2') || echo "15"`
   sed -ri --follow-symlinks "/VertSplit/s/(ctermfg=)[0-9]+/\1$bg/" ~/.vimrc
   sed -ri --follow-symlinks "/OverLength/s/(ctermbg=)[0-9]+/\1$bg/" ~/.vimrc
   sed -ri --follow-symlinks "/OverLength/s/(ctermfg=)[0-9]+/\1$fg/" ~/.vimrc
