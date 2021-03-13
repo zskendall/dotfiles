@@ -5,6 +5,7 @@
 
 LOCK=""
 LOGOUT=""
+SUSPEND=""
 RESTART=""
 SHUTDOWN=""
 
@@ -19,6 +20,7 @@ rofi_confirm() {
 list_icons() {
   echo $LOCK
   echo $LOGOUT
+  echo $SUSPEND
   echo $RESTART
   echo $SHUTDOWN
 }
@@ -30,6 +32,11 @@ handle_option() {
     "$LOGOUT")
         if $(rofi_confirm "$LOGOUT"); then
           i3-msg exit
+        fi
+        ;;
+    "$SUSPEND")
+        if $(rofi_confirm "$SUSPEND"); then
+          systemctl suspend
         fi
         ;;
     "$RESTART")

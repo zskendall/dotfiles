@@ -165,10 +165,28 @@ stow tmux
 Application launcher is rofi. Its key maps, as well as configuration for other
 applications are in .Xresources. Rofi also uses custom rasi themes that can be
 specified with `-theme <theme>` in i3 config bindsym.
+
+To get comparable behaviour, use rofi-git from AUR on Manjaro and 1.6.1-1 on
+Debian.
+
 ```
-sudo pacman -S rofi
+sudo pamac build rofi-git
 stow rofi
 xrdb -merge ~/.Xresources
+```
+
+If rofi 1.6.1-1 isn't in apt yet, build [from
+source](https://github.com/davatorium/rofi/blob/next/INSTALL.md):
+```
+git clone https://github.com/davatorium/rofi.git
+cd rofi
+git submodule update --init
+autoreconf -i
+mkdir build && cd build
+../configure
+make
+sudo make install
+rofi -V
 ```
 
 ## Notifications
