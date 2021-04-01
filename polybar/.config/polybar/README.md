@@ -1,8 +1,7 @@
 # Polybar Config for Custom Statusbar
 
-*Default Polybar on dual monitors*
-![ ](screenshot_dual.png)
-[Photo by FORREST CAVALE on Unsplash](https://unsplash.com/photos/jwIk4Z3Msi4)
+![polybar](../../../assets/polybar.png)
+[Photo creds](../../../images/README.md)
 
 ## Installation Notes
 ```
@@ -46,4 +45,3 @@ Most of the fixes were found from resolved issues filed.
 cd ~/polybar/build
 sudo make uninstall
 ```
-
