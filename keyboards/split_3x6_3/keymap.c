@@ -1,37 +1,5 @@
-#include QMK_KEYBOARD_H
-#include "quantum.h"
-
-extern keymap_config_t keymap_config;
-
-enum user_layers {
-  _QWERTY,
-  _COLEMAK,
-  _NUM,
-  _NAV,
-  _MOUSE,
-  _ART,
-};
-
-// Key aliases
-#define __x__ KC_NO
-#define _____ KC_TRNS
-#define MS_TOG TG(_MOUSE)
-#define KC_UNDS LSFT(KC_MINS)
-#define ART_TOG TG(_ART)
-#define VTERM LCTL(S(KC_F1))
-#define CMAK TG(_COLEMAK)
-#define TERM LGUI(KC_ENT)
-
-/** Dynamic mod-tap keycode macros. */
-#define CTL_ESC LCTL_T(KC_ESC)
-#define CTL_QUOT RCTL_T(KC_QUOT)
-#define LALT_SPC LALT_T(KC_SPC)
-#define META_RET RGUI_T(KC_ENT)
-#define CTL_INS LCTL_T(KC_INS)
-
-/** Dynamic layer-tap keycode macros. */
-#define NUM_LB LT(_NUM, KC_LBRC)
-#define NAV_RB LT(_NAV, KC_RBRC)
+// Layers and aliases
+#include "zskendall.h"
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -50,10 +18,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |LShft | LAlt |*Num* |          | *Nav*| Meta | RShft|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_QWERTY] = LAYOUT(
+    [_QWERTY] = LAYOUT_split_3x6_3(
         KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_BSPC,
         CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_QUOT,
-        __x__  , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
+        KC_NO  , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
                         KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, META_RET, KC_RSPC
     ),
 
@@ -69,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////|//////|          |//////|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_COLEMAK] = LAYOUT(
+    [_COLEMAK] = LAYOUT_split_3x6_3(
 	_____, _____, _____, KC_F , KC_P , KC_G ,		      KC_J, KC_L , KC_U , KC_Y , KC_SCLN, _____,
 	_____, _____, _____, KC_R , KC_T , KC_D ,		      KC_H, KC_N , KC_E , KC_I , KC_O   , _____,
 	CMAK , _____, _____, _____, _____, _____,		      KC_K, _____, _____, _____, _____  , _____,
@@ -88,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////|*Pad* |          | 0    |//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_NUM] = LAYOUT(
-        _____, __x__, __x__, KC_E , KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_MINS, _____ ,
-        _____, _____, __x__, KC_D , KC_F  , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____ ,
-        TERM , __x__, _____, _____, __x__ , _____  ,                    KC_EQL , KC_1 , KC_2 , KC_3  , KC_DOT , KC_DEL,
+    [_NUM] = LAYOUT_split_3x6_3(
+        _____, KC_NO, KC_NO, KC_E , KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_MINS, _____ ,
+        _____, _____, KC_NO, KC_D , KC_F  , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____ ,
+        TERM , KC_NO, _____, _____, KC_NO , _____  ,                    KC_EQL , KC_1 , KC_2 , KC_3  , KC_DOT , KC_DEL,
                                   _____, _____, _____,              KC_0, _____, _____
     ),
 
@@ -107,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////| ART  |          | *Nav*|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_NAV] = LAYOUT(
+    [_NAV] = LAYOUT_split_3x6_3(
         _____, RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5),    RGUI(KC_6), RGUI(KC_7), RGUI(KC_8), RGUI(KC_9), RGUI(KC_0),  _____,
-        _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, __x__,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, __x__, LGUI(KC_L),
-        _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5),    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), __x__,  MS_TOG,
+        _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, LGUI(KC_L),
+        _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5),    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO,  MS_TOG,
                                         _____, _____, ART_TOG,              _____, _____, _____
     ),
 
@@ -126,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////| MsB1 |          | MsB2 |//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_MOUSE] = LAYOUT(
-        RESET, VTERM  , KC_MS_U, __x__  , KC_BRIU, __x__,                        KC_F1  , KC_F2  , KC_F6  , __x__,   KC_BTN3, KC_PSCR,
+    [_MOUSE] = LAYOUT_split_3x6_3(
+        RESET, VTERM  , KC_MS_U, KC_NO  , KC_BRIU, KC_NO,                        KC_F1  , KC_F2  , KC_F6  , KC_NO,   KC_BTN3, KC_PSCR,
         _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
         _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____,                        _____  , _____  , _____  , KC_MUTE, KC_VOLD, MS_TOG ,
                                         _____, _____, KC_BTN1,              KC_BTN2, _____, _____
@@ -148,10 +116,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////|LCtrl |
      *                         └──────┴──────┴──────┘
      */
-    [_ART] = LAYOUT(
-        ART_TOG, KC_N, KC_W, KC_E, KC_O, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
-        _____  , KC_A, KC_S, KC_D, KC_J, KC_G,                     __x__, __x__, __x__, __x__, __x__, _____,
-        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                     __x__, __x__, __x__, __x__, __x__, __x__,
-                                 _____, _____, CTL_INS,         _____, _____, _____
+    [_ART] = LAYOUT_split_3x6_3(
+        KC_ART_00, KC_ART_01, KC_ART_02, KC_ART_03, KC_ART_04, KC_ART_05,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
+        KC_ART_10, KC_ART_11, KC_ART_12, KC_ART_13, KC_ART_14, KC_ART_15,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
+        KC_ART_20, KC_ART_21, KC_ART_22, KC_ART_23, KC_ART_24, KC_ART_25,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                                 KC_ART_T1, KC_ART_T2, CTL_INS,         _____, _____, _____
     ),
 };

@@ -1,39 +1,15 @@
-#include QMK_KEYBOARD_H
-#include "quantum.h"
+#include "zskendall.h"
 
-extern keymap_config_t keymap_config;
-
-enum user_layers {
-  _QWERTY,
-  _NUM,
-  _NAV,
-  _MOUSE,
-  _ART,
-};
 
 // Custom keycodes for modded mod-tap combos
-enum user_keycodes {
+enum keycodes {
   META_CZ,
 };
 
-/** Dynamic mod-tap keycode macros. */
-#define CTL_ESC LCTL_T(KC_ESC)
+/** Iris-specific dynamic mod-tap keycode macros (deprecated). */
 #define CTL_RET RCTL_T(KC_ENT)
-#define LALT_SPC LALT_T(KC_SPC)
 #define RALT_EQL RALT_T(KC_EQL)
-#define CTL_INS LCTL_T(KC_INS)
 
-/** Dynamic layer-tap keycode macros. */
-#define NUM_LB LT(_NUM, KC_LBRC)
-#define NAV_RB LT(_NAV, KC_RBRC)
-
-// Key aliases
-#define __x__ KC_NO
-#define _____ KC_TRNS
-#define MS_TOG TG(_MOUSE)
-#define KC_UNDS LSFT(KC_MINS)
-#define ART_TOG TG(_ART)
-#define VTERM LCTL(S(KC_F1))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -78,9 +54,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NUM] = LAYOUT(
         KC_F1, KC_F2, KC_F3, KC_F4, KC_F5 , KC_F6  ,                    KC_F7  , KC_F8, KC_F9, KC_F10, KC_F11 , KC_F12 ,
-        _____, __x__, __x__, _____, KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_PMNS, KC_BSPC,
-        _____, _____, __x__, _____, _____ , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____  ,
-        _____, __x__, __x__, _____, __x__ , _____  , _____,      __x__, KC_PEQL, KC_1 , KC_2 , KC_3  , KC_DOT,  _____  ,
+        _____, KC_NO, KC_NO, _____, KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_PMNS, KC_BSPC,
+        _____, _____, KC_NO, _____, _____ , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____  ,
+        _____, KC_NO, KC_NO, _____, KC_NO , _____  , _____,      KC_NO, KC_PEQL, KC_1 , KC_2 , KC_3  , KC_DOT,  _____  ,
                                   _____, _____, _____,              KC_0, _____, _____
     ),
 
@@ -99,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_NAV] = LAYOUT(
-        __x__, KC_1,    KC_2,    KC_3,    KC_4,   KC_5,                       KC_6,    KC_7,    KC_8,  KC_9,    KC_0,  __x__,
+        KC_NO, KC_1,    KC_2,    KC_3,    KC_4,   KC_5,                       KC_6,    KC_7,    KC_8,  KC_9,    KC_0,  KC_NO,
         _____, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0),  _____,
-        _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, __x__,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, __x__, _____,
-        _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5), _____,    __x__, LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), __x__,  _____,
+        _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, _____,
+        _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5), _____,    KC_NO, LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO,  _____,
                                         _____, _____, _____,              _____, _____, _____
     ),
 
@@ -121,8 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
     [_MOUSE] = LAYOUT(
-        VTERM, __x__  , __x__  , __x__  , __x__  , __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , KC_PSCR,
-        _____, __x__  , KC_MS_U, __x__  , KC_BRIU, __x__,                        __x__  , __x__  , __x__  , __x__,   __x__  , __x__  ,
+        VTERM, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO,                        KC_NO  , KC_NO  , KC_NO  , KC_NO,   KC_NO  , KC_PSCR,
+        _____, KC_NO  , KC_MS_U, KC_NO  , KC_BRIU, KC_NO,                        KC_NO  , KC_NO  , KC_NO  , KC_NO,   KC_NO  , KC_NO  ,
         _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
         _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____, _____,        KC_BTN3, _____  , _____  , _____  , KC_MUTE, KC_VOLD, MS_TOG ,
                                         _____, _____, KC_BTN1,              KC_BTN2, _____, _____
@@ -146,10 +122,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └──────┴──────┴──────┘
      */
     [_ART] = LAYOUT(
-        ART_TOG, __x__, KC_N , KC_L , KC_I , KC_O,                     __x__, __x__, __x__, __x__, __x__, __x__,
-        _____  , __x__, KC_W , KC_E , __x__, KC_T,                     __x__, __x__, __x__, __x__, __x__, __x__,
-        _____  , KC_A , KC_S , KC_D , __x__, KC_G,                     __x__, __x__, __x__, __x__, __x__, _____,
-        KC_LSFT, KC_Z , KC_X,  KC_C,  KC_V , KC_B,  KC_J,       __x__, __x__, __x__, __x__, __x__, __x__, _____,
+        ART_TOG, KC_NO, KC_N , KC_L , KC_I , KC_O,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        _____  , KC_NO, KC_W , KC_E , KC_NO, KC_T,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        _____  , KC_A , KC_S , KC_D , KC_NO, KC_G,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
+        KC_LSFT, KC_Z , KC_X,  KC_C,  KC_V , KC_B,  KC_J,       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
                                  _____, _____, CTL_INS,             _____, _____, _____
     ),
 };
