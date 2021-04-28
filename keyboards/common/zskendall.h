@@ -54,7 +54,7 @@ enum layers {
 #    define KC_ART_13 TD(TD_DK)
 #    define KC_ART_14 TD(TD_FJ)
 #    define KC_ART_15 TD(TD_GH)
-#    define KC_ART_20 TD(TD_ART)
+#    define KC_ART_20 TD(TD_HYUND_EXIT)
 #    define KC_ART_21 TD(TD_ZSLSH)
 #    define KC_ART_22 TD(TD_XDOT)
 #    define KC_ART_23 TD(TD_CCOMM)

@@ -1,15 +1,21 @@
 #include "tap_dances.h"
 
-// Exits art mode if dance was long enough
-void art_dance_back(qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count >= 5) {
+// Hyphen on one, underscore on two, or exits art mode if dance long enough
+void dance_hyundexit(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code16(KC_MINS);
+    unregister_code16(KC_MINS);
+  } else if (state->count == 2) {
+    register_code16(KC_UNDS);
+    unregister_code16(KC_UNDS);
+  } else if (state->count >= 5) {
     if (layer_state_is(_ART)) {
       layer_off(_ART);
     } else {
       layer_on(_ART);
     }
-    reset_tap_dance(state);
   }
+  reset_tap_dance(state);
 }
 
 // Tap Dance Definitions, sets the index and the keycode
@@ -28,6 +34,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_FJ] = ACTION_TAP_DANCE_DOUBLE(KC_F, KC_J),
   [TD_GH] = ACTION_TAP_DANCE_DOUBLE(KC_G, KC_H),
 
+  [TD_HYUND_EXIT] = ACTION_TAP_DANCE_FN(dance_hyundexit),
   [TD_ZSLSH] = ACTION_TAP_DANCE_DOUBLE(KC_Z, KC_SLSH),
   [TD_XDOT] = ACTION_TAP_DANCE_DOUBLE(KC_X, KC_DOT),
   [TD_CCOMM] = ACTION_TAP_DANCE_DOUBLE(KC_C, KC_COMM),
@@ -35,6 +42,4 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_BN] = ACTION_TAP_DANCE_DOUBLE(KC_B, KC_N),
 
   [TD_SPC_RET] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_ENT),
-
-  [TD_ART] = ACTION_TAP_DANCE_FN(art_dance_back),
 };
