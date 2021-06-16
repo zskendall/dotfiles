@@ -9,6 +9,8 @@ config located in [common/](./common).
   * [Split 3x6+3](./split_3x6_3): Columnar split ergo layout with 3 thumb keys,
     preferred for working, typing, and coding. Currently used on
     [Crkbd](https://github.com/foostan/crkbd).
+  * [Unicorne](./unicorne): Columnar unibody 3x6_3 layout with two rotary
+    encoders [designed by Yang Hu](https://github.com/yanghu/unicorne).
 * **Deprecated**
   * [Iris](./iris): Columnar split ergo layout with 4 thumb keys.
     No longer used in favor of 3x6+3.
