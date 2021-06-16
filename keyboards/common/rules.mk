@@ -2,11 +2,12 @@
 MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 
+SRC += zskendall.c
+
 ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
 	SRC += tap_dances.c
 endif
 
 # Diable unused options on all keyboards.
 LEADER_ENABLE = no
-RGBLIGHT_ENABLE = no
 BACKLIGHT_ENABLE = no

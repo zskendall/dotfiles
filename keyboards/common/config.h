@@ -13,7 +13,6 @@
 #endif //MOUSEKEY_ENABLE
 
 #ifdef SPLIT_KEYBOARD
-#    define USE_I2C
 #    undef SPLIT_HAND_PIN
 #    undef SPLIT_HAND_MATRIX_GRID
 #    define EE_HANDS

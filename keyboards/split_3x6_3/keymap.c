@@ -1,6 +1,23 @@
-// Layers and aliases
 #include "zskendall.h"
 
+// clang-format off
+/*
+ * Layout macros to allow providing a predefined wrapper instead of needing to
+ * provide each key individually.
+ */
+#define LAYOUT_split_3x6_3_wrapper(...)     LAYOUT_split_3x6_3(__VA_ARGS__)
+#define LAYOUT_split_3x6_3_base( \
+    K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, \
+    K10, K11, K12, K13, K14, K15, K16, K17, K18, K19, \
+    K20, K21, K22, K23, K24, K25, K26, K27, K28, K29  \
+  ) \
+  LAYOUT_split_3x6_3_wrapper( \
+    KC_TAB,   K00, K01, K02, K03, K04,        K05, K06, K07, K08, K09, KC_BSPC,  \
+    CTL_ESC,  K10, K11, K12, K13, K14,        K15, K16, K17, K18, K19, CTL_QUOT, \
+    KC_NO,    K20, K21, K22, K23, K24,        K25, K26, K27, K28, K29, KC_MINS,  \
+                                _______THUMB_3______ \
+  )
+#define LAYOUT_split_3x6_3_base_wrapper(...)    LAYOUT_split_3x6_3_base(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -18,49 +35,66 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |LShft | LAlt |*Num* |          | *Nav*| Meta | RShft|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_QWERTY] = LAYOUT_split_3x6_3(
-        KC_TAB , KC_Q, KC_W, KC_E, KC_R, KC_T,                        KC_Y, KC_U, KC_I   , KC_O  , KC_P   , KC_BSPC,
-        CTL_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,                        KC_H, KC_J, KC_K   , KC_L  , KC_SCLN, CTL_QUOT,
-        KC_NO  , KC_Z, KC_X, KC_C, KC_V, KC_B,                        KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-                        KC_LSPO, LALT_SPC, NUM_LB,                NAV_RB, META_RET, KC_RSPC
+    [_QWERTY] = LAYOUT_split_3x6_3_base_wrapper(
+        ______QWERTY_L1_____, ______QWERTY_R1_____,
+        ______QWERTY_L2_____, ______QWERTY_R2_____,
+        ______QWERTY_L3_____, ______QWERTY_R3_____
     ),
 
     /**
      * Modified Colemak Layer
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |//////|  Q   |  W   |  F   |  P   |  G   |                 |   J  |   L  |   U  |   Y  |   ;  |//////|
+     * |//////|  Q   |  W   |  F   |  P   |  G   |                 |   J  |   U  |   I  |   O  |   Y  |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  A   |  S   |  R   |  T   |  D   |                 |   H  |   N  |   E  |   I  |   O  |   '  |
+     * |//////|  A   |  S   |  R   |  T   |  D   |                 |   H  |   N  |   E  |   L  |   ;  |   '  |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
      * | CMAK |  Z   |  X   |  C   |  V   |  B   |                 |   K  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |//////|//////|//////|          |//////|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_COLEMAK] = LAYOUT_split_3x6_3(
-	_____, _____, _____, KC_F , KC_P , KC_G ,		      KC_J, KC_L , KC_U , KC_Y , KC_SCLN, _____,
-	_____, _____, _____, KC_R , KC_T , KC_D ,		      KC_H, KC_N , KC_E , KC_I , KC_O   , _____,
+    [_COLEMAK] = LAYOUT_split_3x6_3_wrapper(
+	_____, _____, _____, KC_F , KC_P , KC_G ,		      KC_J, KC_U , KC_I , KC_O , KC_Y   , _____,
+	_____, _____, _____, KC_R , KC_T , KC_D ,		      KC_H, KC_N , KC_E , KC_L , KC_SCLN, _____,
 	CMAK , _____, _____, _____, _____, _____,		      KC_K, _____, _____, _____, _____  , _____,
-                                  _____, _____, _____,            _____, _____, _____
+                                    _______THUMB_3______
+    ),
+
+    /**
+     * Workman Layer
+     * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
+     * |//////|  Q   |  D   |  R   |  W   |  B   |                 |   J  |   F  |   U  |   P  |   ;  |//////|
+     * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
+     * |//////|  A   |  S   |  H   |  T   |  G   |                 |   Y  |   N  |   E  |   O  |   I  |   '  |
+     * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
+     * |      |  Z   |  X   |  M   |  C   |  V   |                 |   K  |   L  |   ,  |   .  |   /  |   -  |
+     * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
+     *                         |//////|//////|//////|          |//////|//////|//////|
+     *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
+     */
+    [_WORKMAN] = LAYOUT_split_3x6_3_base_wrapper(
+        _____WORKMAN_L1_____, _____WORKMAN_R1_____,
+        _____WORKMAN_L2_____, _____WORKMAN_R2_____,
+        _____WORKMAN_L3_____, _____WORKMAN_R3_____
     ),
 
     /**
      * Numeric Layer
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |//////|      |      |  E   |  `   |  _   |                 |   *  |   7  |   8  |   9  |   -  |//////|
+     * | CHDF |      |      |  E   |  `   |  _   |                 |   *  |   7  |   8  |   9  |   -  |  BSP |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|//////|      |  D   |  F   |  \   |                 |   /  |   4  |   5  |   6  |   +  |//////|
+     * |//////|  A   |      |  D   |  F   |  \   |                 |   /  |   4  |   5  |   6  |   +  |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤		             ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * | TERM |      |//////|//////|      |//////|                 |   =  |   1  |   2  |   3  |   .  |  Del |
+     * |      |      |  X   |  C   |      |  B   |                 |   =  |   1  |   2  |   3  |   .  |  Del |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |//////|//////|*Pad* |          | 0    |//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_NUM] = LAYOUT_split_3x6_3(
-        _____, KC_NO, KC_NO, KC_E , KC_GRV, KC_UNDS,                    KC_PAST, KC_7 , KC_8 , KC_9  , KC_MINS, _____ ,
-        _____, _____, KC_NO, KC_D , KC_F  , KC_BSLS,                    KC_PSLS, KC_4 , KC_5 , KC_6  , KC_PPLS, _____ ,
-        TERM , KC_NO, _____, _____, KC_NO , _____  ,                    KC_EQL , KC_1 , KC_2 , KC_3  , KC_DOT , KC_DEL,
-                                  _____, _____, _____,              KC_0, _____, _____
+    [_NUM] = LAYOUT_split_3x6_3_wrapper(
+        _______NUM_L1_______,             _______NUM_R1_______,
+        _______NUM_L2_______,             _______NUM_R2_______, _____,
+        _______NUM_L3_______,             _______NUM_R3_______,
+                        ______NUM_THUMB_____
     ),
 
     /**
@@ -75,51 +109,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         |//////|//////| ART  |          | *Nav*|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_NAV] = LAYOUT_split_3x6_3(
-        _____, RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5),    RGUI(KC_6), RGUI(KC_7), RGUI(KC_8), RGUI(KC_9), RGUI(KC_0),  _____,
-        _____, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO,                      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, LGUI(KC_L),
-        _____, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5),    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO,  MS_TOG,
-                                        _____, _____, ART_TOG,              _____, _____, _____
+    [_NAV] = LAYOUT_split_3x6_3_wrapper(
+        _____, _______NAV_L1_______,             _______NAV_R1_______, _____,
+        _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
+        _____, _______NAV_L3_______,             _______NAV_R3_______,
+                                ______NAV_THUMB_____
     ),
 
     /**
      * Mouse/Media Layer
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |RESET |V Term|  M↑  |      | Bri+ |      |                 |  F1  |  F2  |  F6  |      | MsB3 | PrtSc|
+     * |RESET |V Term|  W↑  |      | Bri+ |      |                 |  F1  |  F2  |  F6  |      | Vol+ | PrtSc|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  M←  |  M↓  |  M→  | Bri- |//////|                 |  W←  |  W↓  |  W↑  | W→   | Vol+ |//////|
+     * |      |  W←  |  W↓  |  W→  | Bri- |      |                 |  M←  |  M↓  |  M↑  | M→   | Vol- |      |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤		             ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////| Prev | Play | Next | Stop |//////|                 |//////|//////|//////| Mute | Vol- |MS_TOG|
+     * |      | Prev | Play | Next | Stop |      |                 |      |      |      |      | Mute |MS_TOG|
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
-     *                         |//////|//////| MsB1 |          | MsB2 |//////|//////|
+     *                         |      |      |      |          | MsB1 | MsB2 | MsB3 |
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_MOUSE] = LAYOUT_split_3x6_3(
-        RESET, VTERM  , KC_MS_U, KC_NO  , KC_BRIU, KC_NO,                        KC_F1  , KC_F2  , KC_F6  , KC_NO,   KC_BTN3, KC_PSCR,
-        _____, KC_MS_L, KC_MS_D, KC_MS_R, KC_BRID, _____,                        KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_VOLU, _____  ,
-        _____, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _____,                        _____  , _____  , _____  , KC_MUTE, KC_VOLD, MS_TOG ,
-                                        _____, _____, KC_BTN1,              KC_BTN2, _____, _____
+    [_MOUSE] = LAYOUT_split_3x6_3_wrapper(
+        _______OPS_L1_______,             _______OPS_R1_______,
+        _______OPS_L2_______,             _______OPS_R2_______,
+        _______OPS_L3_______,             _______OPS_R3_______,
+                         ______OPS_THUMB_____
     ),
 
     /**
-     * Art Layer
-     * Condensed layout with common Krita functions collapsed onto left half of
-     * keyboard. Only fall through mod functions on right half.
-     * ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * | ART  |  N   |  W   |  E   |  O   |  T   |
-     * ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  A   |  S   |  D   |  J   |  G   |
-     * ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |LShft |  Z   |  X   |  C   |  V   |  B   |
-     * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐
-     *                         |//////|//////| Ins  |
-     *                         |//////|//////|LCtrl |
-     *                         └──────┴──────┴──────┘
+     * Condensed Art Layer
+     * If tap dance is enabled, the keys from the right are moved into a
+     *     double dance on the left.
+     * Otherwise the left has common Krita functions.
+     * Only fall-through mod functions on right half.
      */
-    [_ART] = LAYOUT_split_3x6_3(
-        KC_ART_00, KC_ART_01, KC_ART_02, KC_ART_03, KC_ART_04, KC_ART_05,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
-        KC_ART_10, KC_ART_11, KC_ART_12, KC_ART_13, KC_ART_14, KC_ART_15,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _____,
-        KC_ART_20, KC_ART_21, KC_ART_22, KC_ART_23, KC_ART_24, KC_ART_25,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-                                 KC_ART_T1, KC_ART_T2, CTL_INS,         _____, _____, _____
+    [_ART] = LAYOUT_split_3x6_3_wrapper(
+        _______ART_L1_______,             _______ART_R1_______,
+        _______ART_L2_______,             _______ART_R2_______,
+        _______ART_L3_______,             _______ART_R3_______,
+                         ______ART_THUMB_____
     ),
 };
+
+bool defaults[] = {
+  [_QWERTY] = true,
+  [_COLEMAK] = false,
+  [_WORKMAN] = true,
+  [_CHIA] = false,
+  [_CAIN] = false,
+  [_NUM] = false,
+  [_NAV] = false,
+  [_MOUSE] = false,
+  [_ART] = false,
+  [_ADJUST] = false,
+};
+size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);

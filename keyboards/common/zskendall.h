@@ -2,6 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "quantum.h"
+#include "wrappers.h"
 
 #ifdef TAP_DANCE_ENABLE
 #    include "tap_dances.h"
@@ -10,10 +11,21 @@
 enum layers {
   _QWERTY,
   _COLEMAK,
+  _WORKMAN,
+  _CHIA, // from keyboard-design.com/letterlayout.html?layout=chia.en.matrix
+  _CAIN, // test based on _CHIA
   _NUM,
   _NAV,
   _MOUSE,
   _ART,
+  _ADJUST, // for RGB stuff
+};
+
+extern bool defaults[];
+extern size_t num_defaults;
+
+enum keycodes {
+  CHDF = SAFE_RANGE, // change default layer
 };
 
 /* Key aliases */
