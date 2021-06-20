@@ -12,8 +12,8 @@ enum layers {
   _QWERTY,
   _COLEMAK,
   _WORKMAN,
-  _CHIA, // from keyboard-design.com/letterlayout.html?layout=chia.en.matrix
-  _CAIN, // test based on _CHIA
+  _QWORF, // _WORKMAN and _CAIN inspired
+  _CAIN, // inspired by keyboard-design.com/letterlayout.html?layout=chia.en.matrix
   _NUM,
   _NAV,
   _MOUSE,

@@ -61,21 +61,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /**
-     * Workman Layer
+     * Custom QWORF Layer inspired by Workman and a
+     * keyboard-design.com/letterlayout.html?layout=chia.en.matrix mod
      * ┌──────┬──────┬──────┬──────┬──────┬──────┐                 ┌──────┬──────┬──────┬──────┬──────┬──────┐
-     * |//////|  Q   |  D   |  R   |  W   |  B   |                 |   J  |   F  |   U  |   P  |   ;  |//////|
+     * |//////|  Q   |  W   |  O   |  R   |  F   |                 |   Y  |   U  |   L  |   V  |   X  |//////|
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |//////|  A   |  S   |  H   |  T   |  G   |                 |   Y  |   N  |   E  |   O  |   I  |   '  |
+     * |//////|  A   |  S   |  H   |  T   |  G   |                 |   P  |   N  |   E  |   I  |   ;  |   '  |
      * ├──────┼──────┼──────┼──────┼──────┼──────┤                 ├──────┼──────┼──────┼──────┼──────┼──────┤
-     * |      |  Z   |  X   |  M   |  C   |  V   |                 |   K  |   L  |   ,  |   .  |   /  |   -  |
+     * |      |  Z   |  J   |  D   |  C   |  B   |                 |   K  |   M  |   ,  |   .  |   /  |   -  |
      * └──────┴──────┴──────┴──┬───┴──┬───┴──┬───┴──┐          ┌───┴──┬───┴──┬───┴──┬───┴──────┴──────┴──────┘
      *                         |//////|//////|//////|          |//////|//////|//////|
      *                         └──────┴──────┴──────┘          └──────┴──────┴──────┘
      */
-    [_WORKMAN] = LAYOUT_split_3x6_3_base_wrapper(
-        _____WORKMAN_L1_____, _____WORKMAN_R1_____,
-        _____WORKMAN_L2_____, _____WORKMAN_R2_____,
-        _____WORKMAN_L3_____, _____WORKMAN_R3_____
+    [_QWORF] = LAYOUT_split_3x6_3_base_wrapper(
+        _____QWORF_L1_____, _____QWORF_R1_____,
+        _____QWORF_L2_____, _____QWORF_R2_____,
+        _____QWORF_L3_____, _____QWORF_R3_____
     ),
 
     /**
@@ -152,14 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool defaults[] = {
   [_QWERTY] = true,
-  [_COLEMAK] = false,
-  [_WORKMAN] = true,
-  [_CHIA] = false,
-  [_CAIN] = false,
-  [_NUM] = false,
-  [_NAV] = false,
-  [_MOUSE] = false,
-  [_ART] = false,
+  [_QWORF] = true,
   [_ADJUST] = false,
 };
 size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);

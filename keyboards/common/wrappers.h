@@ -27,6 +27,14 @@
 #define _____WORKMAN_R2_____    KC_Y,   KC_N,   KC_E,     KC_O,   KC_I
 #define _____WORKMAN_R3_____    KC_K,   KC_L,   KC_COMM,  KC_DOT, KC_SLSH
 
+#define ______QWORF_L1______    KC_Q,   KC_W,   KC_O,     KC_R,   KC_F
+#define ______QWORF_L2______    _____WORKMAN_L2_____
+#define ______QWORF_L3______    KC_Z,   KC_J,   KC_D,     KC_C,   KC_B
+
+#define ______QWORF_R1______    KC_Y,   KC_U,   KC_L,     KC_V,   KC_X
+#define ______QWORF_R2______    KC_P,   KC_N,   KC_E,     KC_I,   KC_SCLN
+#define ______QWORF_R3______    KC_K,   KC_M,   KC_COMM,  KC_DOT, KC_SLSH
+
 #define _______NUM_L1_______    CHDF,     KC_NO,  KC_NO,  KC_E,   KC_GRV, KC_UNDS
 #define _______NUM_L2_______    _____,    KC_A,   KC_NO,  KC_D,   KC_F,   KC_BSLS
 #define _______NUM_L3_______    KC_NO,    KC_NO,  KC_X,   KC_C,   KC_NO,  KC_B
@@ -37,7 +45,7 @@
 
 #define ______NUM_THUMB_____    _____,  _____,  _____,      KC_0, _____,  _____
 
-#define _______NAV_L1_______    RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5)
+#define _______NAV_L1_______    ART_TOG, RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5)
 #define _______NAV_L2_______    KC_HOME,    KC_PGUP,    KC_PGDN,    KC_END,     KC_NO
 #define _______NAV_L3_______    LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5)
 
@@ -45,7 +53,7 @@
 #define _______NAV_R2_______    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_NO
 #define _______NAV_R3_______    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO,      MS_TOG
 
-#define ______NAV_THUMB_____    _____,  _____,  ART_TOG,      _____, _____,  _____
+#define ______NAV_THUMB_____    _____,  _____,  _____,      _____, _____,  _____
 
 #define _______OPS_L1_______    RESET,    VTERM,      KC_WH_U,    KC_NO,      KC_BRIU,    KC_NO
 #define _______OPS_L2_______    KC_ESC,   KC_WH_L,    KC_WH_D,    KC_WH_R,    KC_BRID,    KC_NO

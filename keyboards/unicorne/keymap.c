@@ -37,20 +37,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _____WORKMAN_L3_____, _____WORKMAN_R3_____
     ),
 
-    // In pursuit of perfection...
-    // Modified chia.en.matrix layout based on
-    // keyboard-design.com/letterlayout.html?layout=chia.en.matrix
-    [_CHIA] = LAYOUT_unicorne(
-	      _____, KC_SCLN, KC_J, KC_Y , KC_U , KC_NO,		      KC_W, KC_F , KC_L , KC_G , KC_Q, _____,
-	      _____, KC_C, KC_H , KC_I, KC_A , KC_QUOT,		      KC_P, KC_T , KC_N , KC_S , KC_R, LCTL_T(KC_X),
-	      _____, _____, KC_V, KC_M, KC_D, KC_B,		        KC_MINS, KC_DOT, _____, KC_K, _____  , _____,
-               _____, _____, _____, LT(_NUM, KC_O),            LT(_NAV, KC_ENT), RGUI_T(KC_E), _____, _____
+    // Workman- and _CAIN-inspired
+    [_QWORF] = LAYOUT_unicorne_base_wrapper(
+        ______QWORF_L1______, ______QWORF_R1______,
+        ______QWORF_L2______, ______QWORF_R2______,
+        ______QWORF_L3______, ______QWORF_R3______
     ),
 
+    // In pursuit of perfection...
+    // Inspired by keyboard-design.com/letterlayout.html?layout=chia.en.matrix
+    // but with less common keys on the homerow pinkies
     [_CAIN] = LAYOUT_unicorne(
-	      _____, KC_Q, KC_J, KC_H , KC_U , KC_NO,		      KC_W, KC_F , KC_L , KC_G , KC_Y, _____,
-	      _____, KC_C, KC_A , KC_I, KC_N , KC_X,		      KC_P, KC_T , KC_S , KC_R , KC_SCLN, _____,
-	      _____, _____, KC_V, KC_M, KC_D, _____,		        KC_MINS, KC_DOT, _____, KC_K, _____  , _____,
+	      _____, KC_Q, KC_J, KC_H , KC_F , KC_LBRC,		      KC_RBRC, KC_U , KC_L , KC_G , KC_X, _____,
+	      _____, KC_C, KC_A , KC_I, KC_N , KC_W,		      KC_P, KC_T , KC_S , KC_R , KC_SCLN, _____,
+	      _____, _____, KC_Y, KC_D, KC_V, _____,		        KC_K, KC_M, _____, _____, _____  , _____,
                _____, _____, _____, LT(_NUM, KC_O),            LT(_NAV, KC_ENT), RGUI_T(KC_E), _____, _____
     ),
 
@@ -62,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_unicorne_wrapper(
-        _____, _______NAV_L1_______,             _______NAV_R1_______, _____,
+               _______NAV_L1_______,             _______NAV_R1_______, _____,
         _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
-        _____, _______NAV_L3_______,             _______NAV_R3_______,
+        TG(_ADJUST), _______NAV_L3_______,             _______NAV_R3_______,
                          _____, ______NAV_THUMB_____, _____
     ),
 
@@ -94,23 +94,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool defaults[] = {
   [_QWERTY] = true,
-  [_COLEMAK] = false,
   [_WORKMAN] = true,
-  [_CHIA] = true,
+  [_QWORF] = true,
   [_CAIN] = true,
-  [_NUM] = false,
-  [_NAV] = false,
-  [_MOUSE] = false,
-  [_ART] = false,
   [_ADJUST] = false,
 };
 size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);
 
 void keyboard_post_init_user(void) {
-  if (eeconfig_read_default_layer() != _QWERTY) {
-    eeconfig_update_default_layer(1UL << _QWERTY);
-    default_layer_set(1UL << _QWERTY);
-  }
 #ifdef RGBLIGHT_ENABLE
   keyboard_post_init_rgb_light();
 #endif

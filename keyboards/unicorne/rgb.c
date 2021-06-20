@@ -28,11 +28,11 @@ layer_state_t layer_state_set_rgb_light(layer_state_t state) {
     case _WORKMAN:
       rgblight_sethsv_noeeprom(HSV_GREEN);
       break;
-    case _CHIA:
-      rgblight_sethsv_noeeprom(HSV_MAGENTA);
-      break;
     case _CAIN:
       rgblight_sethsv_noeeprom(HSV_ORANGE);
+      break;
+    case _QWORF:
+      rgblight_sethsv_noeeprom(HSV_TURQUOISE);
       break;
     case _QWERTY:
       rgblight_sethsv(HSV_BLUE);
