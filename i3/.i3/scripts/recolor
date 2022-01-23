@@ -50,24 +50,33 @@ line_no() {
 }
 
 theme_polybar() {
-  local current=`egrep -o "^background = .{([a-z]*)" ~/.config/polybar/config \
-    | grep -v "colors" | extract '{' '2'`
-  local updated=`[ $(grep "$THEME\]" ~/.config/polybar/config) ] \
+  local current=`egrep -o "^;?include-file = ~/.*/colors/([a-z]+).ini" \
+      ~/.config/polybar/config | cut -d'/' -f 5 | extract '.' '1'`
+  local updated=`[[ -r ~/.config/polybar/colors/$THEME.ini ]] \
     && echo "$THEME" || echo "default"`
   if [[ "$updated" == *"default"* ]]; then
-    local available=`awk "/COLORS/,/\[colors\]/" ~/.config/polybar/config | \
-      egrep "\[[a-z]+\]" | sed 's/[][]//g' | sed 's/colors//'`
+    local available=`ls ~/.config/polybar/colors/*.ini | cut -d'/' -f 7 \
+      | extract '.' '1'`
     warn "" "Unknown polybar theme $THEME." \
       "  Available themes are: [${available//$'\n'/ }]" \
       "Using default polybar colors."
+    # comment out the color theme file include if needed
+    if [[ -z $(egrep -o "^;include-file =.*${current}.ini" \
+      ~/.config/polybar/config) ]]; then
+      sed -ri "/${current}.ini$/s/(.*)/;\1/g" ~/.config/polybar/config
+    fi
+  else
+    # there's a custom theme, so uncomment the file include line
+    sed -ri "/${current}.ini$/s/;//g" ~/.config/polybar/config
   fi
-  local nbeg=`grep -n "\[colors\]" ~/.config/polybar/config | line_no`
-  local nend=`grep -n "FONTS" ~/.config/polybar/config | line_no`
-  sed -ri "${nbeg},${nend}s/${current}\./${updated}\./g" ~/.config/polybar/config
+  sed -ri "/${current}.ini$/s/${current}/${THEME}/g" ~/.config/polybar/config
 
   # read and parse focus_foreground for the icon styling
-  local focus=`awk "/\[$updated\]/,/\[colors\]/" ~/.config/polybar/config | \
-    egrep -m 1 "^focus-foreground" | extract '#' '2'`
+  local focus_from_file=`grep "^focus = " ~/.config/polybar/colors/$THEME.ini \
+    | extract '#' '2'`
+  local focus=`[ ! -z "$focus_from_file" ] && echo "$focus_from_file" \
+    || awk "/\[default\]/,/FONTS/" ~/.config/polybar/config \
+    | egrep -m 1 "^focus" | extract '#' '2'`
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/config
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/launch.sh
 }
@@ -122,6 +131,8 @@ theme_dunst() {
   norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" ~/.config/dunst/dunstrc`
   local line=`grep "$THEME:" <<< "$norm"`
   local updated=`[[ ! -z "$line" ]] && echo $THEME || echo "default"`
+  local line=`([[ ! -z $line ]] && echo $line || \
+    echo $(grep "default" <<< "$norm"))`
   local norm_bg=$(echo $line | extract '#' '3' | sed -e 's/[[:space:]]*$//')
   local norm_fg=$(echo $line | extract '#' '4')
   local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | line_no`

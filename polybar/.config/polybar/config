@@ -6,116 +6,57 @@
 ;   The README contains a lot of information
 ;
 ;=====================================================
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; module includes
+include-file = ~/.config/polybar/modules/battery.ini
+include-file = ~/.config/polybar/modules/datetime.ini
+include-file = ~/.config/polybar/modules/i3.ini
+include-file = ~/.config/polybar/modules/network.ini
+include-file = ~/.config/polybar/modules/separators.ini
+include-file = ~/.config/polybar/modules/volume.ini
+include-file = ~/.config/polybar/modules/weather.ini
+
+
+[settings]
+screenchange-reload = true
 
 ;=====================================================
 ; COLORS
 ;=====================================================
 [default]
 background = #0000
-background-alt = #222
-module-background = ${self.background}
+module = ${self.background}
 foreground = #dfdfdf
 focus-foreground = #ff0000
-visible-foreground = #000
-unfocus-foreground = #800000ff
+focus-background = #222
+visible = #000
+unfocused = #800000ff
 alert = #bd2c40
 empty = #cc555555
 vol-low = #55aa55
 vol-med = #f5a70a
 vol-high = #ff5555
 
-
-[nikhita]
-inherit = default
-focus-foreground = #00ff00
-unfocus-foreground = #4d4d4d
-visible-foreground = #5d0786
-alert = #a402a5
-
-[borealis]
-inherit = default
-background = #4d723d71
-focus-foreground = #b30000
-unfocus-foreground = #7b926f
-visible-foreground = #fff
-alert = #b30000
-
-[chjara]
-inherit = default
-background = #bf080130
-focus-foreground = #eb8d04
-unfocus-foreground = #a8a8a8
-visible-foreground = #850200
-alert = ${maqi.visible-foreground}
-vol-low = #1d6e1d
-vol-med = #eb8d04
-vol-high = ${maqi.visible-foreground}
-
-
-[maqi]
-inherit = default
-background = #bf1d007d
-foreground = #b5e2ff
-focus-foreground = #ff5fad
-unfocus-foreground = #00008b
-visible-foreground = #850200
-alert = ${self.focus-foreground}
-vol-low = ${maqi.unfocus-foreground}
-vol-med = #690095
-vol-high = #a2189e
-
-
-[astral]
-inherit = default
-background-alt = #0000
-focus-foreground = #ffffff
-unfocus-foreground = #5e3a92
-visible-foreground = #498db9
-vol-low = ${self.unfocus-foreground}
-vol-med = #515fcf
-vol-high = #8ac6ea
-
-
-[autumnal]
-inherit = default
-background = #99222222
-background-alt = #0000
-focus-foreground = #a33b2a
-unfocus-foreground = #478ba9
-visible-foreground = #c9680a
-vol-low = #889b1c
-vol-med = #b47512
-vol-high = #63120e
-
-
-[colors]
-background = ${maqi.background}
-background-alt = ${maqi.background-alt}
-focus = ${maqi.focus-foreground}
-unfocused = ${maqi.unfocus-foreground}
-visible = ${maqi.visible-foreground}
-foreground = ${maqi.foreground}
-alert = ${maqi.alert}
-module = ${maqi.module-background}
-empty = ${maqi.empty}
-vol-low = ${maqi.vol-low}
-vol-med = ${maqi.vol-med}
-vol-high = ${maqi.vol-high}
-
+include-file = ~/.config/polybar/colors/maqi.ini
 
 
 ;=====================================================
 ; FONTS
 ;=====================================================
 [section/fonts]
+; default; mainly for spacing of the i3 modules
 font-0 = "EastSeaDokdo:size=16"
+
 font-1 = "MaterialIcons:size=14;4"
 font-2 = "Font Awesome webfont:pixelsize=10;0"
-font-3 = "EastSeaDokdo:bold:size=16"
-font-4 = "Lekton Nerd Font:bold:size=15;2"
-font-5 = "Iosevka Nerd Font:bold:size=12;2"
-font-6 = "NotoColorEmoji:scale=7;2"
-font-7 = "EastSeaDokdo:size=16;1"
+font-3 = "Iosevka Nerd Font:bold:size=12;2"
+font-4 = "NotoColorEmoji:scale=7;2"
+
+; primary text font; comment to fall back to font-0
+include-file = ~/.config/polybar/fonts/megrim.ini
 
 
 ;=====================================================
@@ -181,214 +122,6 @@ inherit = bar/base
 override-redirect = true
 bottom = true
 modules-center = bgweather
-
-
-
-;=====================================================
-; MODULES
-;=====================================================
-[module/spacer]
-type = custom/text
-content = " "
-content-background = ${colors.module}
-content-padding = 1
-
-
-[module/sep-left]
-type = custom/text
-content = "%{T6}%{T-}"
-content-foreground = ${colors.module}
-
-
-[module/sep-right]
-type = custom/text
-content = "%{T6}%{T-}"
-content-foreground = ${colors.module}
-
-
-[module/separator]
-type = custom/text
-content = %{T8}|%{T-}
-
-
-[module/i3]
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-default = 
-
-type = internal/i3
-format = <label-state>
-wrapping-scroll = false
-pin-workspaces = true
-
-; focused = Active workspace on focused monitor
-; focused workspace will have underline and foreground shading
-label-focused = %icon%
-label-focused-foreground = ${colors.focus}
-label-focused-background = ${colors.background-alt}
-label-focused-padding = 2
-
-; unfocused = Inactive workspace on any monitor
-label-unfocused = %icon%
-label-unfocused-foreground = ${colors.unfocused}
-label-unfocused-background = ${colors.module}
-label-unfocused-padding = 2
-
-; visible = Active workspace on unfocused monitor
-label-visible = %icon%
-label-visible-foreground = ${colors.visible}
-label-visible-background = ${colors.module}
-label-visible-padding = ${self.label-focused-padding}
-
-; urgent = Workspace with urgency hint set
-label-urgent = %icon%
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-
-
-[module/weather]
-type = custom/script
-
-exec = ~/dotfiles/polybar/.config/polybar/weather.sh
-interval = 300 ; seconds
-
-
-[module/bgweather]
-type = custom/script
-
-exec = ~/dotfiles/i3/.i3/scripts/weather "palo alto"
-interval = 300 ; seconds
-
-click-left = ~/dotfiles/polybar/.config/polybar/weather.sh
-
-
-[module/volume]
-type = internal/volume
-
-master-soundcard = hw:1
-
-label-volume = %percentage:02%%
-format-volume = <ramp-volume><bar-volume>
-
-label-volume-foreground = ${colors.foreground}
-format-volume-background = ${colors.module}
-format-volume-padding = 1
-
-format-muted-foreground = ${colors.empty}
-format-muted-background = ${colors.module}
-format-muted-padding = 1
-label-muted = %{T2}%{T-}
-
-ramp-volume-0 = %{F#ff5fad} %{F-}
-ramp-volume-1 = %{F#ff5fad} %{F-}
-ramp-volume-2 = %{F#ff5fad} %{F-}
-
-ramp-headphones-0 = %{F#ff5fad}  %{F-}
-
-bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.vol-low}
-bar-volume-foreground-1 = ${colors.vol-low}
-bar-volume-foreground-2 = ${colors.vol-low}
-bar-volume-foreground-3 = ${colors.vol-low}
-bar-volume-foreground-4 = ${colors.vol-low}
-bar-volume-foreground-5 = ${colors.vol-med}
-bar-volume-foreground-6 = ${colors.vol-high}
-bar-volume-gradient = false
-bar-volume-indicator =
-bar-volume-indicator-font = 2
-bar-volume-fill = ━
-bar-volume-fill-font = 6
-bar-volume-empty = ━
-bar-volume-empty-font = 6
-bar-volume-empty-foreground = ${colors.empty}
-
-
-[module/date]
-type = internal/date
-interval = 5
-
-date = %d %B %Y 
-
-label = %{F#ff5fad}%{F-} %date%
-format = %{A1:gsimplecal &:}<label>%{A}
-format-background = ${colors.module}
-
-
-[module/time]
-type = internal/date
-interval = 5
-
-time = %H:%M
-
-label = %{F#ff5fad}%{F-} %time%
-format-background = ${colors.module}
-
-
-[module/battery]
-type = internal/battery
-
-; In case battery never reports 100% charge
-full-at = 99
-
-; Batteries and adapters: $ ls -1 /sys/class/power_supply/
-battery = BAT0
-adapter = AC
-
-; Aesthetics
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-format-charging-background = ${colors.module}
-format-discharging-background = ${colors.module}
-
-label-full = 
-label-charging = %percentage%%
-label-discharging = %percentage%% %time%
-format-full-background = ${colors.module}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-framerate = 750
-
-
-[module/network]
-type = internal/network
-interface = ${env:NETWORK:enp2s0}
-
-label-connected = ${env:NETWORK_CONNECTED_LABEL:%{F#ff5fad} %{F-}eth }
-label-disconnected = ${env:NETWORK_DISCONNECTED_LABEL:%{F#ff5fad}null%{F-}}
-label-connected-background = ${colors.module}
-label-disconnected-background = ${colors.module}
-
-
-[module/chat]
-type = custom/text
-content = 
-click-left = i3-msg scratchpad show move window to position 2500 200
-
-
-
-;=====================================================
-; OTHER
-;=====================================================
-[settings]
-screenchange-reload = true
-
-
-[global/wm]
-margin-top = 5
-margin-bottom = 5
-
 
 
 ; vim:ft=dosini

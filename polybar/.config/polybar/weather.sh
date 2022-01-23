@@ -10,17 +10,17 @@ SUNSET=`date --date="$(echo "$SUN" | jq .sunset | tr -d '"')" +%s`
 [ $SUNSET -lt $(date +%s) ] || [ $SUNRISE -gt $(date +%s) ] && NIGHT=1
 
 if grep -iq "storm" <<< "$WEATHER"; then
-  CONDITION="%{T6}%{T-}"
+  CONDITION="%{T4}%{T-}"
 elif grep -iq "rain\|shower\|drizzle" <<< "$WEATHER"; then
   if grep -iq "light\|patchy\|drizzle" <<< "$WEATHER"; then
-    [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T6}%{T-}"
-  else CONDITION="%{T6}%{T-}"
+    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T6}%{T-}"
+  else CONDITION="%{T4}%{T-}"
   fi
 elif grep -iq "snow" <<< "$WEATHER"; then
   CONDITION="%{T2}%{T-}"
 elif grep -iq "cloudy\|overcast" <<< "$WEATHER"; then
   if grep -iq "partly" <<< "$WEATHER"; then
-    [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T6}%{T-}"
+    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T6}%{T-}"
   else CONDITION="%{T2}%{T-}"
   fi
 elif grep -iq "haze\|hazy\|mist\|fog" <<< "$WEATHER"; then
@@ -28,9 +28,9 @@ elif grep -iq "haze\|hazy\|mist\|fog" <<< "$WEATHER"; then
 elif grep -iq "smoke" <<< "$WEATHER"; then
   CONDITION="%{T2}%{T-}"
 elif grep -iq "Sunny\|clear" <<< "$WEATHER"; then
-  [ ! -z $NIGHT ] && CONDITION="%{T6}%{T-}" || CONDITION="%{T2}%{T-}"
+  [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T2}%{T-}"
 else
-  CONDITION="%{T7}$(curl -s wttr.in?format='%c+%t' | awk -F'[[:space:]]*+' '{print $1}')"
+  CONDITION="%{T5}$(curl -s wttr.in?format='%c+%t' | awk -F'[[:space:]]*+' '{print $1}')"
 fi
 
 if [ -z "$TEMP" ]; then
@@ -51,4 +51,4 @@ else
   COLOR="#ff6600" # orange
 fi
 
-echo "$CONDITION%{T4}%{F$COLOR} $TEMP%{F-}°F%{T-}"
+echo "$CONDITION%{F$COLOR} %{T6}$TEMP%{F-}°F%{T-}"
