@@ -3,7 +3,7 @@
  * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/options_menu.rasi
  */
 
-@import "colorschemes/maqi.rasi"
+@import "colorschemes/lookingglass.rasi"
 
 window {
   height:                         200;

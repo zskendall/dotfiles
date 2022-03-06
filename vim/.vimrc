@@ -13,6 +13,7 @@ Plug 'mhinz/vim-signify'
 Plug 'RRethy/vim-illuminate'
 Plug 'raimondi/delimitmate'
 Plug 'markonm/traces.vim'
+Plug 'mattn/emmet-vim'
 
 Plug 'tsiemens/vim-aftercolors'
 
@@ -48,7 +49,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " }}}
 
 " Highlight for the search term used by traces.vim.
-hi Search ctermbg=159
+hi Search ctermbg=17
 
 " ==============================================================================
 " Basic Options
@@ -56,6 +57,8 @@ hi Search ctermbg=159
 
 " Syntax highlighting
 syntax on
+
+set background=dark
 
 " Change visual highlight to dark because WHITE???
 hi Visual ctermbg=235 ctermfg=none
@@ -158,6 +161,7 @@ set ttimeoutlen=0
 " maqi: 88
 " astral: 75
 " autumnal: 202
+" lookingglass: 88
 set fillchars+=vert:│
 hi VertSplit cterm=none ctermfg=88
 " }}}

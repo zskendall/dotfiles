@@ -10,14 +10,7 @@
 margin-top = 5
 margin-bottom = 5
 
-; module includes
-include-file = ~/.config/polybar/modules/battery.ini
-include-file = ~/.config/polybar/modules/datetime.ini
-include-file = ~/.config/polybar/modules/i3.ini
-include-file = ~/.config/polybar/modules/network.ini
-include-file = ~/.config/polybar/modules/separators.ini
-include-file = ~/.config/polybar/modules/volume.ini
-include-file = ~/.config/polybar/modules/weather.ini
+include-directory = ~/.config/polybar/modules
 
 
 [settings]
@@ -40,7 +33,7 @@ vol-low = #55aa55
 vol-med = #f5a70a
 vol-high = #ff5555
 
-include-file = ~/.config/polybar/colors/maqi.ini
+include-file = ~/.config/polybar/colors/lookingglass.ini
 
 
 ;=====================================================

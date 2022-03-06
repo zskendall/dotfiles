@@ -229,7 +229,7 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 20"
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
 
 # Rebind the print-screen key
-bindsym mod1+Print exec gnome-screenshot -a
+bindsym $mod+Print exec gnome-screenshot -a
 bindsym Print exec gnome-screenshot
 
 #bindsym $mod+mod1+k exec --no-startup-id xinput disable 10
@@ -285,7 +285,13 @@ set $chjara               #eb8d04
 set $maqi                 #ff5fad
 set $astral               #5e3a92
 set $autumnal             #a33b2a
+set $lookingglass        #cf9115
 
 # class                  border        bg             text            indicator    child_border
-client.focused           $maqi       $maqi        $dark_neutral   $maqi      $maqi
-client.focused_inactive  $mid_neutral  $dark_neutral  $maqi         $indicator   $dark_neutral
+client.focused           $lookingglass       $lookingglass        $dark_neutral   $lookingglass      $lookingglass
+client.focused_inactive  $mid_neutral  $dark_neutral  $lookingglass         $indicator   $dark_neutral
+# --- Gaps
+for_window [class="^.*"] border pixel 5
+gaps inner 30
+gaps outer 20
+for_window [class="Gsimplecal"] border pixel 0

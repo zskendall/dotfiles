@@ -72,13 +72,20 @@ theme_polybar() {
   sed -ri "/${current}.ini$/s/${current}/${THEME}/g" ~/.config/polybar/config
 
   # read and parse focus_foreground for the icon styling
-  local focus_from_file=`grep "^focus = " ~/.config/polybar/colors/$THEME.ini \
+  local focus_from_file=`grep "^focus" ~/.config/polybar/colors/$THEME.ini \
     | extract '#' '2'`
   local focus=`[ ! -z "$focus_from_file" ] && echo "$focus_from_file" \
     || awk "/\[default\]/,/FONTS/" ~/.config/polybar/config \
     | egrep -m 1 "^focus" | extract '#' '2'`
+  echo $focus
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/config
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/launch.sh
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/datetime.ini
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/network.ini
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/volume.ini
+
+  # restart polybar to pick up focus changes in module files
+  polybar-msg cmd restart
 }
 
 theme_i3() {
@@ -97,17 +104,18 @@ theme_i3() {
 theme_tmux() {
   if [[ ! $(grep "^${THEME}_" ~/.tmux.conf) ]]; then
     local available=`awk "/# Themed colors/,/\}\}\}/" ~/.tmux.conf | \
-      grep ".*_status_active" | extract '_' '1'`
+      grep ".*_accent" | extract '_' '1'`
     no_theme_error "tmux" "$available"
     return
   fi
-  local line=`grep -m 1 "=\$.*_" ~/.tmux.conf`
+  local line=`grep -m 1 "^accent=\$.*_" ~/.tmux.conf`
   local re='.*\$([a-z]+)_.*'
   [[ $line =~ $re ]]
   local current=${BASH_REMATCH[1]}
 
-  # must search for and replace literal $ to avoid overwriting color defs
-  sed -i "s/\$${current}_/\$${THEME}_/g" ~/dotfiles/tmux/.tmux.conf
+  local s=`grep -n -m 1 "}}}" ~/.tmux.conf | line_no`
+  local e=`grep -n -m 1 "Status bar {{{" ~/.tmux.conf | line_no`
+  sed -i "${s},${e}s/\$${current}/\$${THEME}/" ~/dotfiles/tmux/.tmux.conf
 }
 
 theme_rofi() {

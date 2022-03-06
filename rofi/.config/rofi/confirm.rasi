@@ -3,7 +3,7 @@
  * https://github.com/ntcarlson/dotfiles/blob/tau/config/rofi/confirmation_dialog.rasi
  */
 
-@import "colorschemes/maqi.rasi"
+@import "colorschemes/lookingglass.rasi"
 
 window {
   background-color:   @background-alt;

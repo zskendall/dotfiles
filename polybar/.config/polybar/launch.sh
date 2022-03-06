@@ -10,9 +10,9 @@ set_vars() {
   NET_TYPE="$(echo $connected | awk -F" " '{print $2}')"
 
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
-    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#ff5fad} %{F-}%essid%
+    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#cf9115} %{F-}%essid%
     %signal%%%{A}"
-    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#ff5fad} %{F-}%{A}"
+    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#cf9115} %{F-}%{A}"
   fi
 }
 

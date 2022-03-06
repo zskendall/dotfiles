@@ -13,14 +13,14 @@ if grep -iq "storm" <<< "$WEATHER"; then
   CONDITION="%{T4}%{T-}"
 elif grep -iq "rain\|shower\|drizzle" <<< "$WEATHER"; then
   if grep -iq "light\|patchy\|drizzle" <<< "$WEATHER"; then
-    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T6}%{T-}"
+    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T4}%{T-}"
   else CONDITION="%{T4}%{T-}"
   fi
 elif grep -iq "snow" <<< "$WEATHER"; then
   CONDITION="%{T2}%{T-}"
 elif grep -iq "cloudy\|overcast" <<< "$WEATHER"; then
   if grep -iq "partly" <<< "$WEATHER"; then
-    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T6}%{T-}"
+    [ ! -z $NIGHT ] && CONDITION="%{T4}%{T-}" || CONDITION="%{T4}%{T-}"
   else CONDITION="%{T2}%{T-}"
   fi
 elif grep -iq "haze\|hazy\|mist\|fog" <<< "$WEATHER"; then

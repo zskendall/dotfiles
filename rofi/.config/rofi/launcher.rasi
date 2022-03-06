@@ -11,7 +11,7 @@ configuration {
   show-icons:                 true;
 }
 
-@import "colorschemes/maqi.rasi"
+@import "colorschemes/lookingglass.rasi"
 
 window {
   border:                     2;

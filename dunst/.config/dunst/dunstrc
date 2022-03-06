@@ -68,7 +68,8 @@
     # maqi: #ff5fad
     # chjara: #eb8d04
     # autumnal: #a33b2a
-    frame_color = "#ff5fad"
+    # lookingglass: #cf9115
+    frame_color = "#cf9115"
 
     # Define a color for the separator.
     # possible values are:
@@ -293,8 +294,9 @@
     # maqi: #1d007d #b5e2ff
     # autumnal: #000000 #478ba9
     # astral: #498db9 #000824
-    background = "#1d007d"
-    foreground = "#b5e2ff"
+    # lookingglass: #400011 #cf9115
+    background = "#400011"
+    foreground = "#cf9115"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
