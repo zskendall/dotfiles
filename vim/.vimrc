@@ -110,29 +110,42 @@ nnoremap Y y$
 set splitbelow
 
 " Map keys for movement: {{{
+execute "set <A-J>=\ej"
+execute "set <A-K>=\ek"
+execute "set <A-L>=\el"
+execute "set <A-H>=\eh"
 
-" buffers C-HJKL
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" buffers Alt-HJKL
+nnoremap <A-J> <C-W><C-J>
+nnoremap <A-K> <C-W><C-K>
+nnoremap <A-L> <C-W><C-L>
+nnoremap <A-H> <C-W><C-H>
 
-" insert C-HJKL
-inoremap <C-J> <Down>
-inoremap <C-K> <Up>
-inoremap <C-L> <Right>
-inoremap <C-H> <Left>
+" insert Alt-HJKL
+inoremap <A-J> <Down>
+inoremap <A-K> <Up>
+inoremap <A-L> <Right>
+inoremap <A-H> <Left>
 
-inoremap <C-E> <End>
+execute "set <A-E>=\ee"
+inoremap <A-E> <End>
 
 " Map keys for page up and page down
-nnoremap <C-U> <PageUp>
-nnoremap <C-N> <PageDown>
+execute "set <A-U>=\eu"
+execute "set <A-N>=\en"
+nnoremap <A-U> <PageUp>
+nnoremap <A-N> <PageDown>
 
+" previous and next cursor placement
+execute "set <A-O>=\eo"
+execute "set <A-I>=\ei"
+nnoremap <A-O> <C-O>
+nnoremap <A-I> <C-I>
 " }}}
 
 " Add some convenience searching
-nnoremap <C-S> *
+execute "set <A-;>=\e;"
+nnoremap <A-;> *
 
 " Fix weird characters sometimes being inserted with i-Esc-i in quick succession
 set ttimeoutlen=0
