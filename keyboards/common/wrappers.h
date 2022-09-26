@@ -35,7 +35,7 @@
 #define ______QWORF_R2______    KC_P,   KC_N,   KC_E,     KC_I,   KC_SCLN
 #define ______QWORF_R3______    KC_K,   KC_M,   KC_COMM,  KC_DOT, KC_SLSH
 
-#define _______NUM_L1_______    CHDF,     KC_NO,  KC_NO,  KC_E,   KC_GRV, KC_UNDS
+#define _______NUM_L1_______    KC_NO,  KC_NO,  KC_E,   KC_GRV, KC_UNDS
 #define _______NUM_L2_______    _____,    KC_A,   KC_NO,  KC_D,   KC_F,   KC_BSLS
 #define _______NUM_L3_______    KC_NO,    KC_NO,  KC_X,   KC_C,   KC_NO,  KC_B
 

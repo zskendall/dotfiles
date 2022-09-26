@@ -26,12 +26,12 @@ extern size_t num_defaults;
 
 enum keycodes {
   CHDF = SAFE_RANGE, // change default layer
+  KEYMAP_SAFE_RANGE, // use for keymaps specific codes
 };
 
 /* Key aliases */
 #define _____ KC_TRNS
 #define MS_TOG TG(_MOUSE)
-#define KC_UNDS LSFT(KC_MINS)
 #define ART_TOG TG(_ART)
 #define VTERM LCTL(S(KC_F1))
 #define TERM LGUI(KC_ENT)

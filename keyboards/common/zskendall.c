@@ -1,5 +1,14 @@
 #include "zskendall.h"
 
+// Add reconfigurable functions here, for keymap customization
+// This allows for a global, userspace functions, and continued
+// customization of the keymap. Use _keymap instead of _user
+// functions in the keymaps
+// https://docs.qmk.fm/#/feature_userspace?id=customized-functions
+__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
+
+// Defines actions for global custom keycodes defined in common header.
+// Then runs the _keymap's recod handier if not processed here,
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case CHDF:
@@ -14,5 +23,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
   }
-  return true;
+  return process_record_keymap(keycode, record);
 }
