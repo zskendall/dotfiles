@@ -1,10 +1,6 @@
 #include "zskendall.h"
 
-enum custom_keycodes {
-  NUM = KEYMAP_SAFE_RANGE,
-  NAV,
-  ADJUST
-};
+enum custom_keycodes { NUM = KEYMAP_SAFE_RANGE, NAV, ADJUST };
 
 #define META_SPC RGUI_T(KC_SPC)
 #define NAV_RET LT(_NAV, KC_ENT)
@@ -92,8 +88,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 bool defaults[] = {
-  [_QWERTY] = true,
-  [_ADJUST] = false,
+    [_QWERTY] = true,
+    [_ADJUST] = false,
 };
 size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);
 
@@ -132,4 +128,24 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
       break;
   }
   return true;
+}
+
+layer_state_t layer_state_set_rgb_light(layer_state_t state) {
+#ifdef RGBLIGHT_ENABLE
+  switch (get_highest_layer(state | default_layer_state)) {
+    case _NAV:
+      rgblight_sethsv_noeeprom(HSV_BLUE);
+      break;
+    case _NUM:
+      rgblight_sethsv_noeeprom(HSV_GREEN);
+      break;
+    case _ADJUST:
+      rgblight_sethsv_noeeprom(HSV_WHITE);
+      break;
+    case _QWERTY:  // fall-through
+    default:
+      rgblight_sethsv(RGBLIGHT_DEFAULT_HSV);
+  }
+#endif
+  return state;
 }

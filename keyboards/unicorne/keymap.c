@@ -1,7 +1,7 @@
 #include "zskendall.h"
 
 #ifdef RGBLIGHT_ENABLE
-#     include "rgb.h"
+#include "rgb.h"
 #endif
 
 // clang-format off
@@ -93,11 +93,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 bool defaults[] = {
-  [_QWERTY] = true,
-  [_WORKMAN] = true,
-  [_QWORF] = true,
-  [_CAIN] = true,
-  [_ADJUST] = false,
+    [_QWERTY] = true, [_WORKMAN] = true, [_QWORF] = true,
+    [_CAIN] = true,   [_ADJUST] = false,
 };
 size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);
 
@@ -115,7 +112,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 // everything else based on default unicorne
 // Left encoder scrolls the mousewheel, right adjusts underglow hue.
 void encoder_update_user(uint8_t idx, bool cw) {
-  if (idx == 0) { // idx = 0: left encoder
+  if (idx == 0) {  // idx = 0: left encoder
     if (cw) {
 #ifdef MOUSEKEY_ENABLE
       tap_code(KC_MS_WH_DOWN);
@@ -129,7 +126,7 @@ void encoder_update_user(uint8_t idx, bool cw) {
       tap_code(KC_PGUP);
 #endif
     }
-  } else { // idx = 1: right encoder
+  } else {  // idx = 1: right encoder
     if (cw) {
 #ifdef RGB_MATRIX_ENABLE
       rgb_matrix_step();
@@ -144,4 +141,39 @@ void encoder_update_user(uint8_t idx, bool cw) {
 #endif
     }
   }
+}
+
+// handle rgbs
+layer_state_t layer_state_set_rgb_light(layer_state_t state) {
+#ifdef RGBLIGHT_ENABLE
+  switch (get_highest_layer(state | default_layer_state)) {
+    case _ART:
+      rgblight_set_hsv_and_mode(HSV_RED, RGBLIGHT_MODE_SNAKE);
+      break;
+    case _MOUSE:
+      rgblight_set_hsv_and_mode(HSV_CYAN, RGBLIGHT_MODE_ALTERNATING);
+      break;
+    case _ADJUST:
+      rgblight_set_hsv_and_mode(HSV_BLUE, RGBLIGHT_MODE_RAINBOW_MOOD + 2);
+      break;
+    case _WORKMAN:
+      rgblight_sethsv_noeeprom(HSV_GREEN);
+      break;
+    case _CAIN:
+      rgblight_sethsv_noeeprom(HSV_ORANGE);
+      break;
+    case _QWORF:
+      rgblight_sethsv_noeeprom(HSV_TURQUOISE);
+      break;
+    case _QWERTY:
+      rgblight_sethsv(HSV_BLUE);
+      // fall-through
+    default:
+      if (rgblight_get_mode() != RGBLIGHT_DEFAULT_MODE) {
+        // reset defaults if coming from another layer
+        rgblight_set_hsv_and_mode(HSV_BLUE, RGBLIGHT_DEFAULT_MODE);
+      }
+  }
+#endif
+  return state;
 }
