@@ -79,9 +79,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Based on default Planck keymap:
     // https://github.com/qmk/qmk_firmware/blob/master/keyboards/planck/keymaps/default/keymap.c
     [_ADJUST] = LAYOUT_planck_grid(
-        _____, QK_BOOT,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL,
-        _____, _____, _____,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _____,  _____,  _____,  _____,  _____,
-        _____, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _____, _____, _____, _____, _____,
+        _____, QK_BOOT,   DB_TOGG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL,
+        _____, _____, MU_NEXT,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _____,  _____,  _____,  _____,  _____,
+        _____, AU_PREV, AU_NEXT,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _____, _____, _____, _____, _____,
         _____, _____, _____, _____, _____, _____, _____, _____, _____,  _____, _____, _____
     ),
 };
