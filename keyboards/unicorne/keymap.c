@@ -104,11 +104,6 @@ void keyboard_post_init_user(void) {
 #endif
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-  state = layer_state_set_rgb_light(state);
-  return state;
-}
-
 // everything else based on default unicorne
 // Left encoder scrolls the mousewheel, right adjusts underglow hue.
 void encoder_update_user(uint8_t idx, bool cw) {

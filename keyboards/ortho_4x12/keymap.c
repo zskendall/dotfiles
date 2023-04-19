@@ -1,5 +1,9 @@
 #include "zskendall.h"
 
+#ifdef RGBLIGHT_ENABLE
+#include "rgb.h"
+#endif
+
 enum custom_keycodes { NUM = KEYMAP_SAFE_RANGE, NAV, ADJUST };
 
 #define META_SPC RGUI_T(KC_SPC)

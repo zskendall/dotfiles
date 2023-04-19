@@ -1,11 +1,23 @@
 #include "zskendall.h"
 
+#ifdef RGBLIGHT_ENABLE
+#include "rgb.h"
+#endif
+
 // Add reconfigurable functions here, for keymap customization
 // This allows for a global, userspace functions, and continued
 // customization of the keymap. Use _keymap instead of _user
 // functions in the keymaps
 // https://docs.qmk.fm/#/feature_userspace?id=customized-functions
-__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
+__attribute__((weak)) bool process_record_keymap(uint16_t keycode,
+                                                 keyrecord_t *record) {
+  return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  state = layer_state_set_rgb_light(state);
+  return state;
+}
 
 // Defines actions for global custom keycodes defined in common header.
 // Then runs the _keymap's recod handier if not processed here,
