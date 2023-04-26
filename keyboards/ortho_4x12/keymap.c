@@ -138,13 +138,13 @@ layer_state_t layer_state_set_rgb_light(layer_state_t state) {
 #ifdef RGBLIGHT_ENABLE
   switch (get_highest_layer(state | default_layer_state)) {
     case _NAV:
-      rgblight_sethsv_noeeprom(HSV_BLUE);
-      break;
-    case _NUM:
       rgblight_sethsv_noeeprom(HSV_GREEN);
       break;
+    case _NUM:
+      rgblight_sethsv_noeeprom(HSV_CYAN);
+      break;
     case _ADJUST:
-      rgblight_sethsv_noeeprom(HSV_WHITE);
+      rgblight_sethsv_noeeprom(110, 175, 255); // desaturated spring green
       break;
     case _QWERTY:  // fall-through
     default:
