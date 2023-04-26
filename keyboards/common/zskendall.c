@@ -14,8 +14,24 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode,
   return true;
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
+void keyboard_post_init_user(void) {
 #ifdef RGBLIGHT_ENABLE
+  keyboard_post_init_rgb_light();
+#endif
+#ifdef RGBLIGHT_LAYERS
+  rgblight_layers = rgb_layers;
+#endif
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+#ifdef RGBLIGHT_LAYERS
+  rgblight_set_layer_state(_NUM, layer_state_cmp(state, _NUM));
+  rgblight_set_layer_state(_NAV, layer_state_cmp(state, _NAV));
+  // rgblight_set_layer_state(_MOUSE, layer_state_cmp(state, _MOUSE));
+  // rgblight_set_layer_state(_ART, layer_state_cmp(state, _ART));
+  // rgblight_set_layer_state(_ADJUST, layer_state_cmp(state, _ADJUST));
+  rgblight_set_layer_state_keymap(state);
+#elif RGBLIGHT_ENABLE
   state = layer_state_set_rgb_light(state);
 #endif
   return state;

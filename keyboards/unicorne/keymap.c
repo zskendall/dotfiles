@@ -98,12 +98,6 @@ bool defaults[] = {
 };
 size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);
 
-void keyboard_post_init_user(void) {
-#ifdef RGBLIGHT_ENABLE
-  keyboard_post_init_rgb_light();
-#endif
-}
-
 // everything else based on default unicorne
 // Left encoder scrolls the mousewheel, right adjusts underglow hue.
 void encoder_update_user(uint8_t idx, bool cw) {

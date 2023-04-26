@@ -32,6 +32,21 @@ enum custom_keycodes { NUM = KEYMAP_SAFE_RANGE, NAV, ADJUST };
 
 #define ______DEFAULT_4_____    KC_NO, KC_LCTL, KC_LALT, KC_LSFT, NUM, META_SPC, NAV_RET, LSFT_T(KC_LEFT), RALT_T(KC_DOWN), RCTL_T(KC_UP), KC_RIGHT
 
+#ifdef RGBLIGHT_LAYERS
+const rgblight_segment_t PROGMEM num_layer[] =
+    RGBLIGHT_LAYER_SEGMENTS({1, 2, HSV_GREEN}, {7, 2, HSV_GREEN});
+const rgblight_segment_t PROGMEM nav_layer[] =
+    RGBLIGHT_LAYER_SEGMENTS({1, 2, NAV_HSV}, {7, 2, NAV_HSV});
+const rgblight_segment_t PROGMEM adjust_layer[] =
+    RGBLIGHT_LAYER_SEGMENTS({1, 2, HSV_WHITE}, {7, 2, HSV_WHITE});
+const rgblight_segment_t* const PROGMEM rgb_layers[] = {
+    [_NUM] = num_layer,
+    [_NAV] = nav_layer,
+    [_ADJUST] = adjust_layer,
+    [_ADJUST + 1] = NULL
+};
+#endif
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /** Base Layer (QWERTY) */
@@ -100,7 +115,7 @@ size_t num_defaults = sizeof(defaults) / sizeof(defaults[0]);
 // Handle tri-layer for num/nav/adjust
 // Based on buswerks' keymap:
 // https://github.com/qmk/qmk_firmware/blob/master/layouts/community/ortho_4x12/buswerks/keymap.c
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
   switch (keycode) {
     case NUM:
       if (record->event.pressed) {
@@ -152,4 +167,11 @@ layer_state_t layer_state_set_rgb_light(layer_state_t state) {
   }
 #endif
   return state;
+}
+
+void rgblight_set_layer_state_keymap(layer_state_t state) {
+#ifdef RGBLIGHT_LAYERS
+  rgblight_set_layer_state(/*layer_index=*/_ADJUST,
+                           layer_state_cmp(state, _ADJUST));
+#endif
 }
