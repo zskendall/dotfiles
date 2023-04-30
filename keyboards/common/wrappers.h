@@ -9,7 +9,7 @@
 #include "zskendall.h"
 
 // clang-format off
-#define _______THUMB_3______    KC_LSPO,  LALT_SPC,  NUM_LB,      NAV_RB,   META_RET,   KC_RSPC
+#define _______THUMB_3______    SC_LSPO,  LALT_SPC,  NUM_LB,      NAV_RB,   META_RET,   SC_RSPC
 
 #define ______QWERTY_L1_____    KC_Q,   KC_W,   KC_E,     KC_R,   KC_T
 #define ______QWERTY_L2_____    KC_A,   KC_S,   KC_D,     KC_F,   KC_G
