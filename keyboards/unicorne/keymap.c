@@ -9,7 +9,7 @@
  * Layout macros to allow providing a predefined wrapper instead of needing to
  * provide each key individually.
  */
-#define LAYOUT_unicorne_wrapper(...)     LAYOUT_split_3x6_4(__VA_ARGS__)
+#define LAYOUT_unicorne_wrapper(...)     LAYOUT_unicorne(__VA_ARGS__)
 #define LAYOUT_unicorne_base( \
     K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, \
     K10, K11, K12, K13, K14, K15, K16, K17, K18, K19, \
@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // In pursuit of perfection...
     // Inspired by keyboard-design.com/letterlayout.html?layout=chia.en.matrix
     // but with less common keys on the homerow pinkies
-    [_CAIN] = LAYOUT_split_3x6_4(
+    [_CAIN] = LAYOUT_unicorne(
 	      _____, KC_Q, KC_J, KC_H , KC_F , KC_LBRC,		      KC_RBRC, KC_U , KC_L , KC_G , KC_X, _____,
 	      _____, KC_C, KC_A , KC_I, KC_N , KC_W,		      KC_P, KC_T , KC_S , KC_R , KC_SCLN, _____,
 	      _____, _____, KC_Y, KC_D, KC_V, _____,		        KC_K, KC_M, _____, _____, _____  , _____,
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     
     // Based on default unicorne keymap
-    [_ADJUST] = LAYOUT_split_3x6_4(
+    [_ADJUST] = LAYOUT_unicorne(
         RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD , KC_NO, RGB_TOG,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD, KC_NO, KC_NO  ,                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_NO  , KC_NO  , KC_NO  , KC_NO   , KC_NO, KC_NO  ,                     RESET, KC_NO, KC_NO, KC_NO, KC_NO, TG(_ADJUST),
@@ -114,7 +114,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         layer_off(_NUM);
         update_tri_layer(_NUM, _NAV, _ADJUST);
       }
-      return false;
+      return true;
       break;
     case NAV_RB:
       if (record->event.pressed) {
@@ -124,7 +124,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         layer_off(_NAV);
         update_tri_layer(_NUM, _NUM, _ADJUST);
       }
-      return false;
+      return true;
       break;
   }
   return true;
@@ -134,18 +134,19 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 // Left encoder scrolls the mousewheel, right adjusts underglow hue.
 bool encoder_update_user(uint8_t index, bool clockwise) {
   switch (index) {
-    case 0:   // left encoder - scrolling
+    case 0:  // left encoder - scrolling
 #ifdef MOUSEKEY_ENABLE
       tap_code(clockwise ? KC_MS_WH_DOWN : KC_MS_WH_UP);
 #else
       tap_code(clockwise ? KC_PGDN : KC_PGUP);
 #endif
       return false;
-    case 1: // right encoder: rgb
+    case 1:  // right encoder: rgb
 #ifdef RGB_MATRIX_ENABLE
       clockwise ? rgb_matrix_step() : rgb_matrix_step_reverse();
 #else
-      clockwise ? rgblight_increase_hue_noeeprom() : rgblight_decrease_hue_noeeprom();
+      clockwise ? rgblight_increase_hue_noeeprom()
+                : rgblight_decrease_hue_noeeprom();
 #endif
       return false;
     default:
