@@ -55,16 +55,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT_unicorne_wrapper(
-        CHDF, _______NUM_L1_______,             _______NUM_R1_______,
-              _______NUM_L2_______,             _______NUM_R2_______, _____,
-              _______NUM_L3_______,             _______NUM_R3_______,
+        CHDF,  _______NUM_L1_______,             _______NUM_R1_______, _____,
+               _______NUM_L2_______,             _______NUM_R2_______, _____,
+        KC_NO, _______NUM_L3_______,             _______NUM_R3_______, KC_DEL,
                       _____, ______NUM_THUMB_____, _____
     ),
 
     [_NAV] = LAYOUT_unicorne_wrapper(
-               _______NAV_L1_______,             _______NAV_R1_______, _____,
-        _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
-        TG(_ADJUST), _______NAV_L3_______,             _______NAV_R3_______,
+        ART_TOG, _______NAV_L1_______,             _______NAV_R1_______, _____,
+          _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
+        TG(_ADJUST), _______NAV_L3_______,         _______NAV_R3_______, MS_TOG,
                          _____, ______NAV_THUMB_____, _____
     ),
 

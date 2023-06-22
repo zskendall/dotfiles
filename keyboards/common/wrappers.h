@@ -37,25 +37,25 @@
 
 #define _______NUM_L1_______    KC_NO,  KC_NO,  KC_E,   KC_GRV, KC_UNDS
 #define _______NUM_L2_______    _____,    KC_A,   KC_NO,  KC_D,   KC_F,   KC_BSLS
-#define _______NUM_L3_______    KC_NO,    KC_NO,  KC_X,   KC_C,   KC_NO,  KC_B
+#define _______NUM_L3_______    KC_NO,  KC_X,   KC_C,   KC_NO,  KC_B
 
-#define _______NUM_R1_______    KC_PAST,  KC_7,   KC_8,   KC_9,   KC_MINS, KC_BSPC
+#define _______NUM_R1_______    KC_PAST,  KC_7,   KC_8,   KC_9,   KC_MINS
 #define _______NUM_R2_______    KC_PSLS,  KC_4,   KC_5,   KC_6,   KC_PPLS
-#define _______NUM_R3_______    KC_EQL,   KC_1,   KC_2,   KC_3,   KC_DOT, KC_DEL
+#define _______NUM_R3_______    KC_EQL,   KC_1,   KC_2,   KC_3,   KC_DOT
 
 #define ______NUM_THUMB_____    _____,  _____,  _____,      KC_0, _____,  _____
 
-#define _______NAV_L1_______    ART_TOG, RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5)
+#define _______NAV_L1_______    RGUI(KC_1), RGUI(KC_2), RGUI(KC_3), RGUI(KC_4), RGUI(KC_5)
 #define _______NAV_L2_______    KC_HOME,    KC_PGUP,    KC_PGDN,    KC_END,     KC_NO
 #define _______NAV_L3_______    LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5)
 
 #define _______NAV_R1_______    RGUI(KC_6), RGUI(KC_7), RGUI(KC_8), RGUI(KC_9), RGUI(KC_0)
 #define _______NAV_R2_______    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_NO
-#define _______NAV_R3_______    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO,      MS_TOG
+#define _______NAV_R3_______    LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), KC_NO
 
 #define ______NAV_THUMB_____    _____,  _____,  _____,      _____, _____,  _____
 
-#define _______OPS_L1_______    RESET,    VTERM,      KC_WH_U,    KC_NO,      KC_BRIU,    KC_NO
+#define _______OPS_L1_______    QK_REBOOT,    VTERM,      KC_WH_U,    KC_NO,      KC_BRIU,    KC_NO
 #define _______OPS_L2_______    KC_ESC,   KC_WH_L,    KC_WH_D,    KC_WH_R,    KC_BRID,    KC_NO
 #define _______OPS_L3_______    KC_NO,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MSTP,    KC_NO
 

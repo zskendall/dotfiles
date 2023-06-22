@@ -44,18 +44,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /** Numeric Layer */
     [_NUM] = LAYOUT_ortho_4x12_wrapper(
-        _____, _______NUM_L1_______,             _______NUM_R1_______,
+        _____, _______NUM_L1_______,             _______NUM_R1_______, _____,
                _______NUM_L2_______,             _______NUM_R2_______, META_RET,
-               _______NUM_L3_______,             _______NUM_R3_______,
+        KC_NO, _______NUM_L3_______,             _______NUM_R3_______, KC_DEL,
         _____, _____, _____, _____, _____, _____, KC_0, _____, _____, _____, _____, _____
     ),
 
     /** Directional Navigation Layer */
     [_NAV] = LAYOUT_ortho_4x12_wrapper(
-               _______NAV_L1_______,             RGUI(KC_6), KC_LPRN, KC_RPRN, RGUI(KC_7), RGUI(KC_8), _____,
-        _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
-        _____, _______NAV_L3_______,             LCTL(KC_6), KC_LBRC, KC_RBRC, LCTL(KC_7), LCTL(KC_9), MS_TOG,
-        _____, _____, _____, _____, _____, _____, _____, _____, _____, _____, _____, _____
+        ART_TOG, _______NAV_L1_______,             RGUI(KC_6), KC_LPRN, KC_RPRN, RGUI(KC_7), RGUI(KC_8), _____,
+          _____, _______NAV_L2_______,             _______NAV_R2_______, LGUI(KC_L),
+          _____, _______NAV_L3_______,             LCTL(KC_6), KC_LBRC, KC_RBRC, LCTL(KC_7), LCTL(KC_9), MS_TOG,
+          _____, _____, _____, _____, _____, _____, _____, _____, _____, _____, _____, _____
     ),
 
     /** Mouse/Media Layer */

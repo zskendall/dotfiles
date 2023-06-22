@@ -15,7 +15,9 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode,
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+#ifdef RGBLIGHT_ENABLE
   state = layer_state_set_rgb_light(state);
+#endif
   return state;
 }
 

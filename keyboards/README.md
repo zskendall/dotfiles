@@ -11,6 +11,8 @@ config located in [common/](./common).
     [Crkbd](https://github.com/foostan/crkbd).
   * [Unicorne](./unicorne): Columnar unibody 3x6_3 layout with two rotary
     encoders [designed by Yang Hu](https://github.com/yanghu/unicorne).
+  * [ansi_60](./ansi_60): collection of 60% layouts; currently only contains
+    keymap for [keychron v4](https://www.keychron.com/products/keychron-v4-qmk-custom-mechanical-keyboard).
 * **Deprecated**
   * [Iris](./iris): Columnar split ergo layout with 4 thumb keys.
     No longer used in favor of 3x6+3.

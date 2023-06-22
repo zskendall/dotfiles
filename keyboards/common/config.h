@@ -1,7 +1,6 @@
 #pragma once
 
 // Prevent fast combos registering as mods
-#define IGNORE_MOD_TAP_INTERRUPT
 #undef PERMISSIVE_HOLD
 
 #ifdef MOUSEKEY_ENABLE
