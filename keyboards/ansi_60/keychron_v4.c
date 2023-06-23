@@ -2,28 +2,31 @@
 
 #include QMK_KEYBOARD_H
 
-enum kb_layers {
-    MAC_BASE,
-    WIN_BASE
-};
+enum kb_layers { MAC_BASE, WIN_BASE };
 
 enum custom_keycodes { APP };
 
 #define KC_FLXP LGUI(KC_E)
 #define ADJ MO(_ADJUST)
-#define HR_S LT(_NUM, KC_S)
 #define NAV_SPC LT(_NAV, KC_SPC)
+#define HR_S LT(_NUM, KC_S)
+#define HR_F LALT_T(KC_F)
+#define HR_J RALT_T(KC_J)
+#define HR_D LGUI_T(KC_D)
+#define HR_K RGUI_T(KC_K)
 
-#define LAYOUT_ansi_61_wrapper(...)    LAYOUT_ansi_61(__VA_ARGS__)
+#define LAYOUT_ansi_61_wrapper(...) LAYOUT_ansi_61(__VA_ARGS__)
 
-#define ___DEFAULT_NUM_60___    KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC
+#define ___DEFAULT_NUM_60___                                                   \
+  KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, \
+      KC_EQL, KC_BSPC
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_ansi_61_wrapper(
         ___DEFAULT_NUM_60___,
         KC_TAB,  ______QWERTY_L1_____, ______QWERTY_R1_____,     KC_LBRC,  KC_RBRC,  KC_BSLS,
-        KC_CAPS, KC_A, HR_S, KC_D, KC_F, KC_G, ______QWERTY_R2_____,  KC_QUOT,            KC_ENT,
+        CTL_ESC, KC_A, HR_S, HR_D, HR_F, KC_G, KC_H, HR_J, HR_K, KC_L, KC_SCLN,  KC_QUOT,            KC_ENT,
         KC_LSFT, ______QWERTY_L3_____, ______QWERTY_R3_____,            KC_RSFT,
         KC_LCTL, KC_LOPT,  KC_LCMD,                    NAV_SPC,                             KC_ROPT,  KC_RCMD, KC_RCTL, ADJ),
 
@@ -31,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [WIN_BASE] = LAYOUT_ansi_61_wrapper(
         ___DEFAULT_NUM_60___,
         KC_TAB,  ______QWERTY_L1_____, ______QWERTY_R1_____,     KC_LBRC,  KC_RBRC,  KC_BSLS,
-        KC_CAPS, KC_A, HR_S, KC_D, KC_F, KC_G, ______QWERTY_R2_____,  KC_QUOT,            KC_ENT,
+        CTL_ESC, KC_A, HR_S, HR_D, HR_F, KC_G, KC_H, HR_J, HR_K, KC_L, KC_SCLN,  KC_QUOT,            KC_ENT,
         KC_LSFT, ______QWERTY_L3_____, ______QWERTY_R3_____,            KC_RSFT,
         KC_LCTL, KC_LWIN,  KC_LALT,                    NAV_SPC,                             KC_RGUI,  _______, KC_RCTL, ADJ),
 
@@ -40,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______NUM_L1_______, _______NUM_R1_______,     _______,  _______,  _______,
         _______, _______, HR_S, _______, _______, KC_BSLS, _______NUM_R2_______,  _______,            _______,
         _______, _______NUM_L3_______, _______NUM_R3_______,            _______,
-        _______, _______,  _______,                    KC_0,                             _______,  _______, _______, _______),
+        _______, _______,  _______,              LGUI_T(KC_0),                             _______,  _______, _______, _______),
 
     [_NAV] = LAYOUT_ansi_61_wrapper(
         _______,  _______,     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,     _______,  _______,   KC_DEL,
