@@ -20,7 +20,6 @@ while getopts ":r:m:c:" opt; do
   esac
 done
 SPLIT=`[ $MAIN_ON_RIGHT ] && echo 0 || echo 1`
-if [ ! $CLIENT ]; then CLIENT=0; fi
 
 # Either attach to an existing session or create a new one
-tmux a -dt $SESSION || create_session
+reattach || tmux a -dt $SESSION || create_session

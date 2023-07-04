@@ -10,41 +10,42 @@
 # |                |-----------------|
 # |                |                 |
 # +----------------------------------+
+# splits into default split in a detached manner, using $SPLIT local var
+# @arg 1: the split arg, optional
 function default_split() {
-  echo $SPLIT
-  tmux a -t $SESSION \; \
+  split=$SPLIT
+  [ ! $SPLIT ] && split=$1 && shift
+  [ ! $attach ] && ([ ! $TMUX ] && attach="a -t $SESSION" || attach="")
+  [ ! $detach ] && ([ ! $TMUX ] && detach="detach" || detach="")
+  tmux $attach \; \
     split-window -h \; \
-    select-pane -t $SPLIT \; \
+    select-pane -t $split \; \
     split-window \; \
-    select-pane -t $SPLIT \; \
+    select-pane -t $split \; \
     split-window \; \
-    resize-pane -t $(( $SPLIT + 1 )) -D 17 \; \
-    resize-pane -t $SPLIT -D 8 \; \
-    detach
+    resize-pane -t $(( $split + 1 )) -D 17 \; \
+    resize-pane -t $split -D 8 \; \
+    select-pane -t $(( 2 - $split * 2 )) \; \
+    $detach
 }
 
-# @arg 1: the command to run in the top side pane
+# @arg 1: either the split var or the command to run in the top side pane
 # @arg 2: the command to run in the middle side pane
 send_keys() {
-  tmux a -t $SESSION \; \
-    select-pane -t $SPLIT \; \
-    send-keys -t $SPLIT "$1" C-m \; \
-    detach
-
-  sleep 1
-
-  tmux a -t $SESSION \; \
-    select-pane -t $(( $SPLIT + 1 )) \; \
-    send-keys -t $(( $SPLIT + 1 )) "$2" C-m \; \
-    select-pane -t $(( 2 - $SPLIT * 2 )) \; \
-    detach
+  tmux $attach \; \
+    select-pane -t $split \; \
+    send-keys -t $split "$1" C-m \; \
+    select-pane -t $(( $split + 1 )) \; \
+    send-keys -t $(( $split + 1 )) "$2" C-m \; \
+    select-pane -t $(( 2 - $split * 2 )) \; \
+    $detach
 }
 
 # Creates a configured tmux session
 function create_session() {
 
   tmux new -s $SESSION -d \; \
-    rename-window "main" \; \
+    rename-window "main"
 
   default_split
 
