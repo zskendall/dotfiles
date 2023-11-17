@@ -1,0 +1,17 @@
+libx11-dev
+libxcomposite-dev
+libxdamage-dev
+libxrender-dev
+libxrandr -dev
+libxinerama-dev
+pkg-config
+make
+x11proto-dev
+x11-utils
+libpcre3 libpcre3-dev
+libconfig-dev
+libdrm-dev
+libgl-dev
+libdbus-1-dev
+asciidoc
+gcc
