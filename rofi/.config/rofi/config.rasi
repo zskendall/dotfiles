@@ -2,6 +2,12 @@
 configuration {
     show-icons:                     false;
     font:                           "DejaVu Sans 20";
+    /* -------------- Key Bindings -------------- */
+    kb-row-down:	                  "Alt-n,Alt-j";
+    kb-row-left:	                  "Alt-h";
+    kb-row-right:	                  "Alt-l";
+    kb-row-up:	                    "Alt-p,Alt-k";
+
 }
 
 * {

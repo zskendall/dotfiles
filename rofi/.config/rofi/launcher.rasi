@@ -2,8 +2,9 @@
  * ROFI theme for application launcher
  * Based on theme by adi1090x:
  * https://github.com/ManuLosta/dotfiles/blob/master/August-2020/.config/rofi/launchers-git/appdrawer.rasi
- * (uses rofi-git version from AUR)
  */
+@theme "config.rasi"
+
 configuration {
   display-drun:               "";
   drun-display-format:        "{name}";
@@ -11,7 +12,7 @@ configuration {
   show-icons:                 true;
 }
 
-@import "colorschemes/lookingglass.rasi"
+@import "colorschemes/borealis.rasi"
 
 window {
   border:                     2;

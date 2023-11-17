@@ -1,3 +1,4 @@
+@theme "config.rasi"
 @import "launcher.rasi"
 
 window {
