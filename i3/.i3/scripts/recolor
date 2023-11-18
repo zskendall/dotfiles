@@ -1,9 +1,9 @@
 #!/bin/bash
 
-argv="$#"
-THEME=$1
+THEME="$1"
 shift
-IMAGES=("$@")
+IMAGES="$@"
+imgv="$#"
 
 # normal font color
 normal=$(tput sgr0)
@@ -21,20 +21,19 @@ error() {
 # @arg1 the config without the theme
 # @arg2 the available themes for the config
 no_theme_error() {
+  local available=$(echo "$2" | sed "s/\n/ /g")
   error "" "No $1 configuration for theme $THEME." \
-    "  Available themes are [${2//$'\n'/ }]" \
+    "  Available themes are [${available}]" \
     "Leaving $1 configuration as-is."
 }
 
 refresh_display() {
-  if (( ${#IMAGES[@]} < 1 )); then
+  if [ "$imgv" -lt 1 ]; then
     warn "No images for theme $THEME. Leaving background as-is."
   else
     local display="feh --bg-scale "
-    [[ $THEME == "borealis" ]] && display="feh --bg-fill "
-    for i in "${IMAGES[@]}"; do
-      display+="'$i' "
-    done
+    [ "$THEME" = "borealis" ] && display="feh --bg-fill "
+    display="$display $IMAGES"
     eval $display
   fi
 }
@@ -52,17 +51,20 @@ line_no() {
 theme_polybar() {
   local current=`egrep -o "^;?include-file = ~/.*/colors/([a-z]+).ini" \
       ~/.config/polybar/config | cut -d'/' -f 5 | extract '.' '1'`
-  local updated=`[[ -r ~/.config/polybar/colors/$THEME.ini ]] \
+  echo $current > ~/tmp/pb
+  local updated=`[ -r ~/.config/polybar/colors/$THEME.ini ] \
     && echo "$THEME" || echo "default"`
-  if [[ "$updated" == *"default"* ]]; then
+  if [ "$updated" = "default" ]; then
     local available=`ls ~/.config/polybar/colors/*.ini | cut -d'/' -f 7 \
       | extract '.' '1'`
+    available=$(echo "$available" | sed "s/\n/ /g")
     warn "" "Unknown polybar theme $THEME." \
-      "  Available themes are: [${available//$'\n'/ }]" \
+      "  Available themes are: [${available}]" \
       "Using default polybar colors."
+      # "  Available themes are: [$(echo $available | sed "s/\n/ /g")]" \
     # comment out the color theme file include if needed
-    if [[ -z $(egrep -o "^;include-file =.*${current}.ini" \
-      ~/.config/polybar/config) ]]; then
+    if [ -z "$(egrep -o "^;include-file =.*${current}.ini" \
+      ~/.config/polybar/config)" ]; then
       sed -ri "/${current}.ini$/s/(.*)/;\1/g" ~/.config/polybar/config
     fi
   else
@@ -74,7 +76,7 @@ theme_polybar() {
   # read and parse focus_foreground for the icon styling
   local focus_from_file=`grep "^focus" ~/.config/polybar/colors/$THEME.ini \
     | extract '#' '2'`
-  local focus=`[ ! -z "$focus_from_file" ] && echo "$focus_from_file" \
+  local focus=`[ -n "$focus_from_file" ] && echo "$focus_from_file" \
     || awk "/\[default\]/,/FONTS/" ~/.config/polybar/config \
     | egrep -m 1 "^focus" | extract '#' '2'`
   echo $focus
@@ -89,7 +91,7 @@ theme_polybar() {
 }
 
 theme_i3() {
-  if [[ ! $(grep "^set \$$THEME" ~/.i3/config) ]]; then
+  if [ -z "$(grep "^set \$$THEME" ~/.i3/config)" ]; then
     local available=`awk "/# themed/,/# class/" ~/.i3/config | \
       egrep "set .[a-z]+.*" | extract ' ' '2' | sed 's/\$//'`
     no_theme_error "i3" "$available"
@@ -102,16 +104,15 @@ theme_i3() {
 }
 
 theme_tmux() {
-  if [[ ! $(grep "^${THEME}_" ~/.tmux.conf) ]]; then
+  if [ -z "$(grep "^${THEME}_" ~/.tmux.conf)" ]; then
     local available=`awk "/# Themed colors/,/\}\}\}/" ~/.tmux.conf | \
       grep ".*_accent" | extract '_' '1'`
     no_theme_error "tmux" "$available"
     return
   fi
   local line=`grep -m 1 "^accent=\$.*_" ~/.tmux.conf`
-  local re='.*\$([a-z]+)_.*'
-  [[ $line =~ $re ]]
-  local current=${BASH_REMATCH[1]}
+  local re='.*\$\([a-z][a-z]*\)_'
+  local current=`expr "$line" : "$re"`
 
   local s=`grep -n -m 1 "}}}" ~/.tmux.conf | line_no`
   local e=`grep -n -m 1 "Status bar {{{" ~/.tmux.conf | line_no`
@@ -126,9 +127,8 @@ theme_rofi() {
     return
   fi
   local line=`egrep -o "^@import .*\.rasi" ~/.config/rofi/launcher.rasi`
-  local re='.*/([a-z]+).rasi'
-  [[ $line =~ $re ]]
-  local current=${BASH_REMATCH[1]}
+  local re='.*/\([a-z][a-z]*\).rasi'
+  local current=`expr "$line" : "$re"`
   for f in $(grep -r $current ~/.config/rofi | extract ':' '1'); do
     sed -i "/^@import/s/${current}/${THEME}/g" $f
   done
@@ -137,10 +137,10 @@ theme_rofi() {
 theme_dunst() {
   # read the [urgency_normal] section and parse the background and foreground
   norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" ~/.config/dunst/dunstrc`
-  local line=`grep "$THEME:" <<< "$norm"`
-  local updated=`[[ ! -z "$line" ]] && echo $THEME || echo "default"`
-  local line=`([[ ! -z $line ]] && echo $line || \
-    echo $(grep "default" <<< "$norm"))`
+  local line=`echo $norm | grep "$THEME:"`
+  local updated=`[ -n "$line" ] && echo $THEME || echo "default"`
+  local line=`([ -n "$line" ] && echo $line || \
+    echo $(echo $norm | grep "default"))`
   local norm_bg=$(echo $line | extract '#' '3' | sed -e 's/[[:space:]]*$//')
   local norm_fg=$(echo $line | extract '#' '4')
   local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | line_no`
@@ -152,9 +152,9 @@ theme_dunst() {
   # read and parse the frame color
   local frame=`awk "/color of the frame/,/color for the separator/" \
     ~/.config/dunst/dunstrc`
-  local line=`grep "$THEME:" <<< "$frame"`
-  local frame=`([[ ! -z $line ]] && echo $line || \
-    echo $(grep "default" <<< "$frame")) | extract '#' '3'`
+  local line=`echo $frame | grep "$THEME:"`
+  local frame=`([ -n "$line" ] && echo $line || \
+    echo $(echo $frame | grep "default")) | extract '#' '3'`
   local fbeg=`grep -n "color of the frame" ~/.config/dunst/dunstrc | line_no`
   local fend=`grep -n "color for the separator" ~/.config/dunst/dunstrc |
     line_no`
@@ -163,7 +163,7 @@ theme_dunst() {
   # attempt to kill dunst to reload the config (shouldn't be allowed, since
   # daemon started from DBUS)
   pkill dunst
-  if [[ "$updated" == *"default"* ]]; then
+  if [ "$updated" = "default" ]; then
     warn "Reset dunst theme to default"
   fi
 }
@@ -185,7 +185,7 @@ theme_ncmpcpp() {
 }
 
 theme_vim() {
-  if [[ ! $(grep "$THEME:" ~/.vimrc) ]]; then
+  if [ -z "$(grep $THEME: ~/.vimrc)" ]; then
     local available=`awk "/Split bar/,/}}}/" ~/.vimrc | \
       egrep "^\".*[a-z]+:.*[0-9]+" | extract ':' '1' | sed 's/\" //'`
     no_theme_error "vim" "$available"
@@ -193,7 +193,7 @@ theme_vim() {
   fi
   local themed=`grep "$THEME:" ~/.vimrc | extract ': ' '2'`
   local bg=`echo $themed | extract ',' '1'`
-  local fg=`[[ $(grep ',' <<< "$themed") ]] && \
+  local fg=`[ -n $(echo $themed | grep ',') ] && \
     echo $(echo $themed | extract ',' '2') || echo "15"`
   sed -ri --follow-symlinks "/VertSplit/s/(ctermfg=)[0-9]+/\1$bg/" ~/.vimrc
   sed -ri --follow-symlinks "/OverLength/s/(ctermbg=)[0-9]+/\1$bg/" ~/.vimrc
@@ -214,34 +214,32 @@ theme_others() {
   # TODO(zskendall): theme xfce4-terminal for light bg (paracosm)
 }
 
-if (( `ps -aux | grep polybar | wc -l` > 1 )) ; then
+if [ `ps -aux | grep polybar | wc -l` -gt 1 ] ; then
   notify-send -a recolor "changing theme to $THEME"
 fi
 
-if (( ${#IMAGES[@]} != `xrandr | egrep "[^dis]connected" | wc -l` )); then
+if [ "$imgv" -ne `xrandr | egrep "[^dis]connected" | wc -l` ]; then
   case $THEME in
     borealis)
-      IMAGES=(~/dotfiles/images/background_main.jpg \
-        ~/dotfiles/images/aurora_secondary.jpg)
+      IMAGES="~/dotfiles/images/background_main.jpg ~/dotfiles/images/aurora_secondary.jpg"
       ;;
     nikhita)
-      IMAGES=(~/dotfiles/images/background_secondary.jpg \
-        ~/dotfiles/images/nikhita_secondary.jpg)
+      IMAGES="~/dotfiles/images/background_secondary.jpg ~/dotfiles/images/nikhita_secondary.jpg"
       ;;
     astral)
-      IMAGES=(~/dotfiles/images/astral_main.jpg ~/dotfiles/images/DSC_4419.jpg)
+      IMAGES="~/dotfiles/images/astral_main.jpg ~/dotfiles/images/DSC_4419.jpg"
       ;;
     autumnal)
-      IMAGES=(~/dotfiles/images/autumnal_main.jpg \
-        ~/dotfiles/images/autumnal_secondary.jpg)
+      IMAGES="~/dotfiles/images/autumnal_main.jpg ~/dotfiles/images/autumnal_secondary.jpg"
       ;;
   esac
+  imgv=$(echo "$IMAGES" | wc -w) # recount the images
 fi
 refresh_display
 
 theme_dunst
 theme_polybar
 theme_others
-if (( `ps -aux | grep polybar | wc -l` > 1 )) ; then
+if [ `ps -aux | grep polybar | wc -l` -gt 1 ] ; then
   notify-send -a recolor "udpated theme to $THEME"
 fi
