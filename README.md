@@ -6,26 +6,20 @@ stow](https://www.gnu.org/software/stow/).
 ## TL;DR
 * **WM**: [i3-gaps](https://github.com/Airblader/i3) (multi-monitor setups) / [i3](https://i3wm.org/) (laptops)
 * **Bar**: [Polybar](https://github.com/polybar/polybar)
-* **Launchers**: [Rofi
-  1.6.1-34-g53533acb](https://github.com/davatorium/rofi/tree/1.6.1) (from
-  rofi-git on Manjaro, from source on Debian)
+* **Launchers**: [Rofi](https://github.com/davatorium/rofi)
 * **Terminal**: [xfce4-terminal](https://helpmanual.io/help/xfce4-terminal/)
 * **Multiplexer**: [tmux](https://github.com/tmux/tmux/wiki)
 * **Editor**: [vim](https://www.vim.org/)
-* **Compositor**:
-  * [Picom 7.5](https://github.com/yshui/picom) on Manjaro
-  * [tryone144/compton](https://github.com/tryone144/compton) on Debian
+* **Compositor**: [tryone144/compton](https://github.com/tryone144/compton)
 
 ### Optional
-* [**Krita**](https://krita.org/en/): FOSS paint program `sudo pacman -S krita`
-* **Wacom Driver**: [xsetwacom](https://github.com/linuxwacom/xf86-input-wacom/wiki/xsetwacom)
-  from [xf86-input-wacom](https://archlinux.org/packages/extra/x86_64/xf86-input-wacom/)
+* [**Krita**](https://krita.org/en/): FOSS paint program
+* **Wacom Driver**: automatically installed from `xserver-xorg-input-wacom`
 * **Messaging Platforms**: [WhatsApp](https://wiki.archlinux.org/index.php/WhatsApp)
   nativefier-dark and [Discord](https://wiki.archlinux.org/index.php/Discord)
 * **Notifications**: [dunst](https://dunst-project.org/) (can also use default
   daemon)
-* **System Monitoring**: [gotop](https://github.com/cjbassi/gotop)
-  (AUR on Manjaro or source for Debian)
+* **System Monitoring**: [gotop](https://github.com/cjbassi/gotop) (from source)
 * **Media**: [mpd](https://wiki.archlinux.org/index.php/Music_Player_Daemon),
   [ncmpcpp](https://wiki.archlinux.org/index.php/ncmpcpp), and
   [cava](https://github.com/karlstav/cava)
@@ -56,5 +50,16 @@ sed "s~%music_dir%~<music_dir_here>~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
 ```
 Since I've never clean installed after creating, might need to install git
 and/or `chmod u+x` the script.
+
+Google Chrome as a browser takes a bit of tinkering to get working. Following
+instructions at wikihow.com/Install-Google-Chrome-Using-Terminal-on-Linux:
+```
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt-get install -f
+```
+
+[Load older Krita brushes: Settings > Manage Resource Libraries > Activate
+Krita_3_Default...](https://www.reddit.com/r/krita/comments/stpd1v/importing_krita_3_brushes/?rdt=33734)
 
 More information is in subdirs :)

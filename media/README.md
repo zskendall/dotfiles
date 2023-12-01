@@ -4,8 +4,7 @@ For computers with music stored locally, daemon is
 [ncmpcpp](https://wiki.archlinux.org/index.php/ncmpcpp) as the client.
 [cava](https://github.com/karlstav/cava) can be used as a visualizer.
 ```
-sudo pacman -S mpd ncmpcpp
-pamac build cava
+sudo apt install mpd ncmpcpp cava
 cd ~/dotfiles && stow media && cd ~
 
 sed "s~%music_dir%~<music_dir_here>~" ~/.config/mpd/template > ~/.config/mpd/mpd.conf
@@ -14,7 +13,7 @@ sed "s~%music_dir%~<music_dir_here>~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
 The colors of ncmpcpp are themed to go with the system. Not all themes are
 supported yet.
 
-## Headphones (Debian)
+## Headphones
 Generally use Bose QC35_II headphones, which are bluetooth. For desktops, will
 need to connect with an adapter. Have used an ASUS USB-BT400 Bluetooth 4.0 USB
 Adapter.
@@ -75,9 +74,9 @@ pulseaudio --start
 ```
 and reconnect the headphones.
 
-## Speakers (Manjaro)
-In Majaro, sometimes the sound from Chrome was cutting out. These things worked
-to fix it once, so try them first!
+## Speakers
+Sometimes there was no sound. These things worked to fix it once, so try them
+first!
 
 1. Check the jacks. On older sound cards, green looks a lot like grey. 🤦🏻‍♀️
 2. Read [this forum post](https://forum.manjaro.org/t/no-sound-in-chrome-or-ff/3824/14),
@@ -91,3 +90,7 @@ to fix it once, so try them first!
 Sometimes polybar will not show the volume; this is usually because it can't
 figure out which sound card to use. `aplay -l` to figure out the card number and
 use `master-soundcard = hw:X` in volume module.
+
+Sometimes pulseaudio needs to be restarted. `pulseaudio -k` generally
+successfully killed the daemon, but `pulseaudio --start` seemed to only restart
+on non-systemd machines - use `systemctl --user restart pulseaudio` for those.

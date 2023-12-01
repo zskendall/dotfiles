@@ -5,33 +5,28 @@ xmodmap ~/.xmodmap
 
 # Set background image. If change background, then change Polybar, i3, and Tmux.
 export TERM=xterm-256color
-[ -r ~/.i3/scripts/recolor ] && . ~/.i3/scripts/recolor borealis
+[ -r ~/.i3/scripts/recolor ] && ~/.i3/scripts/recolor borealis
 
 # If installed, start compton as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
-if [[ $(pacman -Q picom) ]]; then   # for Manjaro
-  picom -b --experimental-backends --config ~/.compton.conf
-elif [[ $(dpkg -s compton | grep "installed") ]]; then  # for Debian/Ubuntu
-  compton -b
+if [ -n "$(dpkg -s compton | grep "installed")" ]; then
+  compton &
 fi
 
 [ -r ~/.xbindkeysrc ] && xbindkeys -f ~/.xbindkeysrc &
 [ -r ~/.inputrc ] && bind -f ~/.inputrc &
 
-if [ -r ~/.wacom_udev ]; then
-  if [[ $(pacman -Q xf86-input-wacom) ]]; then # for Manjaro
-    . ~/.wacom_udev
-  elif [[ $(dpkg -s xsetwacom) ]]; then # for Debian/Ubuntu
-    . ~/.wacom_udev
-  fi
+if [ -n "$(dpkg -s xserver-xorg-input-wacom)" ] && [ -r ~/.wacom_udev ]; then
+  . ~/.wacom_udev
 fi
 
 # Run any machine-specific setup
-if [ -r ~/.xprofile.$HOSTNAME ]; then
-  . ~/.xprofile.$HOSTNAME
+if [ -r ~/.xprofile.$(hostname) ]; then
+  echo "machine time" >> ~/tmp/foo
+  . ~/.xprofile.$(hostname)
 fi
 
-if [[ $(xdg-mime query default x-scheme-handler/https) != *"google-chrome"* ]];
+if [ "$(xdg-mime query default x-scheme-handler/https)" != "google-chrome.desktop" ];
 then
   xdg-mime default google-chrome.desktop x-scheme-handler/https
   xdg-mime default google-chrome.desktop x-scheme-handler/http

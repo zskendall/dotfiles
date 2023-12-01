@@ -1,8 +1,8 @@
 # X Session Configuration
 ```
-sudo pacman -S feh xdotool xautomation xbindkeys xf86-input-wacom xfce4-terminal
+sudo apt install feh xdotool xautomation xbindkeys xfce4-terminal
 stow xsession
-~/.xprofile
+~/.xsessionrc
 ```
 
 ## Theming
@@ -19,21 +19,14 @@ xbindkeys &
 ```
 
 ## [Gotop](https://github.com/cjbassi/gotop) system monitoring
-To avoid compositor auto-dimming the monitoring when inactive, named terminal
-tab 'sysmon' and excluded it in compton config.
-
-### Manjaro
-```
-pamac build gotop
-gotop -p -a
-```
-
-### Debian
 Built from source by cloning repot and running the provided `download.sh`
 script.
 ```
 ~/gotop -p -a
 ```
+
+To avoid compositor auto-dimming the monitoring when inactive, named terminal
+tab 'sysmon' and excluded it in compton config.
 
 ### Save screen space
 `gotop -a -l minimal` to drop network
@@ -44,11 +37,7 @@ certain extent, I like a custom setup that configures the pen, screen mapping,
 and tablet buttons/wheel. 
 
 ```
-sudo apt-get install xsetwacom
-```
-or
-```
-sudo pacman -S feh xf86-input-wacom
+sudo apt-get install xserver-xorg-input-wacom
 ```
 
 To configure the tablet for the first time or after a reboot, run `~/.wacom`.

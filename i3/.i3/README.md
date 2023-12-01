@@ -3,16 +3,12 @@
 
 ```
 sudo apt-get install i3-wm suckless-tools
-```
-or
-```
-sudo pacman -S i3-gaps
 stow i3
 cat ~/.i3/gaps >> ~/.i3/config
 ```
 
-## [i3-gaps](https://github.com/Airblader/i3) on Debian
-Built from source according to [this
+[i3-gaps](https://github.com/Airblader/i3) is now included in i3 by default, but
+can still be built from source according to [this
 guide](benjames.io/2017/09/03/installing-i3-gaps-on-ubuntu-16-04/).
 
 ## Lock screen (as needed)

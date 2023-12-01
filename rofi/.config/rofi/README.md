@@ -11,21 +11,13 @@ Uses [Rofi 1.6.1-34-g53533acb](https://github.com/davatorium/rofi/tree/1.6.1).
 ![system menu](../../../assets/system_menu.png)
 
 ## Installation
-### Manjaro
-Available in the `rofi-git` AUR package, but if it's been updated by next
-install, can view previous versions
-[here](https://aur.archlinux.org/cgit/aur.git/log/?h=rofi-git)
-
+Rofi 1.7.3 was available in apt as of November 2023:
 ```
-sudo pamac build rofi-git
-rofi -V
-stow rofi
-xrdb -merge ~/.Xresources
+sudo apt install rofi
 ```
 
-### Debian
-If the version isn't in apt yet,
-[build](https://github.com/davatorium/rofi/blob/next/INSTALL.md) from source;
+Otherwise, [build](https://github.com/davatorium/rofi/blob/next/INSTALL.md)
+from source:
 ```
 git clone https://github.com/davatorium/rofi.git
 cd rofi

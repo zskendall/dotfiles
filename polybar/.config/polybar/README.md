@@ -5,9 +5,9 @@
 
 ## Installation Notes
 ```
-sudo pacman -S polybar gsimplecal
+sudo apt install polybar gsimplecal
 ```
-Or for Debian, will need to follow instructions to build from [source](https://github.com/jaagr/polybar).
+Or build from [source](https://github.com/jaagr/polybar).
 
 ### Dependencies
 [Wiki with deps for a few different distros](https://github.com/jaagr/polybar/wiki/Compiling)  

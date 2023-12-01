@@ -1,36 +1,35 @@
-INSTALL="sudo "
-if [ $(command -v pacman) ]; then
-  # install from AUR
-  pamac build google-chrome
-  pamac build gotop
-  pamac build cava
+#!/bin/sh
+INSTALL="sudo apt-get install git i3wm suckless-tools "
+for r in $(cat ~/dotfiles/compton/deb_reqs.txt); do
+  INSTALL+="$r"
+done
 
-  # install specific versions of packages; may need to update /etc/pacman.conf
-  # to add these to IgnorePkg
-  sudo pacman -U https://archive.archlinux.org/packages/p/picom/picom-7.5.1-x86_64.pkg.tar.xz
-  sudo pacman -U https://archive.archlinux.org/packages/g/gutenprint/gutenprint-5.3.3-2-x86_64.pkg.tar.xz
-
-  # install pip
-  pip install grip
-
-  INSTALL+="pacman -S xf86-input-wacom polybar mpd ncmpcpp krita "
-  INSTALL+="libreoffice-still gucharmap gsimplecal "
-  if [[ ! $(pacman -Q i3-gaps) ]]; then
-    INSTALL+="i3-gaps "
-  fi
-elif [ $(command -v apt-get) ]; then
-  INSTALL+="apt-get install git xsetwacom i3wm suckless-tools compton "
-fi
-
-INSTALL+="feh stow xautomation xdotool xbindkeys rofi xfce4-terminal tmux jq"
+INSTALL+="feh stow xautomation xdotool xbindkeys rofi xfce4-terminal tmux jq "
+INSTALL+="curl krita polybar mpd ncmpcpp gsimplecal gucharmap psmisc snapd "
 exec $INSTALL
+
+# install tryone144/compton from source
+git clone https://github.com/tryone144/compton.git
+cd compton
+make
+make docs
+make install
+cd ..
+
+# install google chrome stable
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt-get install -f
+
+# install whatsdesk
+sudo snap install whatsdesk
+sudo ln -s /var/lib/snapd/desktop/applications/whatsdesk* /usr/share/applications
 
 # configure!
 rm -r ~/.i3 ~/.config/dunst ~/.Xresources ~/.vimrc
 cd dotfiles
 stow vim i3 polybar xsession compton rofi tmux dunst media
 cd ..
-[ $(pacman -Q i3-gaps) ] && cat ~/.i3/gaps >> ~/.i3/config
 ~/.xsessionrc
 bind -f ~/.inputrc
 
