@@ -31,3 +31,5 @@ title() {
 }
 
 alias ll='ls -la'
+
+source .aliases.$(hostname)
