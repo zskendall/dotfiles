@@ -10,9 +10,8 @@ set_vars() {
   NET_TYPE="$(echo $connected | awk -F" " '{print $2}')"
 
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
-    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#cf9115} %{F-}%essid%
-    %signal%%%{A}"
-    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#cf9115} %{F-}%{A}"
+    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#b30000} %{F-}%{T6}%essid% %signal%%%{T-}%{A}"
+    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#b30000} %{F-}%{A}"
   fi
 }
 
@@ -26,11 +25,12 @@ set_vars
 
 # Launch normal polybar on all monitors, optionally hiding them
 WIDTH=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+' | cut -d"x" -f1)
+[[ -r "~/.polybar.$HOSTNAME.config.ini" ]] && CONFIG="~/.polybar.$HOSTNAME.config.ini" || CONFIG="~/.config/polybar/config.ini"
 for m in $(polybar --list-monitors | cut -d":" -f1); do
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
-    MONITOR=$m polybar --reload expanded &
+    MONITOR=$m polybar -c $CONFIG --reload expanded &
   else
-    MONITOR=$m polybar --reload default &
+    MONITOR=$m polybar -c $CONFIG --reload default &
   fi
   # sleep 5;
   # sh ~/dotfiles/polybar/.config/polybar/hideIt.sh --name "^polybar-tray_"$m"$" --direction top --region 0x0+$WIDTH+10 &

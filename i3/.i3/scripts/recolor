@@ -50,7 +50,7 @@ line_no() {
 
 theme_polybar() {
   local current=`egrep -o "^;?include-file = ~/.*/colors/([a-z]+).ini" \
-      ~/.config/polybar/config | cut -d'/' -f 5 | extract '.' '1'`
+      ~/.config/polybar/base.ini | cut -d'/' -f 5 | extract '.' '1'`
   echo $current > ~/tmp/pb
   local updated=`[ -r ~/.config/polybar/colors/$THEME.ini ] \
     && echo "$THEME" || echo "default"`
@@ -64,24 +64,24 @@ theme_polybar() {
       # "  Available themes are: [$(echo $available | sed "s/\n/ /g")]" \
     # comment out the color theme file include if needed
     if [ -z "$(egrep -o "^;include-file =.*${current}.ini" \
-      ~/.config/polybar/config)" ]; then
-      sed -ri "/${current}.ini$/s/(.*)/;\1/g" ~/.config/polybar/config
+      ~/.config/polybar/base.ini)" ]; then
+      sed -ri "/${current}.ini$/s/(.*)/;\1/g" ~/.config/polybar/base.ini
     fi
   else
     # there's a custom theme, so uncomment the file include line
-    sed -ri "/${current}.ini$/s/;//g" ~/.config/polybar/config
+    sed -ri "/${current}.ini$/s/;//g" ~/.config/polybar/base.ini
   fi
-  sed -ri "/${current}.ini$/s/${current}/${THEME}/g" ~/.config/polybar/config
+  sed -ri "/${current}.ini$/s/${current}/${THEME}/g" ~/.config/polybar/base.ini
 
   # read and parse focus_foreground for the icon styling
   local focus_from_file=`grep "^focus" ~/.config/polybar/colors/$THEME.ini \
     | extract '#' '2'`
   local focus=`[ -n "$focus_from_file" ] && echo "$focus_from_file" \
-    || awk "/\[default\]/,/FONTS/" ~/.config/polybar/config \
+    || awk "/\[default\]/,/BARS/" ~/.config/polybar/base.ini \
     | egrep -m 1 "^focus" | extract '#' '2'`
   echo $focus
-  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/config
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/launch.sh
+  sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/battery.ini
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/datetime.ini
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/network.ini
   sed -ri "s/F#[a-f0-9]{6}/F#$focus/g" ~/.config/polybar/modules/volume.ini
