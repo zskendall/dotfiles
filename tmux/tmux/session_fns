@@ -25,7 +25,12 @@ function default_split() {
     split-window \; \
     resize-pane -t $(( $split + 1 )) -D 17 \; \
     resize-pane -t $split -D 8 \; \
-    select-pane -t $(( 2 - $split * 2 )) \; \
+    select-pane -t $(( $split + 2 )) \; \
+    split-window \; \
+    select-pane -t $(( 4 - $split * 4 )) \; \
+    split-window \; \
+    resize-pane -D 26 \; \
+    select-pane -t $(( 4 - $split * 4 )) \; \
     $detach
 }
 
