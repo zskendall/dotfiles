@@ -30,7 +30,9 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
     MONITOR=$m polybar -c $CONFIG --reload expanded &
   else
-    MONITOR=$m polybar -c $CONFIG --reload default &
+    MONITOR=$m polybar -c $CONFIG --reload bubl &
+    MONITOR=$m polybar -c $CONFIG --reload bubm &
+    MONITOR=$m polybar -c $CONFIG --reload bubr &
   fi
   # sleep 5;
   # sh ~/dotfiles/polybar/.config/polybar/hideIt.sh --name "^polybar-tray_"$m"$" --direction top --region 0x0+$WIDTH+10 &
@@ -41,7 +43,7 @@ if [[ $(ls /sys/class/power_supply/ | egrep -i bat | wc -l) -eq 0 ]]; then
   # https://github.com/ntcarlson/dotfiles/blob/gamma/i3/scripts/polybar_wrapper,
   # linked from
   # reddit.com/r/unixporn/comments/92guq6/i3polybar_animated_polybar_drop_down_menus/
-  MONITOR="DP-5" polybar weather &
+  MONITOR=$m polybar weather &
   BAR_ID=$!
   echo "weather watcher id: $BAR_ID"
   ln -sf /tmp/polybar_mqueue.$BAR_ID /tmp/polybar_mqueue_weather
