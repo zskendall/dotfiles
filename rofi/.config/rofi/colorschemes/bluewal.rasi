@@ -1,0 +1,13 @@
+/**
+ * Blue aurora colorscheme for rofi
+ */
+@import "general.rasi"
+
+* {
+  primary: #309290;
+  secondary: #0b161a;
+  background: #0b161a80;
+  background-alt: @background;
+  text-color: #c2c4c5;
+  selected-background: @background;
+}

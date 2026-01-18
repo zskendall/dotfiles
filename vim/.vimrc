@@ -24,6 +24,11 @@ endif
 
 call plug#end()
 
+" import color specs
+if filereadable(glob('~/.vim/colors/colors.vim'))
+  source ~/.vim/colors/colors.vim
+endif
+
 " Highlight colors in Signify {{{
 highlight SignColumn ctermbg=none
 
@@ -61,14 +66,14 @@ syntax on
 set background=dark
 
 " Change visual highlight to dark because WHITE???
-hi Visual ctermbg=235 ctermfg=none
+execute 'hi Visual ctermbg=' . g:vis . ' ctermfg=none'
 
 " change some colors to also support lighter backgrounds
 hi Constant ctermfg=Yellow
 hi Statement ctermfg=DarkGreen
 
 " Highlight overlength lines
-highlight OverLength ctermbg=88 ctermfg=15 guibg=#592929
+execute 'hi OverLength ctermbg=' . g:olbg . ' ctermfg=' . g:olfg . ' guibg=#592929'
 augroup autohighlight
   autocmd!
   autocmd FileType * match OverLength /\%81v.\+/
@@ -163,7 +168,7 @@ set ttimeoutlen=0
 " autumnal: 202
 " lookingglass: 88
 set fillchars+=vert:│
-hi VertSplit cterm=none ctermfg=88
+execute 'hi VertSplit cterm=none ctermfg=' . g:olbg
 " }}}
 
 " Build status: {{{

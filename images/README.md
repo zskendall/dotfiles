@@ -26,3 +26,6 @@ Unsplash](https://unsplash.com/photos/67hp4FV_9lk)
 
 Secondary: [Hills and mountains in autumn by Nathan Anderson on
 Unsplash](https://unsplash.com/photos/SAB5Y1HS7NY)
+
+## bluewal
+aurora [by Federico Di Dio photography on Unsplash](https://unsplash.com/photos/a-green-and-blue-aurora-bore-in-the-night-sky-J6rYouwW3kU) (not in zip)
