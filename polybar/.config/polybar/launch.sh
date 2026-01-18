@@ -4,14 +4,18 @@ set_vars() {
   export NETWORK
   export NETWORK_CONNECTED_LABEL
   export NETWORK_DISCONNECTED_LABEL
+  export NETWORK_CONNECTED
+  export NETWORK_DISCONNECTED
 
   local connected="$(nmcli device status | grep connected)"
   NETWORK="$(echo $connected | awk -F" " '{print $1}')"
   NET_TYPE="$(echo $connected | awk -F" " '{print $2}')"
 
   if [[ "$NET_TYPE" == *"wifi"* ]]; then
-    NETWORK_CONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#b30000} %{F-}%{T6}%essid% %signal%%%{T-}%{A}"
-    NETWORK_DISCONNECTED_LABEL="%{A1:~/.i3/scripts/wifi:} %{F#b30000} %{F-}%{A}"
+    NETWORK_CONNECTED_LABEL="%essid% %signal%%"
+    NETWORK_CONNECTED="%{A1:~/.i3/scripts/wifi:} <label-connected>%{A}"
+    NETWORK_DISCONNECTED_LABEL="%{F#b30000} %{F-}"
+    NETWORK_DISCONNECTED="%{A1:~/.i3/scripts/wifi:}<label-disconnected>%{A}"
   fi
 }
 
