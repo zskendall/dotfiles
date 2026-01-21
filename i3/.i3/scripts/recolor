@@ -104,19 +104,12 @@ theme_i3() {
 }
 
 theme_tmux() {
-  if [ -z "$(grep "^${THEME}_" ~/.tmux.conf)" ]; then
-    local available=`awk "/# Themed colors/,/\}\}\}/" ~/.tmux.conf | \
-      grep ".*_accent" | extract '_' '1'`
+  if [ ! -r ~/tmux/colors/$THEME.conf ]; then
+    local available=`ls --ignore=colors.conf --ignore=shared.conf ~/tmux/colors | sed 's/.conf//g'`
     no_theme_error "tmux" "$available"
     return
   fi
-  local line=`grep -m 1 "^accent=\$.*_" ~/.tmux.conf`
-  local re='.*\$\([a-z][a-z]*\)_'
-  local current=`expr "$line" : "$re"`
-
-  local s=`grep -n -m 1 "}}}" ~/.tmux.conf | line_no`
-  local e=`grep -n -m 1 "Status bar {{{" ~/.tmux.conf | line_no`
-  sed -i "${s},${e}s/\$${current}/\$${THEME}/" ~/dotfiles/tmux/.tmux.conf
+  echo "source-file ~/tmux/colors/$THEME.conf" > ~/tmux/colors/colors.conf
 }
 
 theme_rofi() {
@@ -146,8 +139,8 @@ theme_dunst() {
   local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | line_no`
   local nend=`grep -n "\[urgency_critical\]" ~/.config/dunst/dunstrc | line_no`
 
-  sed -ri "${nbeg},${nend}s/(^.*background = \"#)[a-f0-9]{6}/\1$norm_bg/" ~/.config/dunst/dunstrc
-  sed -ri "${nbeg},${nend}s/(^.*foreground = \"#)[a-f0-9]{6}/\1$norm_fg/" ~/.config/dunst/dunstrc
+  sed -ri "${nbeg},${nend}s/(^.*background = \"#)[a-f0-9]{6-8}/\1$norm_bg/" ~/.config/dunst/dunstrc
+  sed -ri "${nbeg},${nend}s/(^.*foreground = \"#)[a-f0-9]{6-8}/\1$norm_fg/" ~/.config/dunst/dunstrc
 
   # read and parse the frame color
   local frame=`awk "/color of the frame/,/color for the separator/" \
@@ -185,19 +178,12 @@ theme_ncmpcpp() {
 }
 
 theme_vim() {
-  if [ -z "$(grep $THEME: ~/.vimrc)" ]; then
-    local available=`awk "/Split bar/,/}}}/" ~/.vimrc | \
-      egrep "^\".*[a-z]+:.*[0-9]+" | extract ':' '1' | sed 's/\" //'`
+  if [ ! -r ~/.vim/colors/$THEME.vim ]; then
+    local available=`ls --ignore=colors.vim ~/.vim/colors | sed 's/.vim//g'`
     no_theme_error "vim" "$available"
     return
   fi
-  local themed=`grep "$THEME:" ~/.vimrc | extract ': ' '2'`
-  local bg=`echo $themed | extract ',' '1'`
-  local fg=`[ -n $(echo $themed | grep ',') ] && \
-    echo $(echo $themed | extract ',' '2') || echo "15"`
-  sed -ri --follow-symlinks "/VertSplit/s/(ctermfg=)[0-9]+/\1$bg/" ~/.vimrc
-  sed -ri --follow-symlinks "/OverLength/s/(ctermbg=)[0-9]+/\1$bg/" ~/.vimrc
-  sed -ri --follow-symlinks "/OverLength/s/(ctermfg=)[0-9]+/\1$fg/" ~/.vimrc
+  echo "source ~/.vim/colors/$THEME.vim" > ~/.vim/colors/colors.vim
 }
 
 theme_others() {
@@ -237,7 +223,7 @@ if [ "$imgv" -ne `xrandr | egrep "[^dis]connected" | wc -l` ]; then
 fi
 refresh_display
 
-theme_dunst
+# theme_dunst
 theme_polybar
 theme_others
 if [ `ps -aux | grep polybar | wc -l` -gt 1 ] ; then

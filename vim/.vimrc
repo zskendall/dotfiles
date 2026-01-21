@@ -26,6 +26,10 @@ call plug#end()
 
 " import color specs
 if filereadable(glob('~/.vim/colors/colors.vim'))
+  " reset highlight vars so defaults will work
+  unlet! vis
+  unlet! olbg
+  unlet! olfg
   source ~/.vim/colors/colors.vim
 endif
 
@@ -66,14 +70,14 @@ syntax on
 set background=dark
 
 " Change visual highlight to dark because WHITE???
-execute 'hi Visual ctermbg=' . g:vis . ' ctermfg=none'
+execute 'hi Visual ctermbg=' . get(g:, "vis", 235) . ' ctermfg=none'
 
 " change some colors to also support lighter backgrounds
 hi Constant ctermfg=Yellow
 hi Statement ctermfg=DarkGreen
 
 " Highlight overlength lines
-execute 'hi OverLength ctermbg=' . g:olbg . ' ctermfg=' . g:olfg . ' guibg=#592929'
+execute 'hi OverLength ctermbg=' . g:olbg . ' ctermfg=' . get(g:, "olfg", 15) . ' guibg=#592929'
 augroup autohighlight
   autocmd!
   autocmd FileType * match OverLength /\%81v.\+/
@@ -159,17 +163,9 @@ set ttimeoutlen=0
 " Status Line Functions and Creation
 " ==============================================================================
 
-" Split bar: {{{
-" borealis: 114,0
-" nikhita: 90
-" chjara: 88
-" maqi: 88
-" astral: 75
-" autumnal: 202
-" lookingglass: 88
+" Split bar
 set fillchars+=vert:│
 execute 'hi VertSplit cterm=none ctermfg=' . g:olbg
-" }}}
 
 " Build status: {{{
 function! Status(winnum)

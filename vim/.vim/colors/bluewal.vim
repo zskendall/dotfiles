@@ -21,5 +21,4 @@ let color14 = "#309290"
 let color15 = "#c2c4c5"
 
 let g:olbg = 4
-let g:olfg = 15
 let g:vis = 0
