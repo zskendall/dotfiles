@@ -128,37 +128,16 @@ theme_rofi() {
 }
 
 theme_dunst() {
-  # read the [urgency_normal] section and parse the background and foreground
-  norm=`awk "/\[urgency_normal\]/,/\[urgency_critical/" ~/.config/dunst/dunstrc`
-  local line=`echo $norm | grep "$THEME:"`
-  local updated=`[ -n "$line" ] && echo $THEME || echo "default"`
-  local line=`([ -n "$line" ] && echo $line || \
-    echo $(echo $norm | grep "default"))`
-  local norm_bg=$(echo $line | extract '#' '3' | sed -e 's/[[:space:]]*$//')
-  local norm_fg=$(echo $line | extract '#' '4')
-  local nbeg=`grep -n "\[urgency_normal\]" ~/.config/dunst/dunstrc | line_no`
-  local nend=`grep -n "\[urgency_critical\]" ~/.config/dunst/dunstrc | line_no`
-
-  sed -ri "${nbeg},${nend}s/(^.*background = \"#)[a-f0-9]{6-8}/\1$norm_bg/" ~/.config/dunst/dunstrc
-  sed -ri "${nbeg},${nend}s/(^.*foreground = \"#)[a-f0-9]{6-8}/\1$norm_fg/" ~/.config/dunst/dunstrc
-
-  # read and parse the frame color
-  local frame=`awk "/color of the frame/,/color for the separator/" \
-    ~/.config/dunst/dunstrc`
-  local line=`echo $frame | grep "$THEME:"`
-  local frame=`([ -n "$line" ] && echo $line || \
-    echo $(echo $frame | grep "default")) | extract '#' '3'`
-  local fbeg=`grep -n "color of the frame" ~/.config/dunst/dunstrc | line_no`
-  local fend=`grep -n "color for the separator" ~/.config/dunst/dunstrc |
-    line_no`
-  sed -ri "${fbeg},${fend}s/(^.*frame_color = \"#)[a-f0-9]{6}/\1$frame/" ~/.config/dunst/dunstrc
+  if [ -r ~/.config/dunst/colors/$THEME.conf ]; then
+    cat ~/.config/dunst/colors/$THEME.conf > ~/.config/dunst/dunstrc.d/999-colors.conf
+  else
+    echo "" > ~/.config/dunst/dunstrc.d/999-colors.conf
+    warn "Reset dunst theme to default"
+  fi
 
   # attempt to kill dunst to reload the config (shouldn't be allowed, since
   # daemon started from DBUS)
   pkill dunst
-  if [ "$updated" = "default" ]; then
-    warn "Reset dunst theme to default"
-  fi
 }
 
 theme_ncmpcpp() {
@@ -223,7 +202,7 @@ if [ "$imgv" -ne `xrandr | egrep "[^dis]connected" | wc -l` ]; then
 fi
 refresh_display
 
-# theme_dunst
+theme_dunst
 theme_polybar
 theme_others
 if [ `ps -aux | grep polybar | wc -l` -gt 1 ] ; then
