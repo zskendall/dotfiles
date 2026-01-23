@@ -1,4 +1,6 @@
 /* Default configuration */
+@import "colorschemes/colors.rasi"
+
 configuration {
     show-icons:                     false;
     font:                           "DejaVu Sans 20";

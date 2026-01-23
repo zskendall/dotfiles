@@ -87,17 +87,11 @@ theme_tmux() {
 
 theme_rofi() {
   if [ ! -r "$HOME/.config/rofi/colorschemes/$THEME.rasi" ]; then
-    local available=`grep -r "@import \"general.rasi\"" ~/.config/rofi | \
-      extract ':' '1' | extract '.' '2' | extract '/' '4'`
+    local available=`ls --ignore=general.rasi --ignore=colors.rasi ~/.config/rofi/colorschemes | sed 's/.rasi//g'`
     no_theme_error "rofi" "$available"
     return
   fi
-  local line=`egrep -o "^@import .*\.rasi" ~/.config/rofi/launcher.rasi`
-  local re='.*/\([a-z][a-z]*\).rasi'
-  local current=`expr "$line" : "$re"`
-  for f in $(grep -r $current ~/.config/rofi | extract ':' '1'); do
-    sed -i "/^@import/s/${current}/${THEME}/g" $f
-  done
+  echo "@import \"$THEME.rasi\"" > ~/.config/rofi/colorschemes/colors.rasi
 }
 
 theme_dunst() {

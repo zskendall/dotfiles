@@ -12,8 +12,6 @@ configuration {
   show-icons:                 true;
 }
 
-@import "colorschemes/borealis.rasi"
-
 window {
   border:                     2;
   height:                     400;

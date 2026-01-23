@@ -4,7 +4,6 @@
  */
 
 @theme "config.rasi"
-@import "colorschemes/borealis.rasi"
 
 window {
   background-color:   @background-alt;
