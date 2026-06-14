@@ -1,0 +1,4 @@
+.backup.conf
+
+### vim ###
+*.sw*

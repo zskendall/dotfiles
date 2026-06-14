@@ -62,3 +62,17 @@ Note that the udev rules [seem to] need the user to be hardcoded (at least, I
 didn't manage to get them to execute otherwise). The scripts also assume a
 single user system, such as a PC; if there isn't a single user, the user will
 need to be hardcoded for root to know which one to set permissions for.
+
+## Backups
+Simple 1:1 copy using `rsync`, using
+[norsemangrey/discord-webhook-notification](https://github.com/norsemangrey/discord-webhook-notification)
+for alerting
+
+Steps for a fresh install:
+* `git clone` webhook notification script into ~/discord-webhook-notification
+* update `discord-variables.sh`
+```
+cp ~/dotfiles/xsession/.backup.conf.example ~/.backup.conf
+vim ~/.backup.conf
+```
+* run script daily using `crontab -e`

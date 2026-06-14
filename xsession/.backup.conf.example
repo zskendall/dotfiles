@@ -1,0 +1,9 @@
+SRC=/path/to/source
+DEST=user@host:/path/to/dest
+
+CONTAINER=
+POSTGRES_USER=
+POSTGRES_DB=
+DUMP_PATH=
+
+EXCLUDE=path/to/file/relative/to/source
