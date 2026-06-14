@@ -1,0 +1,21 @@
+[Unit]
+Requires=affine-redis.service affine-postgres.service
+After=affine-redis.service affine-postgres.service affine-migration.service
+
+[Container]
+Pod=affine.pod
+
+AutoUpdate=registry
+ContainerName=affine_server
+Image=ghcr.io/toeverything/affine:stable
+
+EnvironmentFile=%h/affine/.env
+
+Volume=%h/affine/data:/root/.affine/storage
+Volume=%h/affine/config:/root/.affine/config
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

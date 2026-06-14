@@ -1,0 +1,22 @@
+[Unit]
+Requires=mealie-postgres.service
+After=mealie-postgres.service
+
+[Container]
+Pod=mealie.pod
+
+AutoUpdate=registry
+ContainerName=mealie
+Image=ghcr.io/mealie-recipes/mealie:v3.0.1
+
+EnvironmentFile=%h/mealie/.env
+# overrides .env to use localhost for pod communication
+Environment=POSTGRES_SERVER=localhost
+
+Volume=%h/mealie/data:/app/data/
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

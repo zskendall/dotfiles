@@ -1,0 +1,17 @@
+[Container]
+Pod=affine.pod
+
+AutoUpdate=registry
+ContainerName=affine_redis
+Image=docker.io/library/redis
+
+HealthCmd=["redis-cli","--raw","incr","ping"]
+HealthInterval=10s
+HealthRetries=5
+HealthTimeout=5s
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

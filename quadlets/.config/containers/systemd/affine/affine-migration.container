@@ -1,0 +1,16 @@
+[Unit]
+Requires=affine-redis.service affine-postgres.service
+After=affine-redis.service affine-postgres.service
+
+[Container]
+Pod=affine.pod
+
+AutoUpdate=registry
+ContainerName=affine_migration_job
+Exec=sh -c 'npx prisma migrate deploy && node ./dist/main.js run'
+Image=ghcr.io/toeverything/affine:stable
+
+EnvironmentFile=%h/affine/.env
+
+Volume=%h/affine/data:/root/.affine/storage
+Volume=%h/affine/config:/root/.affine/config

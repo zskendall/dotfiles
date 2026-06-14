@@ -1,0 +1,17 @@
+[Unit]
+Description=convertx
+
+[Container]
+AutoUpdate=registry
+ContainerName=convertx
+Image=ghcr.io/c4illin/convertx
+PublishPort=2889:3000
+
+EnvironmentFile=%h/convertx/.env
+Volume=%h/convertx/data:/app/data
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

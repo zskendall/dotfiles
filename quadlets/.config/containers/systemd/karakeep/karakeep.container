@@ -1,0 +1,14 @@
+[Container]
+Pod=karakeep.pod
+
+Image=ghcr.io/karakeep-app/karakeep:release
+AutoUpdate=registry
+
+EnvironmentFile=%h/karakeep/.env
+Volume=%h/karakeep/data:/data
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

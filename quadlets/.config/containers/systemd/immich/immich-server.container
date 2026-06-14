@@ -1,0 +1,26 @@
+[Unit]
+Requires=immich-redis.service immich-database.service
+After=immich-redis.service immich-database.service
+
+[Container]
+Pod=immich.pod
+ContainerName=immich_server
+Image=ghcr.io/immich-app/immich-server:release
+
+EnvironmentFile=%h/immich/.env
+
+Volume=%h/immich/data:/usr/src/app/upload
+Volume=/etc/localtime:/etc/localtime:ro
+
+HealthCmd=["/bin/bash", "immich-healthcheck"]
+HealthStartPeriod=3m
+HealthInterval=10s
+HealthTimeout=30s
+HealthRetries=10
+Notify=healthy
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
