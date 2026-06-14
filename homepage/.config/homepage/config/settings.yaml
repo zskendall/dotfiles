@@ -1,0 +1,38 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+
+title: home sweet home
+background: https://images.unsplash.com/photo-1636653591702-ca6a0ba647df?auto=format
+
+theme: dark
+color: stone
+cardBlur: xs  # xs, md, ... see tailwindcss.com/docs/backdrop-blur
+statusStyle: dot
+bookmarkStyle: icons
+iconStyle: light
+useEqualHeights: true
+hideVersion: true
+target: _top
+
+layout:
+  Quick Links:
+    header: false
+    style: row
+    iconsOnly: true
+  Productivity:
+    header: false
+  Monitoring:
+    header: false
+  Apps:
+    icon: mdi-apps
+    style: row
+    columns: 3
+  "{{HOMEPAGE_VAR_PNAME}}":
+    icon: mdi-server
+    style: row
+    columns: 4
+  "{{HOMEPAGE_VAR_ONAME}}":
+    icon: mdi-server
+    style: row
+    columns: 4

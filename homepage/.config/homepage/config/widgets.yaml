@@ -1,0 +1,37 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/info-widgets/
+
+- search:
+    provider: duckduckgo
+    target: _blank
+
+- datetime:
+    text_size: xl
+    format:
+      timeStyle: short
+      hourCycle: h23
+
+- openmeteo:
+    latitude: "{{HOMEPAGE_VAR_LAT}}"
+    longitude: "{{HOMEPAGE_VAR_LON}}"
+    units: imperial
+    cache: 15
+
+- glances:
+    url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+    version: 4
+    cpu: true
+    mem: true
+    disk: "{{HOMEPAGE_VAR_PGL_DISK}}"
+    uptime: true
+    label: "{{HOMEPAGE_VAR_PNAME}}"
+
+- glances:
+    url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+    version: 4
+    cpu: true
+    mem: true
+    disk: "{{HOMEPAGE_VAR_OGL_DISK}}"
+    uptime: true
+    label: "{{HOMEPAGE_VAR_ONAME}}"

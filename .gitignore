@@ -1,4 +1,8 @@
 .backup.conf
 
+### homepage runtime files ###
+homepage/.config/homepage/.env
+homepage/.config/homepage/config/logs/
+
 ### vim ###
 *.sw*

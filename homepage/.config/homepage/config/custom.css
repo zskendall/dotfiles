@@ -1,0 +1,9 @@
+div:has(> ul.bookmark-list) {
+  margin-bottom: 1%;
+}
+
+ul.bookmark-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

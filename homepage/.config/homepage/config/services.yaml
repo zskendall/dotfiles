@@ -1,0 +1,164 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- "{{HOMEPAGE_VAR_PNAME}}":
+    - Info:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: info
+    - Mem:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: memory
+    - Net:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: network:eno1
+    - Core Temp:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: sensor:Core 0
+
+- "{{HOMEPAGE_VAR_ONAME}}":
+    - Info:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: info
+    - Mem:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: memory
+    - Net:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: network:enp6s0
+    - Core Temp:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_GLANCES_PORT}}"
+          version: 4
+          metric: sensor:Composite
+
+- Productivity:
+    - Calendar:
+        icon: google-calendar.svg
+        href: "{{HOMEPAGE_VAR_CAL_URL}}"
+        widget:
+          type: calendar
+          firstDayInWeek: sunday
+          showTime: true
+          maxEvents: 10
+          timezone: "{{HOMEPAGE_VAR_CAL_TZ}}"
+          integrations:
+              - type: ical
+                url: "{{HOMEPAGE_VAR_CAL_INTEGRATION_URL}}"
+                name: cal
+                color: amber
+
+- Monitoring:
+    - pihole:
+        icon: pi-hole.svg
+        href: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}/admin"
+        siteMonitor: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}"
+        widget:
+          type: pihole
+          url: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}"
+          version: 6
+          key: "{{HOMEPAGE_VAR_PIHOLE_APP_PW}}"
+    - "{{HOMEPAGE_VAR_PNAME}}":
+        icon: uptime-kuma.png  # from github.com/walkxcode/dashboard-icons
+        href: "http://sentinel:{{HOMEPAGE_VAR_KUMA_PORT}}"
+        server: podman
+        container: uptime-kuma
+        description: "Sites monitored by {{HOMEPAGE_VAR_PNAME}}"
+        widget:
+            type: uptimekuma
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_KUMA_PORT}}"
+            slug: watcher
+    - "{{HOMEPAGE_VAR_ONAME}}":
+        icon: uptime-kuma.png
+        href: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
+        siteMonitor: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
+        description: "Sites monitored by {{HOMEPAGE_VAR_ONAME}}"
+        widget:
+          type: uptimekuma
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
+          slug: watcher
+
+- Apps:
+    - Immich:
+        icon: immich.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_IMMICH_PORT}}"
+        server: podman
+        container: immich_server
+        widget:
+            type: immich
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_IMMICH_PORT}}"
+            key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
+            fields: ["photos", "videos", "storage"]
+            version: 2
+    - karakeep:
+        icon: karakeep.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_KARAKEEP_PORT}}"
+        server: podman
+        container: systemd-karakeep
+        widget:
+            type: karakeep
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_KARAKEEP_PORT}}"
+            key: "{{HOMEPAGE_VAR_KARAKEEP_API_KEY}}"
+            fields: ["bookmarks", "favorites", "lists", "archived"]
+    - mealie:
+        icon: mealie.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_MEALIE_PORT}}"
+        server: podman
+        container: mealie
+        widget:
+            type: mealie
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_MEALIE_PORT}}"
+            key: "{{HOMEPAGE_VAR_MEALIE_API_KEY}}"
+            fields: ["recipes", "categories", "tags"]
+            version: 3
+    - Affine:
+        icon: affine-light.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_AFFINE_PORT}}"
+        description: "Notion-like knowledge management"
+        server: podman
+        container: affine_server
+    - Rockbot:
+        icon: mdi-carabiner-#ffffff
+        href: "{{HOMEPAGE_VAR_ROCKBOT_LINK}}"
+        description: "{{HOMEPAGE_VAR_ROCKBOT_DESC}}"
+        server: podman
+        container: rockbot
+    - ConvertX:
+        icon: https://raw.githubusercontent.com/C4illin/ConvertX/9ac5e7569b1e56864438affe6cbf2ca279eb1667/public/favicon.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_CONVERTX_PORT}}"
+        description: "Online file converter"
+        server: podman
+        container: convertx
+    - navidrome:
+        icon: navidrome.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_NAVI_PORT}}"
+        server: podman
+        container: navidrome
+        widget:
+            type: navidrome
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_NAVI_PORT}}"
+            user: "{{HOMEPAGE_VAR_NAVI_USER}}"
+            token: "{{HOMEPAGE_VAR_NAVI_API_KEY}}"
+            salt: "{{HOMEPAGE_VAR_NAVI_SALT}}"

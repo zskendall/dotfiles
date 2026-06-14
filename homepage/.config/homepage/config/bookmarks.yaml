@@ -1,0 +1,26 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/bookmarks
+
+- Quick Links:
+  - Mail:
+      - icon: proton-mail.svg
+        href: https://mail.proton.me/
+  - Drive:
+      - icon: google-drive.svg
+        href: https://drive.google.com/
+  - Github:
+      - icon: github-light.svg
+        href: https://github.com/
+  - Tailscalle:
+      - icon: tailscale-light.svg
+        href: https://login.tailscale.com/admin/machines
+  - Discord:
+      - icon: discord.svg
+        href: discord://discord.com/
+  - Reddit:
+      - icon: reddit.svg
+        href: https://reddit.com/
+  - Netflix:
+      - icon: netflix.svg
+        href: https://netflix.com/
