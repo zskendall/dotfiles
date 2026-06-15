@@ -9,50 +9,70 @@
 # |                |                 |
 # |                |-----------------|
 # |                |                 |
+# |----------------|-----------------|
+# |                |                 |
 # +----------------------------------+
-# splits into default split in a detached manner, using $SPLIT local var
-# @arg 1: the split arg, optional
+# splits into default split in a detached manner
+# @arg 1: optional window name
 function default_split() {
-  split=$SPLIT
-  [ ! $SPLIT ] && split=$1 && shift
-  [ ! $attach ] && ([ ! $TMUX ] && attach="a -t $SESSION" || attach="")
-  [ ! $detach ] && ([ ! $TMUX ] && detach="detach" || detach="")
-  tmux $attach \; \
-    split-window -h \; \
-    select-pane -t $split \; \
-    split-window \; \
-    select-pane -t $split \; \
-    split-window \; \
-    resize-pane -t $(( $split + 1 )) -D 17 \; \
-    resize-pane -t $split -D 8 \; \
-    select-pane -t $(( $split + 2 )) \; \
-    split-window \; \
-    select-pane -t $(( 4 - $split * 4 )) \; \
-    split-window \; \
-    resize-pane -D 26 \; \
-    select-pane -t $(( 4 - $split * 4 )) \; \
-    $detach
+  tmux split-window -t $SESSION:$1 -h \; \
+    split-window -t $SESSION:$1.1 \; \
+    split-window -t $SESSION:$1.1 \; \
+    resize-pane -t $SESSION:$1.2 -D $(( $HEIGHT / 4 )) \; \
+    resize-pane -t $SESSION:$1.1 -D $(( $HEIGHT / 8 )) \; \
+    split-window -t $SESSION:$1.3 \; \
+    split-window -t $SESSION:$1.0 \; \
+    resize-pane -D $(( $HEIGHT * 2 / 5 )) \; \
+    select-pane -t $SESSION:$1.0
 }
 
-# @arg 1: either the split var or the command to run in the top side pane
-# @arg 2: the command to run in the middle side pane
-send_keys() {
-  tmux $attach \; \
-    select-pane -t $split \; \
-    send-keys -t $split "$1" C-m \; \
-    select-pane -t $(( $split + 1 )) \; \
-    send-keys -t $(( $split + 1 )) "$2" C-m \; \
-    select-pane -t $(( 2 - $split * 2 )) \; \
-    $detach
+# send the same command to all panes in the window
+# @arg 1: the command to send
+# @arg 2: optional window name
+send_keys_all_panes() {
+  local IFS=$'\n'
+  for p in $(tmux list-panes -t $SESSION:$2 -F '#{pane_index}'); do
+    tmux send-keys -t $SESSION:$2.$p "$1" Enter
+  done
+}
+
+# starts watching git log and status in designated panes
+# @arg 1: the pane for log watching
+# @arg 2: the pane for status watching
+# @arg 3: optional window name
+watch_git() {
+  tmux send-keys -t $SESSION:$3.$1 "watch -n 10 -c git -c color.ui=always log" Enter
+  tmux send-keys -t $SESSION:$3.$2 "watch -n 1 -c git -c color.status=always status" Enter
+}
+
+# configures main window and adds any additional windows with names provided by
+# -m. if config methods don't exist for a given window, will create the window
+# and display a gaudy error message instead
+basic_config() {
+  config_main
+  local IFS=","
+  for w in $MULTI; do
+    tmux new-window \; rename-window "$w"
+    if declare -f config_${w} > /dev/null 2>&1; then
+      config_${w}
+    else
+      command -v toilet > /dev/null 2>&1 && CMD="toilet -w $WIDTH --gay -f mono12" || CMD="echo"
+      tmux send-keys -t $SESSION:$w.0 "$CMD 'no config info for window $w'" Enter
+    fi
+  done
+  tmux select-window -t "main"
 }
 
 # Creates a configured tmux session
 function create_session() {
 
-  tmux new -s $SESSION -d \; \
+  WIDTH=$(tput cols)
+  HEIGHT=$(tput lines)
+  tmux new -s $SESSION -d -x $WIDTH -y $HEIGHT \; \
     rename-window "main"
 
   default_split
+  basic_config
 
-  configure || tmux a -dt $SESSION \; select-pane -t $(( 2 - $SPLIT * 2 ))
+  configure || tmux a -dt $SESSION \; select-pane -t 0
 }
