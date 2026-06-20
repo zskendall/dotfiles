@@ -20,6 +20,20 @@ EOF
 )
 }
 
+ntfy_notify() {
+  local tags=${2:-bell}
+  local body=$(cat <<EOF
+src: $HOSTNAME
+${3:+$3
+}
+
+Time ($(timedatectl show | grep Timezone | cut -d'=' -f 2))
+$(date +"%Y-%m-%d %H:%M:%S")
+EOF
+)
+  curl -u :$NTFY_TOKEN -H "Title: $1" -H "Tags: $tags" -H "Markdown: yes" -H "Priority: ${4:-high}" -d "$body" $NTFY_URL
+}
+
 if [ -n "$(podman ps | grep "$CONTAINER")" ]; then
   podman exec "$CONTAINER" pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > /tmp/dump.sql 2>/tmp/pgdump.err
 
@@ -27,6 +41,7 @@ if [ -n "$(podman ps | grep "$CONTAINER")" ]; then
     # postgres dump failed, notify and exit
     build_embed "❌ pg_dump failed ❌"
     ~/discord-webhook-notification/discord-webhook.sh -e "$EMBED"
+    ntfy_notify "pg_dump failed ❌" "x"
     exit 1
   fi
 
@@ -42,6 +57,7 @@ if ! zfs snapshot "$SRC@$(date +%Y-%m-%d)" 2>/tmp/snapshot.err; then
   else
     build_embed "❌ snapshot failed ❌"
     ~/discord-webhook-notification/discord-webhook.sh -e "$EMBED"
+    ntfy_notify "snapshot failed ❌" "x"
     exit 1
   fi
 fi
@@ -69,10 +85,12 @@ fi
 
 if [ $STATUS -eq 0 ]; then
   build_embed "✅ rsync succeeded ✅" "65280"
+  ntfy_notify "rsync succeeded ✅" "white_check_mark" "$MSG" "low"
 else
   build_embed "❌ rsync failed ❌"
   ERR=$(grep "failed" /tmp/backup.err | sed s/\"/\'/g | awk -F':' '{print $3}' | xargs)
   [ ! -z "$MSG" ] && MSG=$(printf "%s\n-----\n%s" "$ERR" "$MSG")
+  ntfy_notify "rsync failed ❌" "x" "$MSG"
 fi
 
 EMBED=$(echo "$EMBED" | jq --arg status "$STATUS" --arg msg "$MSG" \

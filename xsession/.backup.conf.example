@@ -7,3 +7,6 @@ POSTGRES_DB=
 DUMP_PATH=
 
 EXCLUDE=path/to/file/relative/to/source
+
+NTFY_URL=
+NTFY_TOKEN=
