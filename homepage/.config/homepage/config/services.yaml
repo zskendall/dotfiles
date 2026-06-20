@@ -56,7 +56,6 @@
 
 - Productivity:
     - Calendar:
-        icon: google-calendar.svg
         href: "{{HOMEPAGE_VAR_CAL_URL}}"
         widget:
           type: calendar
@@ -70,7 +69,7 @@
                 name: cal
                 color: amber
 
-- Monitoring:
+- Infra:
     - pihole:
         icon: pi-hole.svg
         href: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}/admin"
@@ -80,6 +79,14 @@
           url: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}"
           version: 6
           key: "{{HOMEPAGE_VAR_PIHOLE_APP_PW}}"
+    - ntfy:
+        icon: ntfy.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_NTFY_PORT}}"
+        server: podman
+        container: ntfy
+        description: "notification transport on {{HOMEPAGE_VAR_PNAME}}"
+
+- Monitoring:
     - "{{HOMEPAGE_VAR_PNAME}}":
         icon: uptime-kuma.png  # from github.com/walkxcode/dashboard-icons
         href: "http://sentinel:{{HOMEPAGE_VAR_KUMA_PORT}}"
@@ -162,3 +169,14 @@
             user: "{{HOMEPAGE_VAR_NAVI_USER}}"
             token: "{{HOMEPAGE_VAR_NAVI_API_KEY}}"
             salt: "{{HOMEPAGE_VAR_NAVI_SALT}}"
+    - vikunja:
+        icon: vikunja.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_VIKUNJA_PORT}}"
+        server: podman
+        container: vikunja
+        widget:
+            type: vikunja
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_VIKUNJA_PORT}}"
+            key: "{{HOMEPAGE_VAR_VIKUNJA_API_KEY}}"
+            version: 2
+            fields: ["projects", "tasksInProgress"]

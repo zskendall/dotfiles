@@ -20,10 +20,12 @@ layout:
     header: false
     style: row
     iconsOnly: true
+  Infra:
+    icon: mdi-connection
   Productivity:
     header: false
   Monitoring:
-    header: false
+    icon: mdi-pulse
   Apps:
     icon: mdi-apps
     style: row

@@ -7,3 +7,14 @@ ul.bookmark-list {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+[data-name="Calendar"] .service-name {
+  display: none;
+}
+
+/* adjust the padding on the calendar month selector to account for the removed
+   title. may require adjusting selectors if DOM hierarchy changes */
+[data-name="Calendar"] .service-container .text-center > .flex-col {
+  padding-top: calc(var(--spacing) * 4);
+  padding-bottom: calc(var(--spacing) * 4);
+}
