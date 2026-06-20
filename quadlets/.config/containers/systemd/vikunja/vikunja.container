@@ -1,0 +1,14 @@
+[Container]
+ContainerName=vikunja
+Image=docker.io/vikunja/vikunja:latest
+PublishPort=3456:3456
+
+EnvironmentFile=%h/vikunja/.env
+
+Volume=%h/vikunja/data:/app/vikunja/files
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
