@@ -1,10 +1,12 @@
 SRC=/path/to/source
 DEST=user@host:/path/to/dest
 
-CONTAINER=
-POSTGRES_USER=
-POSTGRES_DB=
-DUMP_PATH=
+# for each service in DUMP_SERVICES, add the following variables:
+#   <SERVICE>_CONTAINER - container name running postgres
+#   <SERVICE>_USER      - postgres user
+#   <SERVICE>_DB        - database name
+#   <SERVICE>_DUMP_PATH - where to store the dump
+DUMP_SERVICES="service1 service2"
 
 EXCLUDE=path/to/file/relative/to/source
 
