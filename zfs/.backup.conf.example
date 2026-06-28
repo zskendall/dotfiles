@@ -8,7 +8,9 @@ DEST=user@host:/path/to/dest
 #   <SERVICE>_DUMP_PATH - where to store the dump
 DUMP_SERVICES="service1 service2"
 
+SSH_KEY=/path/to/ssh/key
 EXCLUDE=path/to/file/relative/to/source
 
 NTFY_URL=
+NTFY_TOPIC=
 NTFY_TOKEN=

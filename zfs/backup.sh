@@ -1,37 +1,10 @@
 #!/bin/bash
 
+source /usr/local/lib/ntfy-helpers.sh
 source ~/.backup.conf
 
 extract_count() {
   echo "$1" | awk -F': ' '{print $2}' | awk '{print $1}'
-}
-
-build_embed() {
-  EMBED=$(cat <<EOF
-  {
-    "title": "**$1**",
-    "fields": [
-      {"name": "src", "value": "$HOSTNAME"},
-      {"name": "Time ($(timedatectl show | grep Timezone | cut -d'=' -f 2))", "value": "$(date +"%Y-%m-%d %H:%M:%S")"}
-    ],
-    "color": "${2:-16711680}"
-  }
-EOF
-)
-}
-
-ntfy_notify() {
-  local tags=${2:-bell}
-  local body=$(cat <<EOF
-src: $HOSTNAME
-${3:+$3
-}
-
-Time ($(timedatectl show | grep Timezone | cut -d'=' -f 2))
-$(date +"%Y-%m-%d %H:%M:%S")
-EOF
-)
-  curl -u :$NTFY_TOKEN -H "Title: $1" -H "Tags: $tags" -H "Markdown: yes" -H "Priority: ${4:-high}" -d "$body" $NTFY_URL
 }
 
 dump_dbs() {
@@ -46,8 +19,6 @@ dump_dbs() {
 
       if [ $? -ne 0 ]; then
         # postgres dump failed, notify and exit
-        build_embed "❌ pg_dump for $service failed ❌"
-        ~/discord-webhook-notification/discord-webhook.sh -e "$EMBED"
         ntfy_notify "pg_dump for $service failed ❌" "x"
         exit 1
       fi
@@ -64,22 +35,18 @@ dump_dbs() {
 dump_dbs
 
 # snapshot the pool
-if ! zfs snapshot "$SRC@$(date +%Y-%m-%d)" 2>/tmp/snapshot.err; then
-  if grep -q "already exists" /tmp/snapshot.err; then
-    echo "snapshot already exists, continuing" > /tmp/snapshot.out
-  else
-    build_embed "❌ snapshot failed ❌"
-    ~/discord-webhook-notification/discord-webhook.sh -e "$EMBED"
-    ntfy_notify "snapshot failed ❌" "x"
-    exit 1
-  fi
+SNAP=$(date +%Y%m%d-%H%M%S)
+if ! zfs snapshot "$SRC@$SNAP" 2>/tmp/snapshot.err; then
+  ntfy_notify "snapshot failed ❌" "x"
+  exit 1
 fi
 
 # prune old snapshots
 zfs list -t snapshot -o name | grep "$SRC@" | head -n -30 | xargs -r zfs destroy
 
-/usr/bin/rsync -ah --inplace --info=progress2 --stats \
-  --exclude="$EXCLUDE" "/$SRC/" "$DEST" > /tmp/backup.out 2>/tmp/backup.err
+/usr/bin/rsync -ah -e "ssh -i $SSH_KEY" --inplace --info=progress2 --stats \
+  --exclude="$EXCLUDE" --exclude='.~lock.*#' --exclude='~$*' \
+  "/$SRC/.zfs/snapshot/$SNAP/" "$DEST" > /tmp/backup.out 2>/tmp/backup.err
 
 STATUS=$?
 
@@ -99,16 +66,9 @@ else
 fi
 
 if [ $STATUS -eq 0 ]; then
-  build_embed "✅ rsync succeeded ✅" "65280"
   ntfy_notify "rsync succeeded ✅" "white_check_mark" "$MSG" "low"
 else
-  build_embed "❌ rsync failed ❌"
   ERR=$(cat /tmp/backup.err | awk 'NF > 0 { print }' | head -n 1 | awk -F': ' '{print $3}' | xargs)
   [ ! -z "$MSG" ] && MSG=$(printf "%s\n-----\n%s" "$ERR" "$MSG") || MSG="$ERR"
   ntfy_notify "rsync failed ❌" "x" "$MSG"
 fi
-
-EMBED=$(echo "$EMBED" | jq --arg status "$STATUS" --arg msg "$MSG" \
-  '.fields |= [.[0]] + [{"name": ("Status: " + $status), "value": $msg}] + .[1:]')
-
-~/discord-webhook-notification/discord-webhook.sh -e "$EMBED"
