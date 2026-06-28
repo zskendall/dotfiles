@@ -1,0 +1,15 @@
+[Container]
+Image=docker.io/tecnativa/docker-socket-proxy
+ContainerName=socket-proxy
+Pod=homepage.pod
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
+
+# Only allow listing containers and their info
+Environment=CONTAINERS=1
+Environment=POST=0
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

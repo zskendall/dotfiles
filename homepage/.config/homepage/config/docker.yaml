@@ -2,4 +2,5 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/docker/
 podman:
-  socket: /var/run/podman.sock
+  host: socket-proxy
+  port: "{{HOMEPAGE_VAR_SOCK_PORT}}"

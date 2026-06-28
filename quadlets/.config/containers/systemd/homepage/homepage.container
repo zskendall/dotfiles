@@ -1,17 +1,18 @@
 [Unit]
 Description=Homepage
+After=socket-proxy.service
+Requires=socket-proxy.service
 
 [Container]
 AutoUpdate=registry
 ContainerName=homepage
 Image=ghcr.io/gethomepage/homepage:latest
-PublishPort=4663:3000
+Pod=homepage.pod
 
 EnvironmentFile=%h/.config/homepage/.env
 Environment=LOG_LEVEL=debug
 
 Volume=%h/.config/homepage/config:/app/config
-Volume=/run/user/1000/podman/podman.sock:/var/run/podman.sock:ro
 
 [Service]
 Restart=always
