@@ -1,5 +1,6 @@
 SRC=/path/to/source
-DEST=user@host:/path/to/dest
+REMOTE=user@host
+DEST=/path/to/dest
 
 # for each service in DUMP_SERVICES, add the following variables:
 #   <SERVICE>_CONTAINER - container name running postgres

@@ -43,9 +43,15 @@ if ! zfs snapshot "$SRC@$SNAP" 2>/tmp/snapshot.err; then
   exit 1
 fi
 
+# snapshot the remote pool
+if ! ssh -i "$SSH_KEY" $REMOTE "zfs snapshot $DEST@$SNAP" 2>/tmp/snapshot.err; then
+  FROM="$REMOTE" ntfy_notify "snapshot failed ❌"
+  exit 1
+fi
+
 /usr/bin/rsync -ah -e "ssh -i $SSH_KEY" --inplace --info=progress2 --stats \
   --exclude="$EXCLUDE" --exclude='.~lock.*#' --exclude='~$*' \
-  "/$SRC/.zfs/snapshot/$SNAP/" "$DEST" > /tmp/backup.out 2>/tmp/backup.err
+  "/$SRC/.zfs/snapshot/$SNAP/" "$REMOTE:/" > /tmp/backup.out 2>/tmp/backup.err
 
 STATUS=$?
 

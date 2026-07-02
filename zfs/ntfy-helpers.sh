@@ -5,7 +5,7 @@
 # requires: NTFY_TOKEN, NTFY_URL, NTFY_TOPIC
 ntfy_notify() {
   local body=$(cat <<EOF
-src: $HOSTNAME
+src: ${FROM:-$HOSTNAME}
 ${MSG:+$MSG
 }
 Time ($(timedatectl show | grep Timezone | cut -d'=' -f 2))
