@@ -43,9 +43,6 @@ if ! zfs snapshot "$SRC@$SNAP" 2>/tmp/snapshot.err; then
   exit 1
 fi
 
-# prune old snapshots
-zfs list -t snapshot -o name | grep "$SRC@" | head -n -30 | xargs -r zfs destroy
-
 /usr/bin/rsync -ah -e "ssh -i $SSH_KEY" --inplace --info=progress2 --stats \
   --exclude="$EXCLUDE" --exclude='.~lock.*#' --exclude='~$*' \
   "/$SRC/.zfs/snapshot/$SNAP/" "$DEST" > /tmp/backup.out 2>/tmp/backup.err
