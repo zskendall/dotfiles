@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /usr/local/lib/ntfy-helpers.sh
+source /home/zoe/dotfiles/zfs/ntfy-helpers.sh
 source ~/.backup.conf
 
 extract_count() {
@@ -19,7 +19,7 @@ dump_dbs() {
 
       if [ $? -ne 0 ]; then
         # postgres dump failed, notify and exit
-        ntfy_notify "pg_dump for $service failed ❌" "x"
+        ntfy_notify "pg_dump for $service failed ❌"
         exit 1
       fi
 
@@ -32,12 +32,14 @@ dump_dbs() {
   done
 }
 
+TAGS="x"
+
 dump_dbs
 
 # snapshot the pool
 SNAP=$(date +%Y%m%d-%H%M%S)
 if ! zfs snapshot "$SRC@$SNAP" 2>/tmp/snapshot.err; then
-  ntfy_notify "snapshot failed ❌" "x"
+  ntfy_notify "snapshot failed ❌"
   exit 1
 fi
 
@@ -66,9 +68,9 @@ else
 fi
 
 if [ $STATUS -eq 0 ]; then
-  ntfy_notify "rsync succeeded ✅" "white_check_mark" "$MSG" "low"
+  TAGS="white_check_mark" PRIORITY="low" ntfy_notify "rsync succeeded ✅"
 else
   ERR=$(cat /tmp/backup.err | awk 'NF > 0 { print }' | head -n 1 | awk -F': ' '{print $3}' | xargs)
   [ ! -z "$MSG" ] && MSG=$(printf "%s\n-----\n%s" "$ERR" "$MSG") || MSG="$ERR"
-  ntfy_notify "rsync failed ❌" "x" "$MSG"
+  ntfy_notify "rsync failed ❌"
 fi

@@ -3,7 +3,6 @@ daily db dumps, zfs snapshots, and a 1:1 sync without deletion mirroring from
 main file server to backup using user `rsync`
 ```
 cp ~/dotfiles/zfs/.backup.conf.example ~/.backup.conf
-sudo cp ~/dotfiles/zfs/ntfy-helpers.sh /usr/local/lib
 vim ~/.backup.conf
 crontab -e
 ```
