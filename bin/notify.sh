@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/zoe/dotfiles/zfs/ntfy-helpers.sh
+source /home/zoe/dotfiles/bin/ntfy-helpers.sh
 source /home/zoe/.backup.conf
 
 scrub_finish() {
@@ -25,6 +25,12 @@ prune_finish() {
     [[ "$count" -eq 0 ]] && MSG="nothing to prune" || MSG="pruned $count snapshot$plural"
   fi
   PRIORITY="default" ntfy_notify "${TITLE:-"snapshot prune succeeded ✅"}"
+}
+
+auto-update_finish() {
+  NTFY_TOPIC="$1"
+  MSG=$(journalctl --user -u podman-auto-update.service -o cat --since "10 minutes ago" | grep true)
+  [[ -n "$MSG" ]] && ntfy_notify "containers updated"
 }
 
 EVENT="$1"; shift

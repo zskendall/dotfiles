@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/zoe/dotfiles/zfs/ntfy-helpers.sh
+source /home/zoe/dotfiles/bin/ntfy-helpers.sh
 source ~/.backup.conf
 
 extract_count() {

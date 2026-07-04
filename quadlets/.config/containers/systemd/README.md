@@ -32,3 +32,11 @@ data in another location, simple create a symlink:
 ```
 ln -s /path/to/keep/data/ ~/affine/data
 ```
+
+## image updates
+most container images are updated automatically via `AutoUpdate=registry` using
+`podman-auto-update` user systemd timer. add notifications:
+```
+systemctl --user edit podman-auto-update.service
+```
+to add `ExecStartPost=/path/to/dotfiles/bin/notify.sh auto-update`
