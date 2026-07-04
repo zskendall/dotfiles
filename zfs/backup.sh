@@ -49,7 +49,7 @@ if ! ssh -i "$SSH_KEY" $REMOTE "zfs snapshot $DEST@$SNAP" 2>/tmp/snapshot.err; t
   exit 1
 fi
 
-/usr/bin/rsync -ah -e "ssh -i $SSH_KEY" --inplace --info=progress2 --stats \
+/usr/bin/rsync -ah -e "ssh -i $SSH_KEY" --info=progress2 --stats \
   --exclude="$EXCLUDE" --exclude='.~lock.*#' --exclude='~$*' \
   "/$SRC/.zfs/snapshot/$SNAP/" "$REMOTE:/" > /tmp/backup.out 2>/tmp/backup.err
 
