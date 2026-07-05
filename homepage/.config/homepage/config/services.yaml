@@ -180,3 +180,9 @@
             key: "{{HOMEPAGE_VAR_VIKUNJA_API_KEY}}"
             version: 2
             fields: ["projects", "tasksInProgress"]
+    - joplin:
+        icon: joplin.svg
+        href: "http://sentinel:{{HOMEPAGE_VAR_JOPLIN_PORT}}"
+        description: "markdown based notetaking"
+        server: podman
+        container: joplin-server
