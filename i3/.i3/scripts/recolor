@@ -107,22 +107,6 @@ theme_dunst() {
   pkill dunst
 }
 
-theme_ncmpcpp() {
-  if [ ! -r "$HOME/.ncmpcpp/$THEME.ini" ]; then
-    local available=`ls ~/.ncmpcpp/*.ini | extract '/' '5' | extract '.' '1'`
-    no_theme_error "ncmpcpp" "$available"
-    return
-  fi
-  local music_dir=`grep music_directory ~/.config/mpd/mpd.conf | extract '  ' '2'`
-  sed "s~%music_dir%~$music_dir~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
-  IFS=$'\n'
-  for line in $(cat ~/.ncmpcpp/$THEME.ini); do
-    local param=`echo $line | extract '=' '1' | sed "s/ *$//g"`
-    local value=`echo $line | extract '=' '2' | sed "s/^ *//g"`
-    sed -i "s/%$param%/$value/g" ~/.ncmpcpp/config
-  done
-}
-
 theme_vim() {
   if [ ! -r ~/.vim/colors/$THEME.vim ]; then
     local available=`ls --ignore=colors.vim ~/.vim/colors | sed 's/.vim//g'`
@@ -141,7 +125,6 @@ theme_others() {
   theme_i3
   theme_tmux
   theme_rofi
-  theme_ncmpcpp
   theme_vim
   # TODO(zskendall): theme xfce4-terminal for light bg (paracosm)
 }

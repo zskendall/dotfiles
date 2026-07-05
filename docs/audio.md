@@ -1,24 +1,6 @@
 # Media
-For computers with music stored locally, daemon is
-[mpd](https://wiki.archlinux.org/index.php/Music_Player_Daemon) using
-[ncmpcpp](https://wiki.archlinux.org/index.php/ncmpcpp) as the client.
-[cava](https://github.com/karlstav/cava) can be used as a visualizer.
-```
-sudo apt install mpd ncmpcpp cava
-cd ~/dotfiles && stow media && cd ~
 
-sed "s~%music_dir%~<music_dir_here>~" ~/.config/mpd/template > ~/.config/mpd/mpd.conf
-sed "s~%music_dir%~<music_dir_here>~" ~/.ncmpcpp/template > ~/.ncmpcpp/config
-```
-The colors of ncmpcpp are themed to go with the system. Not all themes are
-supported yet.
-
-## Headphones
-Generally use Bose QC35_II headphones, which are bluetooth. For desktops, will
-need to connect with an adapter. Have used an ASUS USB-BT400 Bluetooth 4.0 USB
-Adapter.
-
-### Connecting
+## Bluetooth headphones
 Followed instructions in [Arch
 guide](https://wiki.archlinux.org/index.php/Bluetooth_headset#Configuration_via_CLI)
 to connect via bluetoothctl.
@@ -34,7 +16,6 @@ bluetoothctl
 ...
 Connection successful
 ```
-The Bose assistant should remark that it is connected to the host.
 
 Adding `load-module module-switch-on-connect` to `/etc/pulse/default.pa` should
 allow headphones to autoconnect. Will also require trusting the headphones via
