@@ -1,0 +1,10 @@
+golang
+maven
+nginx
+openjdk-21-jdk
+pipx
+podman
+sqlite3
+toilet
+zfs-dkms
+zfsutils-linux

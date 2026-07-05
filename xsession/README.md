@@ -1,10 +1,4 @@
 # X Session Configuration
-```
-sudo apt install feh xdotool xautomation xbindkeys xfce4-terminal
-stow xsession
-~/.xsessionrc
-```
-
 ## Theming
 ```
 ~/.i3/scripts/recolor borealis
@@ -18,29 +12,14 @@ xbindkeys -n -v
 xbindkeys &
 ```
 
-## [Gotop](https://github.com/cjbassi/gotop) system monitoring
-Built from source by cloning repot and running the provided `download.sh`
-script.
-```
-~/gotop -p -a
-```
-
-To avoid compositor auto-dimming the monitoring when inactive, named terminal
-tab 'sysmon' and excluded it in compton config.
-
-### Save screen space
-`gotop -a -l minimal` to drop network
-
 ## [Wacom](https://www.wacom.com/en-us) tablet
 I do digital art with a Wacom drawing tablet. While it's plug-and-play to a
 certain extent, I like a custom setup that configures the pen, screen mapping,
 and tablet buttons/wheel. 
 
-```
-sudo apt-get install xserver-xorg-input-wacom
-```
-
 To configure the tablet for the first time or after a reboot, run `~/.wacom`.
+Nvidia graphics cards use the `HEAD-N` notation for identifying monitors; this
+can be passed to `~/.wacom` to map input to the desired monitor
 
 ### Automagically configure
 To support computer hopping with a single tablet (and mitigate reboot strain), I

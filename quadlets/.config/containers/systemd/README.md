@@ -1,12 +1,5 @@
 # Quadlets for running Podman services
 
-## Installation Notes
-```
-sudo apt install podman
-podman -v  # verify v5+
-cd ~/dotfiles && stow quadlets
-```
-
 ## networking
 by default, podman v5+ uses pasta networking, but for homepage to be able to
 correctly find and talk to other containers that may be running on different,
@@ -23,7 +16,7 @@ e.g. `~/service/.env`
 cp ~/dotfiles/quadlets/.config/containers/systemd/affine/.env.example ~/affine/.env
 vim ~/affine/.env
 systemctl --user daemon-reload
-systemctl --user start affine-pod
+systemctl --user restart affine-pod
 ```
 
 ## data mounts

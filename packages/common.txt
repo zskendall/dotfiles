@@ -1,0 +1,11 @@
+curl
+git
+jq
+rsync
+smartmontools
+stow
+tmux
+ufw
+unattended-upgrades
+vim
+zstd
