@@ -1,0 +1,14 @@
+[Unit]
+Description=Joplin Server
+After=joplin-db.service
+Requires=joplin-db.service
+
+[Container]
+AutoUpdate=registry
+Image=docker.io/joplin/server:latest
+ContainerName=joplin-server
+Pod=joplin.pod
+EnvironmentFile=%h/joplin/.env
+
+[Install]
+WantedBy=default.target

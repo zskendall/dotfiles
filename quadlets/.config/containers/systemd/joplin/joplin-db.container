@@ -1,0 +1,13 @@
+[Unit]
+Description=Joplin PostgreSQL
+
+[Container]
+AutoUpdate=registry
+Image=docker.io/library/postgres:16
+ContainerName=joplin-db
+Pod=joplin.pod
+EnvironmentFile=%h/joplin/.env
+Volume=%h/joplin/postgres:/var/lib/postgresql/data
+
+[Install]
+WantedBy=default.target
