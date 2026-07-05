@@ -7,10 +7,10 @@ xmodmap ~/.xmodmap
 export TERM=xterm-256color
 [ -r ~/.i3/scripts/recolor ] && ~/.i3/scripts/recolor borealis
 
-# If installed, start compton as a background process to enable compositing. See
+# If installed, start picom as a background process to enable compositing. See
 # https://wiki.archlinux.org/index.php/compton for more information.
-if [ -n "$(dpkg -s compton | grep "installed")" ]; then
-  compton &
+if [ -n "$(dpkg -s picom | grep "installed")" ]; then
+  picom -b
 fi
 
 [ -r ~/.xbindkeysrc ] && xbindkeys -f ~/.xbindkeysrc &
@@ -24,10 +24,4 @@ fi
 if [ -r ~/.xprofile.$(hostname) ]; then
   echo "machine time" >> ~/tmp/foo
   . ~/.xprofile.$(hostname)
-fi
-
-if [ "$(xdg-mime query default x-scheme-handler/https)" != "google-chrome.desktop" ];
-then
-  xdg-mime default google-chrome.desktop x-scheme-handler/https
-  xdg-mime default google-chrome.desktop x-scheme-handler/http
 fi
