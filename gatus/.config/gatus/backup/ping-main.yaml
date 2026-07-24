@@ -1,0 +1,9 @@
+endpoints:
+  - name: ${SERVICES_HOST}
+    group: fleet
+    url: "icmp://${SERVICES_HOST}"
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: ntfy

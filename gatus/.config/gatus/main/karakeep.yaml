@@ -1,0 +1,9 @@
+endpoints:
+  - name: karakeep
+    group: services
+    url: "http://${SERVICES_HOST}.${TAILNET}:3000"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

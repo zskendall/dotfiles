@@ -1,0 +1,9 @@
+endpoints:
+  - name: affine
+    group: services
+    url: "http://${SERVICES_HOST}.${TAILNET}:3010"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

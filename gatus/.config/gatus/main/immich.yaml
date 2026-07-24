@@ -1,0 +1,9 @@
+endpoints:
+  - name: immich
+    group: services
+    url: "http://${SERVICES_HOST}.${TAILNET}:2283"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

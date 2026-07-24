@@ -1,0 +1,23 @@
+[Unit]
+Description=Gatus health monitoring
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+AutoUpdate=registry
+ContainerName=gatus
+Image=ghcr.io/twin/gatus:stable
+PublishPort=8080:8080
+
+EnvironmentFile=%h/gatus/.env
+
+Volume=%h/.config/gatus:/config:ro
+Volume=%h/gatus/data:/data
+
+AddCapability=NET_RAW
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,9 @@
+endpoints:
+  - name: joplin
+    group: services
+    url: "http://${SERVICES_HOST}.${TAILNET}:${JOPLIN_PORT}"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

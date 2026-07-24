@@ -1,0 +1,9 @@
+endpoints:
+  - name: homepage
+    group: services
+    url: "http://${SERVICES_HOST}.${TAILNET}:4663"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

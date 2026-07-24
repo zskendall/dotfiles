@@ -1,0 +1,9 @@
+endpoints:
+  - name: pihole
+    group: fleet
+    url: "icmp://${PIHOLE_HOST}"
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: ntfy

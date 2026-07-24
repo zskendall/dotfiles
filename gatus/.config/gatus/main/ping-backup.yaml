@@ -1,0 +1,11 @@
+endpoints:
+  - name: ${BACKUP_HOST}
+    group: fleet
+    url: "icmp://${BACKUP_HOST}"
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: ntfy
+        provider-override:
+          topic: "${NTFY_SECONDARY_TOPIC}"

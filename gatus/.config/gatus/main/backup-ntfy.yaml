@@ -1,0 +1,9 @@
+endpoints:
+  - name: ntfy
+    group: services
+    url: "http://${BACKUP_HOST}:6839"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: ntfy

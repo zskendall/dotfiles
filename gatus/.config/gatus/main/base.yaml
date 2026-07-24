@@ -1,0 +1,16 @@
+storage:
+  type: sqlite
+  path: /data/gatus.db
+
+alerting:
+  ntfy:
+    url: "http://${SERVICES_HOST}.${TAILNET}:6839"
+    topic: "${NTFY_PRIMARY_TOPIC}"
+    token: "${NTFY_TOKEN}"
+    priority: 3
+    default-alert:
+      enabled: true
+      failure-threshold: 3
+      success-threshold: 2
+      send-on-resolved: true
+      minimum-reminder-interval: 1h
