@@ -12,6 +12,7 @@ Pod=homepage.pod
 EnvironmentFile=%h/.config/homepage/.env
 Environment=LOG_LEVEL=debug
 
+Tmpfs=/app/.next/server/pages
 Volume=%h/.config/homepage/config:/app/config
 
 [Service]

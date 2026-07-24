@@ -1,3 +1,7 @@
+[Unit]
+Requires=podman.socket
+After=podman.socket
+
 [Container]
 Image=docker.io/tecnativa/docker-socket-proxy
 ContainerName=socket-proxy
