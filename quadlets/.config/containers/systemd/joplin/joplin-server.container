@@ -10,5 +10,8 @@ ContainerName=joplin-server
 Pod=joplin.pod
 EnvironmentFile=%h/joplin/.env
 
+[Service]
+Restart=always
+
 [Install]
 WantedBy=default.target
