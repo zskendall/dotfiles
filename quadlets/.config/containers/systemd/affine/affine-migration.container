@@ -7,7 +7,7 @@ Pod=affine.pod
 
 AutoUpdate=registry
 ContainerName=affine_migration_job
-Exec=sh -c 'npx prisma migrate deploy && node ./dist/main.js run'
+Exec=sh -c 'node ./scripts/self-host-predeploy.js'
 Image=ghcr.io/toeverything/affine:stable
 
 EnvironmentFile=%h/affine/.env

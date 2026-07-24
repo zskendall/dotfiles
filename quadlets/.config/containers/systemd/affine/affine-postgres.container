@@ -17,6 +17,7 @@ Volume=%h/affine/postgres:/var/lib/postgresql/data
 
 [Service]
 Restart=always
+TimeoutStartSec=300
 
 [Install]
 WantedBy=default.target
