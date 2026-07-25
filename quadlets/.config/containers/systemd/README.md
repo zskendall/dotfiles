@@ -33,3 +33,21 @@ most container images are updated automatically via `AutoUpdate=registry` using
 systemctl --user edit podman-auto-update.service
 ```
 to add `ExecStartPost=/path/to/dotfiles/bin/notify.sh auto-update`
+
+## running as a separate user
+```
+sudo useradd -m -s /bin/bash -u 1234 foouser
+sudo loginctl enable-linger foouser
+sudo machinectl shell foouser@.host
+git clone https://github.com/zskendall/dotfiles.git
+mkdir -p ~/.config/containers/systemd
+ln -s ~/dotfiles/quadlets/.config/containers/containers.conf ~/.config/containers/containers.conf
+ln -s ~/dotfiles/quadlets/.config/containers/systemd/gatus.container ~/.config/containers/systemd/gatus.container
+(cd dotfiles && stow gatus)
+mkdir -p ~/gatus/data
+cp ~/.config/gatus/.env.example ~/gatus/.env
+systemctl --user daemon-reload
+systemctl --user start gatus
+crontab -e
+```
+repo and services are updated weekly at 3am thu via user crontab
