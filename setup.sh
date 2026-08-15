@@ -16,11 +16,10 @@ setup_server() {
   sudo tailscale up --authkey=file:/tmp/ts-authkey --advertise-tags=tag:nas && shred -u /tmp/ts-authkey
 
   sudo xargs apt install -y < ~/dotfiles/packages/server.txt
-  dpkg-reconfigure -plow unattended-upgrades
   pipx install grip
 
   # start services
-  (cd ~/dotfiles && stow vim xsession tmux quadlets)
+  (cd ~/dotfiles && stow xsession quadlets)
   find -L ~/.config/containers/systemd -name '.env.example' | while read -r example; do
     local service=$(basename "$(dirname "$example")")
     mkdir -p ~/"$service"
@@ -40,12 +39,17 @@ setup_graphical() {
   client_installs
 
   rm -r ~/.i3 ~/.config/dunst ~/.Xresources ~/.vimrc
-  (cd ~/dotfiles && stow vim i3 polybar xsession compton rofi tmux dunst)
+  (cd ~/dotfiles && stow i3 polybar xsession picom rofi dunst)
 
   sudo tailscale up
 
   # create default ssh key
   ssh-keygen -t ed25519 -C ${HOSTNAME:-$(hostname)}
+}
+
+setup_pihole() {
+  sudo tailscale up --authkey=file:/tmp/ts-authkey --advertise-tags=tag:service && shred -u /tmp/ts-authkey
+  curl -sSL https://install.pi-hole.net | bash
 }
 
 setup_devenv() {
@@ -55,8 +59,10 @@ setup_devenv() {
 }
 
 sudo xargs apt install -y < ~/dotfiles/packages/common.txt
+dpkg-reconfigure -plow unattended-upgrades
 curl -fsSL https://tailscale.com/install.sh | sh
 
 echo "UMASK 027" | sudo tee -a /etc/login.defs
+(cd ~/dotfiles && stow vim tmux)
 setup_${1:-graphical}
 setup_devenv

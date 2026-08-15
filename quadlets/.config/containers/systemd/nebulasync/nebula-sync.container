@@ -1,0 +1,13 @@
+[Container]
+Image=ghcr.io/lovelaze/nebula-sync:latest
+ContainerName=nebula-sync
+EnvironmentFile=%h/nebula-sync/.env
+
+[Unit]
+ConditionPathExists=/etc/pihole
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
