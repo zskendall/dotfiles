@@ -1,0 +1,3 @@
+  - name: pihole-%idx%
+    <<: *pihole
+    url: "icmp://%hostname%"

@@ -1,0 +1,12 @@
+ping: &pihole
+  group: fleet
+  interval: 1m
+  conditions:
+    - "[CONNECTED] == true"
+  alerts:
+    - type: ntfy
+
+endpoints:
+  - name: pihole
+    <<: *pihole
+    url: "icmp://${PRIMARY_PIHOLE}"

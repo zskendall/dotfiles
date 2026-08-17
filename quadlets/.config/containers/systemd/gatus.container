@@ -18,6 +18,8 @@ AddCapability=NET_RAW
 
 [Service]
 Restart=always
+EnvironmentFile=%h/gatus/.env
+ExecStartPre=%h/.config/gatus/generate_config.sh
 
 [Install]
 WantedBy=default.target
