@@ -13,6 +13,9 @@
   background-alt:         @grey80;
   selected-background:    #723d71cc;
   border-color:           @text-color;
+  accent-subtle:          #7b926f33;
+  accent-border:          #7b926fbf;
+  secondary-subtle:       #723d7166;
 }
 
 /* vim:ft=css

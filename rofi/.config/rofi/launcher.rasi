@@ -14,16 +14,10 @@ configuration {
 
 window {
   border:                     2;
-  height:                     400;
-  location:                   north;
-  padding:                    5;
-  width:                      25%;
-  y-offset:                   27;
-}
-
-mainbox {
+  border-color:               @text-color;
+  border-radius:              16;
   children:                   [ inputbar, listview ];
-  padding:                    8 15;
+  padding:                    13 20;
   spacing:                    10;
 }
 
@@ -31,8 +25,6 @@ inputbar {
   background-color:           @background;
   children:                   [ prompt, entry ];
   border-radius:              30;
-  expand:                     false;
-  position:                   center;
 }
 
 prompt {
@@ -41,7 +33,6 @@ prompt {
 }
 
 entry {
-  expand:                     true;
   padding:                    10 10 10 0;
   placeholder-color:          @text-color;
   text-color:                 @primary;
@@ -49,9 +40,8 @@ entry {
 
 listview {
   columns:                    2;
-  dynamic:                    true;
-  layout:                     vertical;
   spacing:                    4;
+  lines:                      4;
 }
 
 element {
@@ -59,7 +49,6 @@ element {
 }
 
 element-icon {
-  border:                     0;
   padding:                    6;
   size:                       50;
 }
@@ -69,10 +58,11 @@ element-text {
 }
 
 element selected {
-  border:                     0 0 2 0;
   border-color:               @primary;
-  background-color:           @selected-background;
-  text-color:                 @primary;
+}
+
+element-text selected {
+  color:                      @text-color;
 }
 
 /* vim:ft=css

@@ -4,11 +4,13 @@
   primary:                 #cf9115;
   secondary:               #080130;
   text-color:              #feffa5;
-  accent:                  @primary;
   background:              #080130bf;
   background-alt:          #400011cc;
   selected-background:     #400011d9;
   border-color:            @text-color;
+  accent-subtle:           #cf911533;
+  accent-border:           #cf9115bf;
+  secondary-subtle:        #08013066;
 }
 
 /* vim:ft=css

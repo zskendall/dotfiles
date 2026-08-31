@@ -1,11 +1,10 @@
-@theme "config.rasi"
-@import "launcher.rasi"
+@theme "launcher.rasi"
 
 window {
-  height:                     30%;
   location:                   northeast;
-  width:                      20%;
-  x-offset:                   -140;
+  width:                      30ch;
+  x-offset:                   -3.5ch;
+  y-offset:                   3.5ch;
 }
 
 entry {

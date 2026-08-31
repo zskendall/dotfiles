@@ -6,6 +6,8 @@
 @theme "config.rasi"
 
 window {
+  height:             100%;
+  width:              100%;
   background-color:   @background-alt;
   children:           [ message, listview ];
   padding:            36% 0;
@@ -23,12 +25,7 @@ textbox {
 listview {
   layout:             horizontal;
   spacing:            2%;
-  fixed-height:       1;
-  dynamic:            true;
-  horizontal-align:   0.5;
   margin:             0 40%;
-  padding:            0 0 0 1%;
-  expand:             true;
 }
 
 element {
@@ -37,9 +34,6 @@ element {
 
 element selected {
   background-color:   @background;
-  border:             0 0 2 0;
-  border-color:       @text-color;
-  color:              @primary;
 }
 
 /* vim:ft=css

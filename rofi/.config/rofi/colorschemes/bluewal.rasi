@@ -10,4 +10,7 @@
   background-alt: @background;
   text-color: #c2c4c5;
   selected-background: @background;
+  accent-subtle:           #30929033;
+  accent-border:           #309290bf;
+  secondary-subtle:        #0b161a66;
 }

@@ -6,11 +6,13 @@
   primary:                #eb8d04;
   secondary:              #222;
   text-color:             #850200;
-  accent:                 @primary;
   background:             @grey80;
   background-alt:         #08013099;
   selected-background:    black;
   border-color:           @primary;
+  accent-subtle:          #eb8d0433;
+  accent-border:          #eb8d04bf;
+  secondary-subtle:       #22222266;
 }
 
 /* vim:ft=css

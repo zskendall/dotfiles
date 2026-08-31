@@ -5,34 +5,34 @@
 
 @theme "config.rasi"
 
+configuration {
+    font: "Material Icons 40";
+}
+
 window {
-  height:                         200;
-  width:                          715;
-  location:                       center;
+  width:                          520;
   children:                       [ listview ];
-  background-color:               @background-alt;
-  border-radius:                  12;
-  padding:                        12px 0;
+  background-color:               transparent;
 }
 
 listview {
-  layout:                         horizontal;
-  margin:                         42 78;
-  padding:                        0 0 0 1;
-  spacing:                        20;
+  columns:                        5;
+  lines:                          1;
+  spacing:                        16;
 }
 
 element {
-  background-color:               @secondary;
-  border-radius:                  20;
-  padding:                        10;
-  width:                          95;
+  background-color:               @secondary-subtle;
+  border-radius:                  30;
+  padding:                        12 10;
 }
 
 element selected {
-  background-color:               @primary;
-  border-radius:                  20;
-  color:                          @secondary;
+  background-color:               @accent-subtle;
+  border-radius:                  30;
+  border:                         1.5px;
+  border-color:                   @accent-border;
+  color:                          @primary;
 }
 
 /* vim:ft=css
