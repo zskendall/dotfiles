@@ -33,6 +33,8 @@ setup_server() {
   for unit in $pods $standalone; do
     systemctl --user start "$unit"
   done
+  setup_devenv
+  sudo loginctl enable-linger $(whoami)
 }
 
 setup_graphical() {
@@ -45,11 +47,13 @@ setup_graphical() {
 
   # create default ssh key
   ssh-keygen -t ed25519 -C ${HOSTNAME:-$(hostname)}
+  setup_devenv
 }
 
 setup_pihole() {
   sudo tailscale up --authkey=file:/tmp/ts-authkey --advertise-tags=tag:service && shred -u /tmp/ts-authkey
   curl -sSL https://install.pi-hole.net | bash
+  sudo loginctl enable-linger $(whoami)
 }
 
 setup_devenv() {
@@ -65,4 +69,3 @@ curl -fsSL https://tailscale.com/install.sh | sh
 echo "UMASK 027" | sudo tee -a /etc/login.defs
 (cd ~/dotfiles && stow vim tmux)
 setup_${1:-graphical}
-setup_devenv
