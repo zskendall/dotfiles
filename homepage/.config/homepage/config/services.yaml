@@ -72,6 +72,15 @@
 - Infra:
     - pihole:
         icon: pi-hole.svg
+        href: "http://{{HOMEPAGE_VAR_PIHOLE_PRIMARY}}/admin"
+        siteMonitor: "http://{{HOMEPAGE_VAR_PIHOLE_PRIMARY}}"
+        widget:
+          type: pihole
+          url: "http://{{HOMEPAGE_VAR_PIHOLE_PRIMARY}}"
+          version: 6
+          key: "{{HOMEPAGE_VAR_PIHOLE_APP_PW}}"
+    - pihole2:
+        icon: pi-hole.svg
         href: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}/admin"
         siteMonitor: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}"
         widget:
@@ -79,33 +88,32 @@
           url: "http://{{HOMEPAGE_VAR_PIHOLE_HOST}}"
           version: 6
           key: "{{HOMEPAGE_VAR_PIHOLE_APP_PW}}"
-    - ntfy:
+    - "ntfy ({{HOMEPAGE_VAR_PNAME}})":
         icon: ntfy.svg
         href: "http://sentinel:{{HOMEPAGE_VAR_NTFY_PORT}}"
         server: podman
         container: ntfy
-        description: "notification transport on {{HOMEPAGE_VAR_PNAME}}"
+    - "ntfy ({{HOMEPAGE_VAR_ONAME}})":
+        icon: ntfy.svg
+        href: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_NTFY_PORT}}"
+        siteMonitor: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_NTFY_PORT}}"
 
 - Monitoring:
-    - "{{HOMEPAGE_VAR_PNAME}}":
-        icon: uptime-kuma.png  # from github.com/walkxcode/dashboard-icons
-        href: "http://sentinel:{{HOMEPAGE_VAR_KUMA_PORT}}"
+    - "gatus ({{HOMEPAGE_VAR_PNAME}})":
+        icon: gatus.svg  # from github.com/walkxcode/dashboard-icons
+        href: "http://sentinel:8080"
         server: podman
-        container: uptime-kuma
-        description: "Sites monitored by {{HOMEPAGE_VAR_PNAME}}"
+        container: gatus
         widget:
-            type: uptimekuma
-            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:{{HOMEPAGE_VAR_KUMA_PORT}}"
-            slug: watcher
-    - "{{HOMEPAGE_VAR_ONAME}}":
-        icon: uptime-kuma.png
-        href: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
-        siteMonitor: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
-        description: "Sites monitored by {{HOMEPAGE_VAR_ONAME}}"
+            type: gatus
+            url: "http://{{HOMEPAGE_VAR_PNAME}}.{{HOMEPAGE_VAR_TAILNET}}.ts.net:8080"
+    - "gatus ({{HOMEPAGE_VAR_ONAME}})":
+        icon: gatus.svg
+        href: "http://{{HOMEPAGE_VAR_ONAME}}:8080"
+        siteMonitor: "http://{{HOMEPAGE_VAR_ONAME}}:8080"
         widget:
-          type: uptimekuma
-          url: "http://{{HOMEPAGE_VAR_ONAME}}:{{HOMEPAGE_VAR_KUMA_PORT}}"
-          slug: watcher
+          type: gatus
+          url: "http://{{HOMEPAGE_VAR_ONAME}}:8080"
 
 - Apps:
     - Immich:
